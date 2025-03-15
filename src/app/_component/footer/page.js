@@ -1328,7 +1328,7 @@ const footer = () => {
                                                         >
                                                             Packaging
                                                         </a>{" "}
-                                                    </li>
+                                                    </li>l
                                                     <li>
                                                         <a
                                                             href="/us/partner"
@@ -1370,7 +1370,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/help/faq/cost-calculator.html"
+                                                            href="/home/pricing"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             Pricing
@@ -1453,7 +1453,7 @@ const footer = () => {
                                         <ul className="fnx-list-inline">
                                             <li>
                                                 <a
-                                                    href="/us/about/terms-conditions"
+                                                    href="/home/terms-conditions"
                                                     className="footer-legal-link js-ga4-click-track"
                                                 >
                                                     Terms &amp; Conditions
@@ -1461,7 +1461,7 @@ const footer = () => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href="/us/about/privacy-policy"
+                                                    href="/home/privacy-policy"
                                                     className="footer-legal-link js-ga4-click-track"
                                                 >
                                                     Privacy Policy
@@ -1469,7 +1469,7 @@ const footer = () => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href="/us/about/fonts"
+                                                    href="/home/fonts"
                                                     className="footer-legal-link js-ga4-click-track"
                                                 >
                                                     Fonts
@@ -1477,7 +1477,7 @@ const footer = () => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href="/us/sitemap"
+                                                    href="/home/sitemap"
                                                     className="footer-legal-link js-ga4-click-track"
                                                 >
                                                     Sitemap
@@ -1485,7 +1485,7 @@ const footer = () => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href="/us/about/about-the-company"
+                                                    href="/home/about-the-company"
                                                     className="footer-legal-link js-ga4-click-track"
                                                 >
                                                     Company information
