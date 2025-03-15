@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" class="js fnx-site chrome chrome-134 touchevents is-loaded is-bottom-banner-visible">
+    <html lang="en" className="js fnx-site chrome chrome-134 no-touchevents is-loaded is-nav-animatable is-nav-active">
       <head>
         <link rel='stylesheet' href='/assets/stylesheet/main.min.css' media='all' />
       </head>

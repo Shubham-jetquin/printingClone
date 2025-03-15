@@ -1,4 +1,32 @@
+'use client';
+
+import React, { useRef } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const home = () => {
+
+    const sliderRef = useRef(null);
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: false,
+    };
+
+    const goToSlide = (index) => {
+        if (sliderRef.current) {
+            sliderRef.current.slickGoTo(index);
+        }
+    };
+
+
     return <>
         <main id="main-content" className="u-outline-none">
             <section
@@ -25,11 +53,8 @@ const home = () => {
                         className="slick-list draggable"
                         style={{ padding: 0 }}
                     >
-                        <div
-                            className="slick-track"
-                            style={{ opacity: 1, width: 9800, left: "-2800px" }}
-                            role="listbox"
-                        >
+                        <Slider {...settings} className="slick-track" ref={sliderRef}>
+
                             <div
                                 className="u-position-relative hhcm-slide js-hhcm-slide slick-slide slick-cloned"
                                 data-slide-indicator-color-class="-color-light"
@@ -53,11 +78,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/assets/home/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /assets/home/0812WF-HPC-3840x1000-Business-Cards-Special-Finishes.jpg 2x"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg 2x"
                                             />
                                             <img
-                                                src="/assets/home/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg"
-                                                srcSet="/assets/home/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg, /assets/home/0812WF-HPC-1280x1140-Business-Cards-Special-Finishes.jpg 2x"
+                                                src="/assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg 2x"
                                                 alt="Special Finish Business Cards"
                                                 className="wide-media"
                                             />
@@ -188,11 +213,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/assets/home/0812WF-HPC-1920x500-Stickers.jpg,/assets/home/0812WF-HPC-3840x1000-Stickers.jpg 2x"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Stickers.jpg, /assets/images0812WF-HPC-1920x500-Stickers.jpg 2x"
                                             />
                                             <img
-                                                src="/assets/home/0812WF-HPC-640x570-Stickers.jpg"
-                                                srcSet="/assets/home/0812WF-HPC-640x570-Stickers.jpg, /assets/home/0812WF-HPC-1280x1140-Stickers.jpg 2x"
+                                                src="/assets/images/0812WF-HPC-640x570-Stickers.jpg"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Stickers.jpg, /assets/images/0812WF-HPC-1920x500-Stickers.jpg 2x"
                                                 alt="Stickers & Labels"
                                                 className="wide-media"
                                             />
@@ -336,11 +361,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/assets/home/0813WF-HPC-1920x500-GTM-Launch.jpg, /assets/home/0813WF-HPC-3840x1000-GTM-Launch.jpg 2x"
+                                                srcSet="/assets/images/0813WF-HPC-1920x500-GTM-Launch.jpg, /assets/images/0813WF-HPC-3840x1000-GTM-Launch.jpg 2x"
                                             />
                                             <img
-                                                src="/assets/home/0813WF-HPC-640x570-GTM-Launch.jpg"
-                                                srcSet="/assets/home/0813WF-HPC-640x570-GTM-Launch.jpg, /assets/home/0813WF-HPC-1280x1140-GTM-Launch.jpg 2x"
+                                                src="/assets/images/0813WF-HPC-640x570-GTM-Launch.jpg"
+                                                srcSet="/assets/images/0813WF-HPC-640x570-GTM-Launch.jpg, /assets/images/0813WF-HPC-1280x1140-GTM-Launch.jpg 2x"
                                                 alt="Planners"
                                                 className="wide-media"
                                                 fetchPriority="high"
@@ -464,11 +489,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/dam/jcr:ad483465-dd7e-4836-84b8-dea72361ad2e/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /dam/jcr:5cf9db4c-50ca-4340-aeb2-026d9708039c/0812WF-HPC-3840x1000-Business-Cards-Special-Finishes.jpg 2x"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /assets/images/0812WF-HPC-3840x1000-Business-Cards-Special-Finishes.jpg 2x"
                                             />
                                             <img
-                                                src="/dam/jcr:11fce36e-bc25-4587-9c88-e52696c6216c/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg"
-                                                srcSet="/dam/jcr:11fce36e-bc25-4587-9c88-e52696c6216c/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg, /dam/jcr:28a7a5c3-5ee0-4b75-83a1-662796cdcbec/0812WF-HPC-1280x1140-Business-Cards-Special-Finishes.jpg 2x"
+                                                src="/assets/images/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg"
+                                                srcSet="/assets/images/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg, /assets/images/0812WF-HPC-1280x1140-Business-Cards-Special-Finishes.jpg 2x"
                                                 alt="Special Finish Business Cards"
                                                 className="wide-media"
                                             />
@@ -601,11 +626,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/dam/jcr:05138af9-e6ab-41a0-ac4d-b8a9ffcf3416/0812WF-HPC-1920x500-Stickers.jpg, /dam/jcr:2ebc5ac7-a8cd-454f-b940-e65a26420ec0/0812WF-HPC-3840x1000-Stickers.jpg 2x"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Stickers.jpg, /assets/images/0812WF-HPC-3840x1000-Stickers.jpg 2x"
                                             />
                                             <img
-                                                src="/dam/jcr:62d40649-11fb-4cf1-a811-b929d0383b35/0812WF-HPC-640x570-Stickers.jpg"
-                                                srcSet="/dam/jcr:62d40649-11fb-4cf1-a811-b929d0383b35/0812WF-HPC-640x570-Stickers.jpg, /dam/jcr:fc66a058-5198-4905-b842-1e71eb9fa916/0812WF-HPC-1280x1140-Stickers.jpg 2x"
+                                                src="/assets/images/0812WF-HPC-640x570-Stickers.jpg"
+                                                srcSet="/assets/images/0812WF-HPC-640x570-Stickers.jpg, /assets/images/0812WF-HPC-1280x1140-Stickers.jpg 2x"
                                                 alt="Stickers & Labels"
                                                 className="wide-media"
                                             />
@@ -747,11 +772,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/dam/jcr:1303c9b9-cb29-450e-90ea-a543a09ca1e3/0813WF-HPC-1920x500-GTM-Launch.jpg, /dam/jcr:80335038-e341-46ad-a803-a0423f30b8b2/0813WF-HPC-3840x1000-GTM-Launch.jpg 2x"
+                                                srcSet="/assets/images/0813WF-HPC-1920x500-GTM-Launch.jpg, /assets/images/0813WF-HPC-3840x1000-GTM-Launch.jpg 2x"
                                             />
                                             <img
-                                                src="/dam/jcr:6e277e13-5a82-44a9-a268-74f63fb7fcc5/0813WF-HPC-640x570-GTM-Launch.jpg"
-                                                srcSet="/dam/jcr:6e277e13-5a82-44a9-a268-74f63fb7fcc5/0813WF-HPC-640x570-GTM-Launch.jpg, /dam/jcr:05c7612b-1b39-48ed-9d67-51e51d22636b/0813WF-HPC-1280x1140-GTM-Launch.jpg 2x"
+                                                src="/assets/images/0813WF-HPC-640x570-GTM-Launch.jpg"
+                                                srcSet="/assets/images/0813WF-HPC-640x570-GTM-Launch.jpg, /assets/images/0813WF-HPC-1280x1140-GTM-Launch.jpg 2x"
                                                 alt="Planners"
                                                 className="wide-media"
                                                 fetchPriority="high"
@@ -873,11 +898,11 @@ const home = () => {
                                         <picture>
                                             <source
                                                 media="only screen and (min-width: 40.0625em)"
-                                                srcSet="/dam/jcr:ad483465-dd7e-4836-84b8-dea72361ad2e/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /dam/jcr:5cf9db4c-50ca-4340-aeb2-026d9708039c/0812WF-HPC-3840x1000-Business-Cards-Special-Finishes.jpg 2x"
+                                                srcSet="/assets/images/0812WF-HPC-1920x500-Business-Cards-Special-Finishes.jpg, /assets/images/0812WF-HPC-3840x1000-Business-Cards-Special-Finishes.jpg 2x"
                                             />
                                             <img
-                                                src="/dam/jcr:11fce36e-bc25-4587-9c88-e52696c6216c/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg"
-                                                srcSet="/dam/jcr:11fce36e-bc25-4587-9c88-e52696c6216c/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg, /dam/jcr:28a7a5c3-5ee0-4b75-83a1-662796cdcbec/0812WF-HPC-1280x1140-Business-Cards-Special-Finishes.jpg 2x"
+                                                src="/assets/images/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg"
+                                                srcSet="/assets/images/0812WF-HPC-640x570-Business-Cards-Special-Finishes.jpg, /assets/images/0812WF-HPC-1280x1140-Business-Cards-Special-Finishes.jpg 2x"
                                                 alt="Special Finish Business Cards"
                                                 className="wide-media"
                                             />
@@ -985,7 +1010,8 @@ const home = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                        </Slider>
                     </div>
                     <ul
                         className="hhmc__slide-indicator fade-then-hide js-hhmc-slide-indicator -color-dark is-visible"
@@ -1006,9 +1032,10 @@ const home = () => {
                                 role="button"
                                 aria-required="false"
                                 tabIndex={0}
-                                className="js-ga4-click-track"
+                                className="prev-button slick-arrow"
                                 data-component-name="slide-indicator"
                                 data-component-text="slide-1"
+                                onClick={() => goToSlide(0)}
                             >
                                 1
                             </button>
@@ -1025,10 +1052,11 @@ const home = () => {
                                 data-role="none"
                                 role="button"
                                 aria-required="false"
-                                tabIndex={0}
-                                className="js-ga4-click-track"
+                                tabIndex={1}
+                                className="next-button slick-arrow"
                                 data-component-name="slide-indicator"
                                 data-component-text="slide-2"
+                                onClick={() => goToSlide(1)}
                             >
                                 2
                             </button>
@@ -1045,10 +1073,11 @@ const home = () => {
                                 data-role="none"
                                 role="button"
                                 aria-required="false"
-                                tabIndex={0}
+                                tabIndex={2}
                                 className="js-ga4-click-track"
                                 data-component-name="slide-indicator"
                                 data-component-text="slide-3"
+                                onClick={() => goToSlide(2)}
                             >
                                 3
                             </button>
@@ -1064,7 +1093,7 @@ const home = () => {
                         style={{}}
                     >
                         <button
-                            className="hhcm__btn btn -disc js-ga4-click-track js-btn -ghost-dark"
+                            className="hhcm__btn btn -disc js-ga4-click-track js-btn -ghost-dark prev-button slick-arrow"
                             data-module-action="click_left"
                             data-qa-name="prev-button"
                         >
@@ -1090,7 +1119,7 @@ const home = () => {
                         style={{}}
                     >
                         <button
-                            className="hhcm__btn btn -disc js-ga4-click-track js-btn -ghost-dark"
+                            className="hhcm__btn btn -disc js-ga4-click-track js-btn -ghost-dark next-button slick-arrow"
                             data-module-action="click_right"
                             data-qa-name="next-button"
                         >
@@ -1182,7 +1211,7 @@ js-tile
                                                 data-qa-name="figure"
                                             >
                                                 <img
-                                                    src="/dam/jcr:dd3f5a3e-1819-4e5f-87a4-28ccd183f870/MOO-Icon-Next-Day-Delivery.svg"
+                                                    src="/assets/images/icons/MOO-Icon-Next-Day-Delivery.svg"
                                                     alt="Next day delivery!"
                                                     title="Next day delivery!"
                                                     className="tile__image"
@@ -1235,7 +1264,7 @@ js-tile
                                                 data-qa-name="figure"
                                             >
                                                 <img
-                                                    src="/dam/jcr:6d499eb6-e11d-49cc-a3b4-cca71608a36a/MOO-Icon-Promise.svg"
+                                                    src="/assets/images/icons/MOO-Icon-Promise.svg"
                                                     alt=" The MOO promise"
                                                     title=" The MOO promise"
                                                     className="tile__image"
@@ -1288,7 +1317,7 @@ js-tile
                                                 data-qa-name="figure"
                                             >
                                                 <img
-                                                    src="/dam/jcr:b8e1bbeb-8d9e-46ac-b94e-f4d4963f3157/MOO-Icon-Sample-Pack.svg"
+                                                    src="/assets/images/icons/MOO-Icon-Sample-Pack.svg"
                                                     alt="Business perks"
                                                     title="Business perks"
                                                     className="tile__image"
@@ -1341,7 +1370,7 @@ js-tile
                                                 data-qa-name="figure"
                                             >
                                                 <img
-                                                    src="/dam/jcr:4a653b9a-31e1-4634-a171-cfeaef3fbb5f/MOO-Icon-Printfinity.svg"
+                                                    src="/assets/images/icons/MOO-Icon-Printfinity.svg"
                                                     alt="Get a feel for MOO"
                                                     title="Get a feel for MOO"
                                                     className="tile__image"
@@ -1541,7 +1570,7 @@ u-backgroundColor-neutral20"
                                                         >
                                                             <img
                                                                 src="/assets/images/0702WF-TR-752x564-Postcards.jpg"
-                                                                srcSet="/dam/jcr:0bc8afa8-8c00-444d-8c75-5ba4ab51cfcd/0702WF-TR-752x564-Postcards.jpg, /dam/jcr:0bc8afa8-8c00-444d-8c75-5ba4ab51cfcd/0702WF-TR-752x564-Postcards.jpg 2x"
+                                                                srcSet="/assets/images/0702WF-TR-752x564-Postcards.jpg, /assets/images/0702WF-TR-752x564-Postcards.jpg 2x"
                                                                 alt=""
                                                                 className="tile__image"
                                                                 data-qa-name="image"
@@ -1644,7 +1673,7 @@ u-backgroundColor-neutral20"
                                                         >
                                                             <img
                                                                 src="/assets/images/0868WF-TR-752x564-All%20(1)0.jpg"
-                                                                srcSet="/dam/jcr:5087bf08-0532-465a-baba-5eba34d416fb/0868WF-TR-752x564-All%20(1)0.jpg, /dam/jcr:5087bf08-0532-465a-baba-5eba34d416fb/0868WF-TR-752x564-All%20(1)0.jpg 2x"
+                                                                srcSet="/assets/images/0868WF-TR-752x564-All%20(1)0.jpg, /assets/images/0868WF-TR-752x564-All%20(1)0.jpg 2x"
                                                                 alt=""
                                                                 className="tile__image"
                                                                 data-qa-name="image"
@@ -1762,7 +1791,7 @@ u-backgroundColor-neutral20"
                                                             >
                                                                 <img
                                                                     src="/assets/images/0702WF-TR-752x564-Stickers.jpg"
-                                                                    srcSet="/dam/jcr:f9e99df8-d248-4069-b88a-2c35cf905841/0702WF-TR-752x564-Stickers.jpg, /dam/jcr:f9e99df8-d248-4069-b88a-2c35cf905841/0702WF-TR-752x564-Stickers.jpg 2x"
+                                                                    srcSet="/assets/images/0702WF-TR-752x564-Stickers.jpg, /assets/images/0702WF-TR-752x564-Stickers.jpg 2x"
                                                                     alt=""
                                                                     className="tile__image"
                                                                     data-qa-name="image"
@@ -1891,8 +1920,8 @@ u-backgroundColor-neutral20"
                                                             data-qa-name="figure"
                                                         >
                                                             <img
-                                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                data-srcset="/dam/jcr:15bc92b4-7a4f-44cd-8605-28e09359291b/0702WF-TR-752x564-Invitations0.jpg, /dam/jcr:15bc92b4-7a4f-44cd-8605-28e09359291b/0702WF-TR-752x564-Invitations0.jpg 2x"
+                                                                src="/assets/images/0702WF-TR-752x564-Invitations0.jpg"
+                                                                data-srcset="/assets/images/0702WF-TR-752x564-Invitations0.jpg, /assets/images/0702WF-TR-752x564-Invitations0.jpg 2x"
                                                                 alt=""
                                                                 className="tile__image lazyload"
                                                                 data-qa-name="image"
@@ -1994,8 +2023,8 @@ u-backgroundColor-neutral20"
                                                             data-qa-name="figure"
                                                         >
                                                             <img
-                                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                data-srcset="/dam/jcr:f8f0d13e-5349-4a02-bc6a-65de44794588/0687WF-TR-752x564-Tape-Bound-Notebooks0.jpg, /dam/jcr:f8f0d13e-5349-4a02-bc6a-65de44794588/0687WF-TR-752x564-Tape-Bound-Notebooks0.jpg 2x"
+                                                                src="/assets/images/0687WF-TR-752x564-Tape-Bound-Notebooks0.jpg"
+                                                                data-srcset="/assets/images/0687WF-TR-752x564-Tape-Bound-Notebooks0.jpg, /assets/images/0687WF-TR-752x564-Tape-Bound-Notebooks0.jpg 2x"
                                                                 alt=""
                                                                 className="tile__image lazyload"
                                                                 data-qa-name="image"
@@ -2097,8 +2126,8 @@ u-backgroundColor-neutral20"
                                                             data-qa-name="figure"
                                                         >
                                                             <img
-                                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                data-srcset="/dam/jcr:2f1a9790-5cdb-4edc-9598-4976abb0d5ed/0702WF-TR-752x564-Flyers.jpg, /dam/jcr:2f1a9790-5cdb-4edc-9598-4976abb0d5ed/0702WF-TR-752x564-Flyers.jpg 2x"
+                                                                src="/assets/images/0702WF-TR-752x564-Flyers.jpg"
+                                                                data-srcset="/assets/images/0702WF-TR-752x564-Flyers.jpg, /assets/images/0702WF-TR-752x564-Flyers.jpg 2x"
                                                                 alt=""
                                                                 className="tile__image lazyload"
                                                                 data-qa-name="image"
@@ -2200,8 +2229,8 @@ u-backgroundColor-neutral20"
                                                             data-qa-name="figure"
                                                         >
                                                             <img
-                                                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                data-srcset="/dam/jcr:1d151c7f-d6ea-44dc-9253-5c6756eb32c2/0760WF-Notepad-Launch-TR-752x564-Group-Non-Full-Bleed0.jpg, /dam/jcr:1d151c7f-d6ea-44dc-9253-5c6756eb32c2/0760WF-Notepad-Launch-TR-752x564-Group-Non-Full-Bleed0.jpg 2x"
+                                                                src="/assets/images/0760WF-Notepad-Launch-TR-752x564-Group-Non-Full-Bleed0.jpg"
+                                                                data-srcset="/assets/images/0760WF-Notepad-Launch-TR-752x564-Group-Non-Full-Bleed0.jpg, /assets/images/0760WF-Notepad-Launch-TR-752x564-Group-Non-Full-Bleed0.jpg 2x"
                                                                 alt=""
                                                                 className="tile__image lazyload"
                                                                 data-qa-name="image"
@@ -2301,7 +2330,7 @@ u-backgroundColor-neutral20"
                         <picture>
                             <source
                                 media="only screen and (min-width: 40.0625em)"
-                                srcSet="/.imaging/scale/dam/144e6a2d-89aa-4cea-83c0-65829364c9ce/0812WF-BIWT-3840x1000-EN-Business-Printing-Services0.jpg, /dam/jcr:7b20fd87-b540-4992-b65f-69484ffb27a2/0812WF-BIWT-3840x1000-EN-Business-Printing-Services0.jpg 2x"
+                                srcSet="/assets/images/0812WF-BIWT-3840x1000-EN-Business-Printing-Services0.jpg, /assets/images/0812WF-BIWT-3840x1000-EN-Business-Printing-Services0.jpg 2x"
                             />
                             <img
                                 src="/.imaging/scale/dam/1a5978e6-6109-44d8-829b-2609212b9891/0812WF-BIWT-1216x912-EN-Business-Printing-Services.jpg"
@@ -2373,8 +2402,8 @@ u-backgroundColor-neutral20"
                             data-component-name="logo-block"
                         >
                             <img
-                                data-src="/dam/jcr:9fe13f6f-11ef-4875-aa68-985065075da2/0676WF-Logo-112x112-Uber.svg"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                data-src="/assets/images/icons/0676WF-Logo-112x112-Uber.svg"
+                                src="/assets/images/icons/0676WF-Logo-112x112-Uber.svg"
                                 alt="Uber logo"
                                 className="logo-module__image lazyload"
                             />{" "}
@@ -2384,8 +2413,8 @@ u-backgroundColor-neutral20"
                             data-component-name="logo-block"
                         >
                             <img
-                                data-src="/dam/jcr:b7bcf18a-480c-4060-98f7-90870d63ddaa/0676WF-Logo-112x112-Calm.svg"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                data-src="/assets/images/icons/0676WF-Logo-112x112-Calm.svg"
+                                src="/assets/images/icons/0676WF-Logo-112x112-Calm.svg"
                                 alt="coca cola logo"
                                 className="logo-module__image lazyload"
                             />{" "}
@@ -2395,8 +2424,8 @@ u-backgroundColor-neutral20"
                             data-component-name="logo-block"
                         >
                             <img
-                                data-src="/dam/jcr:7357b9b2-c933-4a1c-a025-66a11054f6c6/0676WF-Logo-112x112-Glossier.svg"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                data-src="/assets/images/icons/0676WF-Logo-112x112-Glossier.svg"
+                                src="/assets/images/icons/0676WF-Logo-112x112-Glossier.svg"
                                 alt="Glossier Logo"
                                 className="logo-module__image lazyload"
                             />{" "}
@@ -2406,8 +2435,8 @@ u-backgroundColor-neutral20"
                             data-component-name="logo-block"
                         >
                             <img
-                                data-src="/dam/jcr:74714f2f-676d-4935-a8e9-eebe7b648024/0676WF-Logo-112x112-Etsy.svg"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                data-src="/assets/images/icons/0676WF-Logo-112x112-Etsy.svg"
+                                src="/assets/images/icons/0676WF-Logo-112x112-Etsy.svg"
                                 alt="Etsy logo"
                                 className="logo-module__image lazyload"
                             />{" "}
@@ -2417,8 +2446,8 @@ u-backgroundColor-neutral20"
                             data-component-name="logo-block"
                         >
                             <img
-                                data-src="/dam/jcr:d0933e8c-5c08-4a7f-936e-be2305884c5d/0000WF-Logo-112x112-Airbnb-Version2.svg"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                data-src="/assets/images/icons/0000WF-Logo-112x112-Airbnb-Version2.svg"
+                                src="/assets/images/icons/0000WF-Logo-112x112-Airbnb-Version2.svg"
                                 alt="Audi logo"
                                 className="logo-module__image lazyload"
                             />{" "}
@@ -2428,8 +2457,8 @@ u-backgroundColor-neutral20"
                             data-component-name="logo-block"
                         >
                             <img
-                                data-src="/dam/jcr:b34a9cf7-40f0-407e-baf1-09f6da867b57/0000WF-Logo-112x112-TED-Version2.svg"
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                data-src="/assets/images/icons/0000WF-Logo-112x112-TED-Version2.svg"
+                                src="/assets/images/icons/0000WF-Logo-112x112-TED-Version2.svg"
                                 alt="Facebook logo"
                                 className="logo-module__image lazyload"
                             />{" "}
@@ -2509,11 +2538,11 @@ u-backgroundColor-neutral20"
                                                 <picture>
                                                     <source
                                                         media="only screen and (min-width: 64.0625em)"
-                                                        srcSet="/dam/jcr:e0b9cd16-3df5-46c4-9853-401d38cfbcd2/BC%20to%20wow%20693%20x%20520.jpg, /dam/jcr:7cd8d8e1-c834-45b6-af72-316634e77f13/BC%20to%20wow%201386%20x%201040.jpg 2x"
+                                                        srcSet="/assets/images/BC%20to%20wow%20693%20x%20520.jpg, /assets/images/BC%20to%20wow%201386%20x%201040.jpg 2x"
                                                     />
                                                     <img
-                                                        src="/dam/jcr:8882db0c-a4f4-427d-bb1d-53f0888d2528/BC%20to%20wow%20376%20x%20282.jpg"
-                                                        srcSet="/dam/jcr:8882db0c-a4f4-427d-bb1d-53f0888d2528/BC%20to%20wow%20376%20x%20282.jpg, /dam/jcr:8c541c30-cfb3-4842-a6cf-0ab2dc22ab39/BC%20to%20wow%20752%20x%20564.jpg 2x"
+                                                        src="/assets/images/BC%20to%20wow%20376%20x%20282.jpg"
+                                                        srcSet="/assets/images/BC%20to%20wow%20376%20x%20282.jpg, /assets/images/BC%20to%20wow%20752%20x%20564.jpg 2x"
                                                         alt="Business Cards to wow your customer"
                                                         title="Business Cards to wow your customer"
                                                         className="tile__image"
@@ -2620,11 +2649,11 @@ u-backgroundColor-neutral20"
                                                 <picture>
                                                     <source
                                                         media="only screen and (min-width: 64.0625em)"
-                                                        srcSet="/dam/jcr:c5d32ccb-da09-4334-812b-b90147491d7c/Elevate%20the%20every%20day%20693%20x%20520.jpeg, /dam/jcr:07bf16e0-f2aa-40ad-b674-b105787ea053/Elevate%20the%20every%20day%201386%20x%201040.jpeg 2x"
+                                                        srcSet="/assets/images/Elevate%20the%20every%20day%20693%20x%20520.jpeg, /assets/images/Elevate%20the%20every%20day%201386%20x%201040.jpeg 2x"
                                                     />
                                                     <img
-                                                        src="/dam/jcr:f999f6a7-6a13-4ebb-8f93-13e485c20fc6/Elevate%20the%20every%20day%20376%20x%20282.jpeg"
-                                                        srcSet="/dam/jcr:f999f6a7-6a13-4ebb-8f93-13e485c20fc6/Elevate%20the%20every%20day%20376%20x%20282.jpeg, /dam/jcr:26276974-96d5-494f-8727-d34a94166b73/Elevate%20the%20every%20day%20752%20x%20564.jpeg 2x"
+                                                        src="/assets/images/Elevate%20the%20every%20day%20376%20x%20282.jpeg"
+                                                        srcSet="/assets/images/Elevate%20the%20every%20day%20376%20x%20282.jpeg, /assets/images/Elevate%20the%20every%20day%20752%20x%20564.jpeg 2x"
                                                         alt="Make work feel more luxurious"
                                                         title="Make work feel more luxurious"
                                                         className="tile__image"
@@ -2728,15 +2757,15 @@ u-backgroundColor-neutral20"
                                 <picture>
                                     <source
                                         media="only screen and (min-width: 64.0625em)"
-                                        srcSet="/.imaging/scale/dam/eac958cf-ffc1-4e12-8945-66a8cabd9662/0836WF-IC-2352x578-All-Products-Sample-Pack.jpg, /dam/jcr:89fb9cf3-8516-447a-af62-8689cd2a90d8/0836WF-IC-2352x578-All-Products-Sample-Pack.jpg 2x"
+                                        srcSet="/assets/images/0836WF-IC-2352x578-All-Products-Sample-Pack.jpg, /assets/images/0836WF-IC-2352x578-All-Products-Sample-Pack.jpg 2x"
                                     />
                                     <source
                                         media="only screen and (min-width: 40.0625em)"
-                                        srcSet="/.imaging/scale/dam/50ecbebd-ff9a-468f-9a61-7bdb4d94718e/0836WF-IC-1952x500-All-Products-Sample-Pack.jpg, /dam/jcr:8c3c1b76-3478-4880-8450-3193dddb861b/0836WF-IC-1952x500-All-Products-Sample-Pack.jpg 2x"
+                                        srcSet="/assets/images/0836WF-IC-1952x500-All-Products-Sample-Pack.jpg, /assets/images/0836WF-IC-1952x500-All-Products-Sample-Pack.jpg 2x"
                                     />
                                     <img
-                                        src="/.imaging/scale/dam/a598109f-f681-41f9-835c-f891e2613b1a/0836WF-IC-1280x960-All-Products-Sample-Pack.jpg"
-                                        srcSet="/.imaging/scale/dam/a598109f-f681-41f9-835c-f891e2613b1a/0836WF-IC-1280x960-All-Products-Sample-Pack.jpg, /dam/jcr:e27654ad-2c63-4c67-9f6b-2b83812e40ab/0836WF-IC-1280x960-All-Products-Sample-Pack.jpg 2x"
+                                        src="/assets/images/0836WF-IC-1280x960-All-Products-Sample-Pack.jpg"
+                                        srcSet="/assets/images/0836WF-IC-1280x960-All-Products-Sample-Pack.jpg, /assets/images/0836WF-IC-1280x960-All-Products-Sample-Pack.jpg 2x"
                                         alt=""
                                     />
                                 </picture>
@@ -2798,7 +2827,7 @@ u-backgroundColor-neutral20"
                             >
                                 <figure className="u-margin-0">
                                     <img
-                                        src="/dam/jcr:a7fbff99-5e41-4ff4-a8e2-07b02388d271/0801WF-G-640x640-Social-Content-1.jpg"
+                                        src="/assets/images/0801WF-G-640x640-Social-Content-1.jpg"
                                         alt="Business Cards"
                                     />
                                 </figure>
@@ -2812,7 +2841,7 @@ u-backgroundColor-neutral20"
                             >
                                 <figure className="u-margin-0">
                                     <img
-                                        src="/dam/jcr:86f3fe9a-99d7-4b2b-9db4-1310009bf25b/0801WF-G-640x640-Social-Content-2.jpg"
+                                        src="/assets/images/0801WF-G-640x640-Social-Content-2.jpg"
                                         alt="Hand holding Business Cards"
                                     />
                                 </figure>
@@ -2826,7 +2855,7 @@ u-backgroundColor-neutral20"
                             >
                                 <figure className="u-margin-0">
                                     <img
-                                        src="/dam/jcr:b70f678a-47fc-49a3-a431-27414cb3a79f/0801WF-G-640x640-Social-Content-3.jpg"
+                                        src="/assets/images/0801WF-G-640x640-Social-Content-3.jpg"
                                         alt="Business Cards"
                                     />
                                 </figure>
@@ -2840,7 +2869,7 @@ u-backgroundColor-neutral20"
                             >
                                 <figure className="u-margin-0">
                                     <img
-                                        src="/dam/jcr:6ff4ec0f-a9f2-4367-ad94-e888a0fc939f/0801WF-G-640x640-Social-Content-4.jpg"
+                                        src="/assets/images/0801WF-G-640x640-Social-Content-4.jpg"
                                         alt="Hand holding a Square Business Cards"
                                     />
                                 </figure>
