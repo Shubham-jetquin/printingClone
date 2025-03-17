@@ -11,9 +11,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="js fnx-site chrome chrome-134 no-touchevents is-loaded is-nav-animatable is-nav-active">
+    <html lang="en" className="js fnx-site chrome chrome-134 no-touchevents is-loaded">
       <head>
         <link rel='stylesheet' href='/assets/stylesheet/main.min.css' media='all' />
+        {/* <link rel='stylesheet' href='/assets/stylesheet/style.css' media='all' /> */}
       </head>
       <body
         id="htmlBody" data-ga-page-subtype=""

@@ -188,7 +188,7 @@ const footer = () => {
                             <div className="layout u-marginTop-xs">
                                 <div className="layout__item u-1/2 u-position-relative u-paddingTop-l u-marginTop-xxxxs u-marginTop-0@small">
                                     <a
-                                        href="/us/about/privacy-policy"
+                                        href="/home/privacy-policy"
                                         className="cta-link -has-chevron -black u-center-transform-y u-paddingLeft-xxxs js-ga4-click-track"
                                         target="_blank"
                                     >
@@ -223,7 +223,7 @@ const footer = () => {
                                 </p>
                             </div>
                             <a
-                                href="/us/about/privacy-policy"
+                                href="/home/privacy-policy"
                                 className="cta-link -has-chevron -black u-paddingLeft-xxxs js-ga4-click-track"
                                 target="_blank"
                             >
@@ -1142,7 +1142,7 @@ const footer = () => {
                                                 >
                                                     <li>
                                                         <a
-                                                            href="/us/about/paper"
+                                                            href="/home/paper"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-paper"
                                                         >
@@ -1160,7 +1160,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/paper#luxe"
+                                                            href="/home/paper#luxe"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-luxe"
                                                         >
@@ -1169,7 +1169,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/paper#super"
+                                                            href="/home/paper#super"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-super"
                                                         >
@@ -1178,7 +1178,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/paper#cotton"
+                                                            href="/home/paper#cotton"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-cotton"
                                                         >
@@ -1187,7 +1187,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/paper#original"
+                                                            href="/home/paper#original"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-original"
                                                         >
@@ -1196,7 +1196,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/paper#letterpress"
+                                                            href="/home/paper#letterpress"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-letterpress"
                                                         >
@@ -1237,7 +1237,7 @@ const footer = () => {
                                                 >
                                                     <li>
                                                         <a
-                                                            href="/us/about"
+                                                            href="/home/about-us"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             About MOO
@@ -1245,7 +1245,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/press"
+                                                            href="/home/press"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-press"
                                                         >
@@ -1254,7 +1254,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/people-products-planet"
+                                                            href="/home/people-products-planet"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             People, products and the planet
@@ -1262,7 +1262,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/about-the-company"
+                                                            href="/home/about-the-company"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             Who we are
@@ -1270,7 +1270,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/working-for-moo"
+                                                            href="/home/working-for-moo"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-careers"
                                                         >
@@ -1279,7 +1279,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/blog/"
+                                                            href="/home/blog/"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             The Drop
@@ -1287,7 +1287,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/business-printing-services"
+                                                            href="/home/business-printing-services"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-mbs"
                                                         >
@@ -1296,7 +1296,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/business-printing-services/reseller-print-solutions"
+                                                            href="/home/business-printing-services/reseller-print-solutions"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             Reseller
@@ -1304,7 +1304,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/printfinity"
+                                                            href="/home/printfinity"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-printfinity"
                                                         >
@@ -1313,7 +1313,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/moo-promise"
+                                                            href="/home/moo-promise"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-moo-promise"
                                                         >
@@ -1322,13 +1322,13 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/packaging"
+                                                            href="/home/packaging"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-packaging"
                                                         >
                                                             Packaging
                                                         </a>{" "}
-                                                    </li>l
+                                                    </li>
                                                     <li>
                                                         <a
                                                             href="/us/partner"
@@ -1378,7 +1378,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/next-day-delivery"
+                                                            href="/home/next-day-delivery"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                             id="footer-ndd"
                                                         >
@@ -1427,7 +1427,7 @@ const footer = () => {
                                                     </li>
                                                     <li>
                                                         <a
-                                                            href="/us/about/vulnerability-disclosure"
+                                                            href="/home/vulnerability-disclosure"
                                                             className="nav-ftr__link nav-ftr__link--l2 nav-ftr-main__link-l2 js-nav-ftr__link js-ga4-click-track"
                                                         >
                                                             Vulnerability Disclosure

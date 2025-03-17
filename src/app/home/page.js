@@ -2466,6 +2466,7 @@ u-backgroundColor-neutral20"
                     </div>
                 </div>
             </section>
+
             <section
                 id="TrustPilotCarouselModel"
                 className="band -module         u-backgroundColor-white
@@ -2506,6 +2507,7 @@ u-backgroundColor-neutral20"
                     </div>
                 </div>
             </section>
+            
             <section
 
                 className="band -module        u-backgroundColor-neutralTint
@@ -2538,11 +2540,11 @@ u-backgroundColor-neutral20"
                                                 <picture>
                                                     <source
                                                         media="only screen and (min-width: 64.0625em)"
-                                                        srcSet="/assets/images/BC%20to%20wow%20693%20x%20520.jpg, /assets/images/BC%20to%20wow%201386%20x%201040.jpg 2x"
+                                                        srcSet="/assets/images/BC-to-wow.jpg, /assets/images/BC-to-wow.jpg 2x"
                                                     />
                                                     <img
-                                                        src="/assets/images/BC%20to%20wow%20376%20x%20282.jpg"
-                                                        srcSet="/assets/images/BC%20to%20wow%20376%20x%20282.jpg, /assets/images/BC%20to%20wow%20752%20x%20564.jpg 2x"
+                                                        src="/assets/images/BC-to-wow.jpg"
+                                                        srcSet="/assets/images/BC-to-wow.jpg, /assets/images/BC-to-wow.jpg 2x"
                                                         alt="Business Cards to wow your customer"
                                                         title="Business Cards to wow your customer"
                                                         className="tile__image"
@@ -2649,11 +2651,11 @@ u-backgroundColor-neutral20"
                                                 <picture>
                                                     <source
                                                         media="only screen and (min-width: 64.0625em)"
-                                                        srcSet="/assets/images/Elevate%20the%20every%20day%20693%20x%20520.jpeg, /assets/images/Elevate%20the%20every%20day%201386%20x%201040.jpeg 2x"
+                                                        srcSet="/assets/images/Elevate-the-every-day.jpeg, /assets/images/Elevate-the-every-day.jpeg 2x"
                                                     />
                                                     <img
-                                                        src="/assets/images/Elevate%20the%20every%20day%20376%20x%20282.jpeg"
-                                                        srcSet="/assets/images/Elevate%20the%20every%20day%20376%20x%20282.jpeg, /assets/images/Elevate%20the%20every%20day%20752%20x%20564.jpeg 2x"
+                                                        src="/assets/images/Elevate-the-every-day.jpeg"
+                                                        srcSet="/assets/images/Elevate-the-every-day.jpeg, /assets/images/Elevate-the-every-day.jpeg 2x"
                                                         alt="Make work feel more luxurious"
                                                         title="Make work feel more luxurious"
                                                         className="tile__image"
