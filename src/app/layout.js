@@ -14,7 +14,20 @@ export default function RootLayout({ children }) {
     <html lang="en" className="js fnx-site chrome chrome-134 no-touchevents is-loaded">
       <head>
         <link rel='stylesheet' href='/assets/stylesheet/main.min.css' media='all' />
-        {/* <link rel='stylesheet' href='/assets/stylesheet/style.css' media='all' /> */}
+        {/* <link rel='stylesheet' href='/assets/stylesheet/style.min.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/app.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/lightslider.min.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/style.index.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/splide-style.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/splide-core.min.css' media='all' /> */}
+
+        {/* <link rel='stylesheet' href='/assets/stylesheet/core-components.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/country-state-selector.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/pagination.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/core.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/account.css' media='all' /> */}
+        {/* <link rel='stylesheet' href='/assets/stylesheet/splide-style.css' media='all' />
+        <link rel='stylesheet' href='/assets/stylesheet/splide-core.min.css' media='all' /> */}
       </head>
       <body
         id="htmlBody" data-ga-page-subtype=""

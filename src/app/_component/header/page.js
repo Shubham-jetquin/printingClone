@@ -58,17 +58,17 @@ const header = () => {
     };
 
     // Close dropdown when clicking outside
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsDropdownOpen(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    // useEffect(() => {
+    //     function handleClickOutside(event) {
+    //         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    //             setIsDropdownOpen(false);
+    //         }
+    //     }
+    //     document.addEventListener("mousedown", handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener("mousedown", handleClickOutside);
+    //     };
+    // }, []);
 
     return <>
         <div
@@ -179,13 +179,13 @@ const header = () => {
                                                                                                     srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:3c2f9b55-5793-4545-9074-f6bfd407f9e4/0702WF-TR-752x376-Original-Business-Cards.jpg, /dam/jcr:3c2f9b55-5793-4545-9074-f6bfd407f9e4/0702WF-TR-752x376-Original-Business-Cards.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Original-Business-Cards.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Original-Business-Cards.jpg, /assets/0702WF-TR-752x376-Original-Business-Cards.jpg 2x"
                                                                                                     alt="Original Business Cards"
                                                                                                     title="Original Business Cards"
                                                                                                     className="tile__image lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:3c2f9b55-5793-4545-9074-f6bfd407f9e4/0702WF-TR-752x376-Original-Business-Cards.jpg, /dam/jcr:3c2f9b55-5793-4545-9074-f6bfd407f9e4/0702WF-TR-752x376-Original-Business-Cards.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Original-Business-Cards.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -268,16 +268,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:5713c730-b015-4d4f-90ae-661bbb2c2982/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg, /dam/jcr:5713c730-b015-4d4f-90ae-661bbb2c2982/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg, /assets/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg 2x"
                                                                                                     alt="Business Cards with special finishes"
                                                                                                     title="Business Cards with special finishes"
                                                                                                     className="tile__image lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:5713c730-b015-4d4f-90ae-661bbb2c2982/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg, /dam/jcr:5713c730-b015-4d4f-90ae-661bbb2c2982/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg, /assets/0702WF-TR-752x376-Gold-Foil-Business-Cards.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -654,16 +654,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Foil-Postcards.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:593a0954-955e-4f74-b854-7508308985e1/0702WF-TR-752x376-Original-Postcards.jpg, /dam/jcr:593a0954-955e-4f74-b854-7508308985e1/0702WF-TR-752x376-Original-Postcards.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Foil-Postcards.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Original-Postcards.jpg, /assets/0702WF-TR-752x376-Original-Postcards.jpg 2x"
                                                                                                     alt="Original Postcards"
                                                                                                     title="Original Postcards"
                                                                                                     className="tile__image lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:593a0954-955e-4f74-b854-7508308985e1/0702WF-TR-752x376-Original-Postcards.jpg, /dam/jcr:593a0954-955e-4f74-b854-7508308985e1/0702WF-TR-752x376-Original-Postcards.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Original-Postcards.jpg, /assets/0702WF-TR-752x376-Original-Postcards.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -745,16 +745,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Foil-Postcards.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:bcc23bb2-08fa-4cc2-85bd-95d64fd5fbdd/0702WF-TR-752x376-Foil-Postcards.jpg, /dam/jcr:bcc23bb2-08fa-4cc2-85bd-95d64fd5fbdd/0702WF-TR-752x376-Foil-Postcards.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Foil-Postcards.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Foil-Postcards.jpg, /assets/0702WF-TR-752x376-Foil-Postcards.jpg 2x"
                                                                                                     alt="Foil Postcards"
                                                                                                     title="Foil Postcards"
                                                                                                     className="tile__image lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:bcc23bb2-08fa-4cc2-85bd-95d64fd5fbdd/0702WF-TR-752x376-Foil-Postcards.jpg, /dam/jcr:bcc23bb2-08fa-4cc2-85bd-95d64fd5fbdd/0702WF-TR-752x376-Foil-Postcards.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Foil-Postcards.jpg, /assets/0702WF-TR-752x376-Foil-Postcards.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -1093,16 +1093,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Premium-Flyer.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:1cb4e1f0-ed9c-4491-9f4e-c24767dce308/0702WF-TR-752x376-Premium-Flyer.jpg, /dam/jcr:1cb4e1f0-ed9c-4491-9f4e-c24767dce308/0702WF-TR-752x376-Premium-Flyer.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Premium-Flyer.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Premium-Flyer.jpg, /assets/0702WF-TR-752x376-Premium-Flyer.jpg 2x"
                                                                                                     alt="Premium Flyers"
                                                                                                     title="Premium Flyers"
                                                                                                     className="tile__image lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:1cb4e1f0-ed9c-4491-9f4e-c24767dce308/0702WF-TR-752x376-Premium-Flyer.jpg, /dam/jcr:1cb4e1f0-ed9c-4491-9f4e-c24767dce308/0702WF-TR-752x376-Premium-Flyer.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Premium-Flyer.jpg, /assets/0702WF-TR-752x376-Premium-Flyer.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -1184,16 +1184,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Square-Flyers.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:c4dc7f31-768c-437c-be7e-5ae69eee18ba/0702WF-TR-752x376-Square-Flyers.jpg, /dam/jcr:c4dc7f31-768c-437c-be7e-5ae69eee18ba/0702WF-TR-752x376-Square-Flyers.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Square-Flyers.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Square-Flyers.jpg, /assets/0702WF-TR-752x376-Square-Flyers.jpg 2x"
                                                                                                     alt="Pearlescent Flyers"
                                                                                                     title="Pearlescent Flyers"
                                                                                                     className="tile__image lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:c4dc7f31-768c-437c-be7e-5ae69eee18ba/0702WF-TR-752x376-Square-Flyers.jpg, /dam/jcr:c4dc7f31-768c-437c-be7e-5ae69eee18ba/0702WF-TR-752x376-Square-Flyers.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Square-Flyers.jpg, /assets/0702WF-TR-752x376-Square-Flyers.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -1453,16 +1453,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Stickers0.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:8d411798-7f58-4cfa-b4b2-e29780b582f4/0702WF-TR-752x376-Stickers0.jpg, /dam/jcr:8d411798-7f58-4cfa-b4b2-e29780b582f4/0702WF-TR-752x376-Stickers0.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Stickers0.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Stickers0.jpg, /assets/0702WF-TR-752x376-Stickers0.jpg 2x"
                                                                                                     alt="Stickers & Labels"
                                                                                                     title="Stickers & Labels"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:8d411798-7f58-4cfa-b4b2-e29780b582f4/0702WF-TR-752x376-Stickers0.jpg, /dam/jcr:8d411798-7f58-4cfa-b4b2-e29780b582f4/0702WF-TR-752x376-Stickers0.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Stickers0.jpg, /assets/0702WF-TR-752x376-Stickers0.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -1557,16 +1557,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0813WF-Collection-Launch-TR-752x376.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/.imaging/scale/dam/20679869-69ca-492c-a56b-6150e7336d91/0813WF-Collection-Launch-TR-752x376.jpg, /dam/jcr:16cf8e41-8362-4899-b6ee-4555658c6708/0813WF-Collection-Launch-TR-752x376.jpg 2x"
+                                                                                                    src="/assets/0813WF-Collection-Launch-TR-752x376.jpg"
+                                                                                                    data-srcset="/assets/0813WF-Collection-Launch-TR-752x376.jpg, /assets/0813WF-Collection-Launch-TR-752x376.jpg 2x"
                                                                                                     alt="Brochures"
                                                                                                     title="Brochures"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/.imaging/scale/dam/20679869-69ca-492c-a56b-6150e7336d91/0813WF-Collection-Launch-TR-752x376.jpg, /dam/jcr:16cf8e41-8362-4899-b6ee-4555658c6708/0813WF-Collection-Launch-TR-752x376.jpg 2x"
+                                                                                                    srcSet="/assets/0813WF-Collection-Launch-TR-752x376.jpg, /assets/0813WF-Collection-Launch-TR-752x376.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -2283,16 +2283,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:bdcd42ff-bda4-4141-94c0-710bf3ab9a41/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg, /dam/jcr:bdcd42ff-bda4-4141-94c0-710bf3ab9a41/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg 2x"
+                                                                                                    src="/assets/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg"
+                                                                                                    data-srcset="/assets/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg, /assets/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg 2x"
                                                                                                     alt="MOO Notepads"
                                                                                                     title="MOO Notepads"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:bdcd42ff-bda4-4141-94c0-710bf3ab9a41/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg, /dam/jcr:bdcd42ff-bda4-4141-94c0-710bf3ab9a41/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg 2x"
+                                                                                                    srcSet="/assets/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg, /assets/0760WF-Notepad-Launch-TR-752x376-Group-Non-Full-Bleed0.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -2374,16 +2374,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:094f525c-4129-48cb-8a9e-ec5c56da617b/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg, /dam/jcr:094f525c-4129-48cb-8a9e-ec5c56da617b/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg 2x"
+                                                                                                    src="/assets/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg"
+                                                                                                    data-srcset="/assets/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg, /assets/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg 2x"
                                                                                                     alt="MOO Softcover Journals"
                                                                                                     title="MOO Softcover Journals"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:094f525c-4129-48cb-8a9e-ec5c56da617b/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg, /dam/jcr:094f525c-4129-48cb-8a9e-ec5c56da617b/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg 2x"
+                                                                                                    srcSet="/assets/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg, /assets/0702WF-TR-752x376-Custom-Lined-Softcover-Journals.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -3113,16 +3113,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0821WF-TR-752x376-3.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:8b4d565e-9576-4747-98e1-646c56a17203/0821WF-TR-752x376-3.jpg, /dam/jcr:8b4d565e-9576-4747-98e1-646c56a17203/0821WF-TR-752x376-3.jpg 2x"
+                                                                                                    src="/assets/0821WF-TR-752x376-3.jpg"
+                                                                                                    data-srcset="/assets/0821WF-TR-752x376-3.jpg, /assets/0821WF-TR-752x376-3.jpg 2x"
                                                                                                     alt="Save up to 20% off* branded merch"
                                                                                                     title="Save up to 20% off* branded merch"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:8b4d565e-9576-4747-98e1-646c56a17203/0821WF-TR-752x376-3.jpg, /dam/jcr:8b4d565e-9576-4747-98e1-646c56a17203/0821WF-TR-752x376-3.jpg 2x"
+                                                                                                    srcSet="/assets/0821WF-TR-752x376-3.jpg, /assets/0821WF-TR-752x376-3.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -3206,16 +3206,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0868WF-TR-752x376-18oz-ALL1.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:44e53aae-a13b-4da9-9e93-5f6b14d5808d/0868WF-TR-752x376-18oz-ALL1.jpg, /dam/jcr:44e53aae-a13b-4da9-9e93-5f6b14d5808d/0868WF-TR-752x376-18oz-ALL1.jpg 2x"
+                                                                                                    src="/assets/0868WF-TR-752x376-18oz-ALL1.jpg"
+                                                                                                    data-srcset="/assets/0868WF-TR-752x376-18oz-ALL1.jpg, /assets/0868WF-TR-752x376-18oz-ALL1.jpg 2x"
                                                                                                     alt="New MOO Water Bottles"
                                                                                                     title="New MOO Water Bottles"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:44e53aae-a13b-4da9-9e93-5f6b14d5808d/0868WF-TR-752x376-18oz-ALL1.jpg, /dam/jcr:44e53aae-a13b-4da9-9e93-5f6b14d5808d/0868WF-TR-752x376-18oz-ALL1.jpg 2x"
+                                                                                                    srcSet="/assets/0868WF-TR-752x376-18oz-ALL1.jpg, /assets/0868WF-TR-752x376-18oz-ALL1.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -3613,16 +3613,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0198WF-TR-752x564-resellers-subscription.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/.imaging/scale/dam/1d4582f5-420d-4744-8b9a-51f67413a6d3/0198WF-TR-752x564-resellers-subscription.jpg, /dam/jcr:6d5fe142-6481-46eb-a6e6-798a8b8b9538/0198WF-TR-752x564-resellers-subscription.jpg 2x"
+                                                                                                    src="/assets/0198WF-TR-752x564-resellers-subscription.jpg"
+                                                                                                    data-srcset="/assets/0198WF-TR-752x564-resellers-subscription.jpg, /assets/0198WF-TR-752x564-resellers-subscription.jpg 2x"
                                                                                                     alt="Reseller Plan"
                                                                                                     title="Reseller Plan"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/.imaging/scale/dam/1d4582f5-420d-4744-8b9a-51f67413a6d3/0198WF-TR-752x564-resellers-subscription.jpg, /dam/jcr:6d5fe142-6481-46eb-a6e6-798a8b8b9538/0198WF-TR-752x564-resellers-subscription.jpg 2x"
+                                                                                                    srcSet="/assets/0198WF-TR-752x564-resellers-subscription.jpg, /assets/0198WF-TR-752x564-resellers-subscription.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -3705,16 +3705,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0198WF-TR-752x376-managed-services-platform.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:10284c52-0ff7-4227-b406-b02fc60a7012/0198WF-TR-752x376-managed-services-platform.jpg, /dam/jcr:10284c52-0ff7-4227-b406-b02fc60a7012/0198WF-TR-752x376-managed-services-platform.jpg 2x"
+                                                                                                    src="/assets/0198WF-TR-752x376-managed-services-platform.jpg"
+                                                                                                    data-srcset="/assets/0198WF-TR-752x376-managed-services-platform.jpg, /assets/0198WF-TR-752x376-managed-services-platform.jpg 2x"
                                                                                                     alt="Our (revamped) plans"
                                                                                                     title="Our (revamped) plans"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:10284c52-0ff7-4227-b406-b02fc60a7012/0198WF-TR-752x376-managed-services-platform.jpg, /dam/jcr:10284c52-0ff7-4227-b406-b02fc60a7012/0198WF-TR-752x376-managed-services-platform.jpg 2x"
+                                                                                                    srcSet="/assets/0198WF-TR-752x376-managed-services-platform.jpg, /assets/0198WF-TR-752x376-managed-services-platform.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -3911,7 +3911,7 @@ const header = () => {
                                             </li>
                                             <li className="nav-main__item -l1 js-nav__item--l1">
                                                 <a
-                                                    href="https://www.moo.com/blog/"
+                                                    href="/home/blog/"
                                                     className="nav-main__link -l1 js-nav__link--l1
                                   "
                                                 >
@@ -3962,16 +3962,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/use-case-navigation-help-FAQs0.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:71bf795a-a4f7-4cdb-b7ac-256e21f69e10/use-case-navigation-help-FAQs0.jpg, /dam/jcr:71bf795a-a4f7-4cdb-b7ac-256e21f69e10/use-case-navigation-help-FAQs0.jpg 2x"
+                                                                                                    src="/assets/use-case-navigation-help-FAQs0.jpg"
+                                                                                                    data-srcset="/assets/use-case-navigation-help-FAQs0.jpg, /assets/use-case-navigation-help-FAQs0.jpg 2x"
                                                                                                     alt="Case Studies"
                                                                                                     title="Case Studies"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:71bf795a-a4f7-4cdb-b7ac-256e21f69e10/use-case-navigation-help-FAQs0.jpg, /dam/jcr:71bf795a-a4f7-4cdb-b7ac-256e21f69e10/use-case-navigation-help-FAQs0.jpg 2x"
+                                                                                                    srcSet="/assets/use-case-navigation-help-FAQs0.jpg, /assets/use-case-navigation-help-FAQs0.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -4054,16 +4054,16 @@ const header = () => {
                                                                                             <picture>
                                                                                                 <source
                                                                                                     media="only screen and (max-width: 64em)"
-                                                                                                    srcSet="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                                                                    srcSet="/assets/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg"
                                                                                                 />
                                                                                                 <img
-                                                                                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                                                                    data-srcset="/dam/jcr:e6c89673-fe4f-45d2-b9dd-0668223569b3/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg, /dam/jcr:e6c89673-fe4f-45d2-b9dd-0668223569b3/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg 2x"
+                                                                                                    src="/assets/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg"
+                                                                                                    data-srcset="/assets/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg,/assets/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg 2x"
                                                                                                     alt="Sample packs for all"
                                                                                                     title="Sample packs for all"
                                                                                                     className="tile__image ls-is-cached lazyloaded"
                                                                                                     data-qa-name="image"
-                                                                                                    srcSet="/dam/jcr:e6c89673-fe4f-45d2-b9dd-0668223569b3/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg, /dam/jcr:e6c89673-fe4f-45d2-b9dd-0668223569b3/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg 2x"
+                                                                                                    srcSet="/assets/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg, /assets/0836WF-TR-752x376-Business-Cards-Sample-Pack0.jpg 2x"
                                                                                                 />
                                                                                             </picture>
                                                                                             <figcaption className="u-visually-hidden">
@@ -4820,7 +4820,7 @@ const header = () => {
                                                 <span className="js-hide-when-signed-in">
                                                     <li className="nav-main__item -l2 -divider js-header-sign-in">
                                                         <a
-                                                            href="/us/account/signin.php"
+                                                            href="/home/SignIn"
                                                             className="nav-main__link -l2 -supernav-dropdown js-super-nav__link--l2"
                                                         >
                                                             Sign in
@@ -4908,7 +4908,7 @@ const header = () => {
                                             data-component-name="supernav-level-1-sign-in"
                                         >
                                             <a
-                                                href="/us/account/signin.php"
+                                                href="/home/SignIn"
                                                 className="nav-main__link -l1 -tools -sign-in -basic-link js-header-sign-in-primary-link"
                                             >
                                                 Sign in
@@ -5013,11 +5013,11 @@ const header = () => {
                                 <picture>
                                     <source
                                         media="only screen and (min-width: 40.0625em)"
-                                        srcSet="/.imaging/scale-png/dam/7a59536d-456e-4058-8ee2-beb184c8cd39/0821WF-MB-240x120.png, /dam/jcr:4f2479ec-10f6-4527-bcff-93afae5374f7/0821WF-MB-240x120.png 2x"
+                                        srcSet="/assets/0821WF-MB-240x120.png, /assets/0821WF-MB-240x120.png 2x"
                                     />
                                     <img
-                                        src="/.imaging/scale-png/dam/4a95e642-040a-44bd-be3c-2155f79780df/0821WF-MB-640x120-US-00AC73.png"
-                                        srcSet="/.imaging/scale-png/dam/4a95e642-040a-44bd-be3c-2155f79780df/0821WF-MB-640x120-US-00AC73.png, /dam/jcr:a72d0bf5-9181-45f4-b64e-5fbf60c12b70/0821WF-MB-640x120-US-00AC73.png 2x"
+                                        src="/assets/0821WF-MB-640x120-US-00AC73.png"
+                                        srcSet="/assets/0821WF-MB-640x120-US-00AC73.png, /assets/0821WF-MB-640x120-US-00AC73.png 2x"
                                         alt=""
                                         className="marketing-banner__image"
                                     />

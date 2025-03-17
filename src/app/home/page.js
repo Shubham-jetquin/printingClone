@@ -70,7 +70,7 @@ const home = () => {
                                     data-component-text="Special Finish Business Cards"
                                 >
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="-standalone-white -large js-ga4-click-track"
                                         data-qa-name="hero-image"
                                         tabIndex={-1}
@@ -126,7 +126,7 @@ const home = () => {
                                                 </p>
                                                 <div className="home-hero-module__header-ctas-wrap -left has-fouc js-home-hero-module-button-wrapper">
                                                     <a
-                                                        href="/home/card-details"
+                                                        href="/home/card-category"
                                                         className="btn home-hero-module__header-cta -left u-margin-horizontal-xxxs u-margin-vertical-xxxs -standalone-white -large js-ga4-click-track"
                                                         data-qa-name="primary-cta"
                                                         data-component-name="primary-cta"
@@ -154,7 +154,7 @@ const home = () => {
                                             <ul className="hiding-single-row-nav__list fnx-list-inline u-textAlign-center">
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/standard-size"
+                                                        href="/home/card-category/standard-size"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -165,7 +165,7 @@ const home = () => {
                                                 </li>
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/moo-size"
+                                                        href="/home/card-category/moo-size"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -176,7 +176,7 @@ const home = () => {
                                                 </li>
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/minicards"
+                                                        href="/home/card-category/minicards"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -481,7 +481,7 @@ const home = () => {
                                     data-component-text="Special Finish Business Cards"
                                 >
                                     <a
-                                        href="/home/card-details/super"
+                                        href="/home/card-category/super"
                                         className="-standalone-white -large js-ga4-click-track"
                                         data-qa-name="hero-image"
                                         tabIndex={-1}
@@ -537,7 +537,7 @@ const home = () => {
                                                 </p>
                                                 <div className="home-hero-module__header-ctas-wrap -left has-fouc js-home-hero-module-button-wrapper">
                                                     <a
-                                                        href="/home/card-details/super"
+                                                        href="/home/card-category/super"
                                                         className="btn home-hero-module__header-cta -left u-margin-horizontal-xxxs u-margin-vertical-xxxs -standalone-white -large js-ga4-click-track"
                                                         data-qa-name="primary-cta"
                                                         data-component-name="primary-cta"
@@ -565,7 +565,7 @@ const home = () => {
                                             <ul className="hiding-single-row-nav__list fnx-list-inline u-textAlign-center">
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/standard-size"
+                                                        href="/home/card-category/standard-size"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -576,7 +576,7 @@ const home = () => {
                                                 </li>
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/moo-size"
+                                                        href="/home/card-category/moo-size"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -587,7 +587,7 @@ const home = () => {
                                                 </li>
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/minicards"
+                                                        href="/home/card-category/minicards"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -890,7 +890,7 @@ const home = () => {
                                     data-component-text="Special Finish Business Cards"
                                 >
                                     <a
-                                        href="/home/card-details/super"
+                                        href="/home/card-category/super"
                                         className="-standalone-white -large js-ga4-click-track"
                                         data-qa-name="hero-image"
                                         tabIndex={-1}
@@ -946,7 +946,7 @@ const home = () => {
                                                 </p>
                                                 <div className="home-hero-module__header-ctas-wrap -left has-fouc js-home-hero-module-button-wrapper">
                                                     <a
-                                                        href="/home/card-details/super"
+                                                        href="/home/card-category/super"
                                                         className="btn home-hero-module__header-cta -left u-margin-horizontal-xxxs u-margin-vertical-xxxs -standalone-white -large js-ga4-click-track"
                                                         data-qa-name="primary-cta"
                                                         data-component-name="primary-cta"
@@ -974,7 +974,7 @@ const home = () => {
                                             <ul className="hiding-single-row-nav__list fnx-list-inline u-textAlign-center">
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/standard-size"
+                                                        href="/home/card-category/standard-size"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -985,7 +985,7 @@ const home = () => {
                                                 </li>
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/moo-size"
+                                                        href="/home/card-category/moo-size"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -996,7 +996,7 @@ const home = () => {
                                                 </li>
                                                 <li className="u-padding-horizontal-m">
                                                     <a
-                                                        href="/home/card-details/minicards"
+                                                        href="/home/card-category/minicards"
                                                         className="animated-underline u-padding-vertical-xxxs u-fontFamily-primaryMedium u-fontSize-m u-pointerEvents-auto js-ga4-click-track"
                                                         data-component-name="animated-underline-link"
                                                         data-qa-name="animated-underline-link"
@@ -1450,7 +1450,7 @@ js-tile
                                     <div className="tile__body" data-qa-name="body">
                                         <div className="tile__media-wrap">
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                 data-qa-name="image-link"
                                                 data-component-text="Shop Business Cards"
@@ -1487,7 +1487,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -1514,7 +1514,7 @@ u-backgroundColor-neutral20"
                                         </div>
                                     </div>
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="js-ga4-click-track"
                                         data-qa-name="footer-link"
                                     >
@@ -1553,7 +1553,7 @@ u-backgroundColor-neutral20"
                                     <div className="tile__body" data-qa-name="body">
                                         <div className="tile__media-wrap">
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                 data-qa-name="image-link"
                                                 data-component-text="Shop Postcards"
@@ -1590,7 +1590,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -1617,7 +1617,7 @@ u-backgroundColor-neutral20"
                                         </div>
                                     </div>
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="js-ga4-click-track"
                                         data-qa-name="footer-link"
                                     >
@@ -1693,7 +1693,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -1720,7 +1720,7 @@ u-backgroundColor-neutral20"
                                         </div>
                                     </div>
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="js-ga4-click-track"
                                         data-qa-name="footer-link"
                                     >
@@ -1774,7 +1774,7 @@ u-backgroundColor-neutral20"
                                         >
                                             <div className="tile__media-wrap">
                                                 <a
-                                                    href="/home/card-details"
+                                                    href="/home/card-category"
                                                     className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                     data-qa-name="image-link"
                                                     data-component-text="Shop Stickers & Labels"
@@ -1841,7 +1841,7 @@ u-backgroundColor-neutral20"
                                             </div>
                                         </div>
                                         <a
-                                            href="/home/card-details"
+                                            href="/home/card-category"
                                             className="has-fouc js-tile-footer js-ga4-click-track"
                                             data-qa-name="footer-link"
                                         >
@@ -1904,7 +1904,7 @@ u-backgroundColor-neutral20"
                                     <div className="tile__body" data-qa-name="body">
                                         <div className="tile__media-wrap">
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                 data-qa-name="image-link"
                                                 data-component-text="Shop Invitations"
@@ -1941,7 +1941,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -2007,7 +2007,7 @@ u-backgroundColor-neutral20"
                                     <div className="tile__body" data-qa-name="body">
                                         <div className="tile__media-wrap">
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                 data-qa-name="image-link"
                                                 data-component-text="Shop Notebooks & Planners"
@@ -2044,7 +2044,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -2071,7 +2071,7 @@ u-backgroundColor-neutral20"
                                         </div>
                                     </div>
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="js-ga4-click-track"
                                         data-qa-name="footer-link"
                                     >
@@ -2110,7 +2110,7 @@ u-backgroundColor-neutral20"
                                     <div className="tile__body" data-qa-name="body">
                                         <div className="tile__media-wrap">
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                 data-qa-name="image-link"
                                                 data-component-text="Shop Flyers"
@@ -2147,7 +2147,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -2174,7 +2174,7 @@ u-backgroundColor-neutral20"
                                         </div>
                                     </div>
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="js-ga4-click-track"
                                         data-qa-name="footer-link"
                                     >
@@ -2213,7 +2213,7 @@ u-backgroundColor-neutral20"
                                     <div className="tile__body" data-qa-name="body">
                                         <div className="tile__media-wrap">
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__image-link js-tile-image-link js-ga4-click-track"
                                                 data-qa-name="image-link"
                                                 data-component-text="Shop Notepads"
@@ -2250,7 +2250,7 @@ u-backgroundColor-neutral20"
                                                 data-qa-name="text-wrap-inner"
                                             ></div>
                                             <a
-                                                href="/home/card-details"
+                                                href="/home/card-category"
                                                 className="tile__horizontal-footer-link js-ga4-click-track"
                                                 data-qa-name="horizontal-footer-link"
                                             >
@@ -2277,7 +2277,7 @@ u-backgroundColor-neutral20"
                                         </div>
                                     </div>
                                     <a
-                                        href="/home/card-details"
+                                        href="/home/card-category"
                                         className="js-ga4-click-track"
                                         data-qa-name="footer-link"
                                     >
@@ -2311,7 +2311,7 @@ u-backgroundColor-neutral20"
                     data-component-name="module-footer"
                 >
                     <a
-                        href="/home/card-details"
+                        href="/home/card-category"
                         className="btn -standalone -large js-ga4-click-track"
                     >
                         Shop All MOO Products

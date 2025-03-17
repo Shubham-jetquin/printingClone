@@ -1,0 +1,212 @@
+@media (max-width:1410px) {
+    .splide {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%
+    }
+}
+
+.splide--arrows-below {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%
+}
+
+.splide__arrow {
+    background: 0 0;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 1;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px
+}
+
+.splide__arrow svg {
+    stroke: #545f6f;
+    fill: none;
+    height: 40px;
+    width: 40px;
+    -webkit-transition: .2s stroke;
+    transition: .2s stroke
+}
+
+.splide__arrow:hover {
+    opacity: 1;
+    background: 0 0
+}
+
+.splide__arrow:hover svg {
+    stroke: #00ac73
+}
+
+[data-whatintent=keyboard] .splide__arrow:focus {
+    outline: 2px solid #00ac73;
+    opacity: 1;
+    background: 0 0
+}
+
+[data-whatintent=keyboard] .splide__arrow:focus svg {
+    stroke: #00ac73
+}
+
+.splide__arrow:disabled {
+    cursor: default
+}
+
+@media (max-width:1410px) {
+    .splide__arrow:disabled {
+        opacity: .4
+    }
+}
+
+@media (min-width:1411px) {
+    .splide__arrow:disabled {
+        opacity: 0
+    }
+}
+
+.splide__arrow:disabled svg {
+    stroke: #545f6f
+}
+
+.splide__arrow:focus {
+    outline: 0
+}
+
+.splide__arrow--prev {
+    left: -70px
+}
+
+.splide__arrow--prev svg {
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    transform: scaleX(-1)
+}
+
+.splide__arrow--next {
+    right: -70px
+}
+
+@media (max-width:1410px) {
+    .home .splide__arrow {
+        display: none !important
+    }
+}
+
+.splide--arrows-below .splide__arrow {
+    position: static;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none
+}
+
+.splide__arrows {
+    margin-left: 0;
+    margin-right: 0
+}
+
+@media (max-width:1410px) {
+    .splide__arrows {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-ordinal-group: 3;
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2
+    }
+}
+
+.splide--arrows-below .splide__arrows {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-ordinal-group: 3;
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2
+}
+
+@media (max-width:1410px) {
+    .splide__track {
+        -webkit-box-ordinal-group: 2;
+        -webkit-order: 1;
+        -ms-flex-order: 1;
+        order: 1;
+        width: 100%
+    }
+}
+
+.splide--arrows-below .splide__track {
+    -webkit-box-ordinal-group: 2;
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1;
+    width: 100%
+}
+
+.splide__pagination {
+    -webkit-box-pack: start;
+    -webkit-justify-content: start;
+    -ms-flex-pack: start;
+    justify-content: start;
+    gap: .5rem;
+    margin-top: 1.5rem
+}
+
+.splide__pagination__page {
+    background: #d0d5d2;
+    border: 0;
+    border-radius: 9999px;
+    display: inline-block;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    -webkit-transition: .15s all cubic-bezier(.18, .89, .32, 1.28);
+    transition: .15s all cubic-bezier(.18, .89, .32, 1.28);
+    width: 8px;
+    opacity: 1
+}
+
+.splide__slide.is-active .splide__pagination__page.is-active {
+    background: #00ac73;
+    z-index: 1;
+    width: 24px
+}

@@ -1,0 +1,8 @@
+div.dropdown-country {
+    display: inline-block;
+}
+
+div.dropdown-state {
+    display: inline-block;
+    margin-left: 20px;
+}
