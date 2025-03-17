@@ -6,6 +6,7 @@ const cardDetails = () => {
     const [productId, setProductId] = useState(null);
     const [product, setProduct] = useState(null);
 
+
     useEffect(() => {
         const storedPostcard = localStorage.getItem("selectedPostcard");
         if (storedPostcard) {
@@ -18,11 +19,17 @@ const cardDetails = () => {
             // Find the matching product in JSON data
             const selectedProduct = postcardData.find((item) => item.id === productId);
             setProduct(selectedProduct);
-            
+
             // Logging inside useEffect to ensure latest state update
             console.log("Selected Product:", selectedProduct);
         }
     }, [productId]);
+
+    useEffect(() => {
+        console.log(product, "Selected Filter Product");
+    }, [product])
+
+
 
 
     return <>
@@ -77,7 +84,7 @@ const cardDetails = () => {
                                                 </div>
                                                 <div className="u-hide-when-js-enabled">
                                                     <img
-                                                        srcSet="/.imaging/po-product-320x320/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 320w, /.imaging/po-product-524x524/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 524w, /.imaging/po-product-683x683/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 683w, /.imaging/po-product-817x817/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 817w, /.imaging/po-product-987x987/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 987w, /.imaging/po-product-1152x1152/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 1152w"
+                                                        src=""
                                                         sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
                                                         alt="Five Original Postcards in various sizes "
                                                         className="u-fill"
@@ -2386,6 +2393,8 @@ const cardDetails = () => {
                         </div>
                     </div>
                 </div>
+
+                
                 <div className="wrapper u-display-none@medium u-marginTop-s">
                     <div className="layout layout--row-spacing">
                         <div className="layout__item u-1/2@large" data-qa-name="usp">

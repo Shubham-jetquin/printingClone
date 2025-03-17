@@ -1,6 +1,6 @@
 [
     {
-        "id":1,
+        "id": 1,
         "product_title": "Original Postcards",
         "price": "$23.00",
         "description": "Looking for inspiration\nWant simple customization",
@@ -58,14 +58,10 @@
             "2500 - $367.00"
         ],
         "image_urls": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+            "assets/images/0337WF-PO-1920x1920-original-postcards-corners0.jpg",
+            "assets/images/0337WF-PO-1920x1920-original-postcards-irl0.jpg",
+            "assets/images/0337WF-PO-1920x1920-original-postcards-matte0.jpg",
+            "assets/images/0337WF-PO-1920x1920-original-postcards-postcard0.jpg"
         ],
         "paper_types": [
             "Small",
@@ -85,7 +81,7 @@
         ]
     },
     {
-        "id":2,
+        "id": 2,
         "product_title": "Super Postcards",
         "price": "$23.00",
         "description": "Looking for inspiration\nWant simple customization",
@@ -160,7 +156,7 @@
         ]
     },
     {
-        "id":3,
+        "id": 3,
         "product_title": "Luxe Postcards",
         "price": "$31.00",
         "description": "Looking for inspiration\nWant simple customization",
@@ -240,7 +236,7 @@
         ]
     },
     {
-        "id":4,
+        "id": 4,
         "product_title": "Gold and Silver Foil Postcards",
         "price": "$62.00",
         "description": "Looking for inspiration\nWant simple customization",
@@ -309,7 +305,7 @@
         ]
     },
     {
-        "id":5,
+        "id": 5,
         "product_title": "Postcard Design Guidelines",
         "price": "$23.00",
         "description": "No description available",
