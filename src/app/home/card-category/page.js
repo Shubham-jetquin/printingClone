@@ -7,7 +7,8 @@ const cardCategory = () => {
 
     const productClick = (productId) => {
         localStorage.setItem("selectedPostcard", JSON.stringify(productId));
-        router.push("/home/card-details");
+        router.push(`/home/card-details?productId=${productId}`);
+
     }
 
     const postcardFoil = [
@@ -80,6 +81,7 @@ const cardCategory = () => {
             ]
         }
     ];
+    
     return <>
         <main id="main-content" className="u-outline-none">
             <section

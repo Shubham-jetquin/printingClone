@@ -1,36 +1,75 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import postcardData from '@/app/assets/Allproducts.json';
 const cardDetails = () => {
-    const [productId, setProductId] = useState(null);
+
     const [product, setProduct] = useState(null);
-
+    const params = useSearchParams();
+    const [loading, setLoading] = useState(true); // Track loading state
+    const [isExpanded, setIsExpanded] = useState(false); // Toggle Read More
+    const [selectedSize, setSelectedSize] = useState(null);
 
     useEffect(() => {
-        const storedPostcard = localStorage.getItem("selectedPostcard");
-        if (storedPostcard) {
-            setProductId(JSON.parse(storedPostcard));
+        if (!params) return;
+
+        // Show loader
+        setLoading(true);
+
+        // Get productId from URL
+        const productId = params.get("productId");
+
+        if (productId && Array.isArray(postcardData)) {
+            const selectedProduct = postcardData.find((item) => String(item.id) === String(productId));
+
+            if (selectedProduct) {
+                setProduct(selectedProduct);
+                setSelectedSize(selectedProduct.sizes[0]); // Default to first size
+                console.log("✅ Selected Product:", selectedProduct);
+            } else {
+                console.warn("⚠️ No product found with ID:", productId);
+            }
+        } else {
+            console.warn("❌ Invalid productId or missing postcardData");
         }
-    }, []);
 
+        setLoading(false);
+    }, [params, postcardData]);
+
+    // Only log when `product` is updated
     useEffect(() => {
-        if (productId !== null) {
-            // Find the matching product in JSON data
-            const selectedProduct = postcardData.find((item) => item.id === productId);
-            setProduct(selectedProduct);
-
-            // Logging inside useEffect to ensure latest state update
-            console.log("Selected Product:", selectedProduct);
+        if (product !== null) {
+            console.log(product, "Selected Filter Product");
         }
-    }, [productId]);
+    }, [product]);
 
-    useEffect(() => {
-        console.log(product, "Selected Filter Product");
-    }, [product])
+    // Navigate to the next image
+    const nextImage = () => {
+        if (product && product.image_urls.length > 0) {
+            setCurrentImageIndex((prevIndex) =>
+                prevIndex < product.image_urls.length - 1 ? prevIndex + 1 : 0
+            );
+        }
+    };
 
+    // Navigate to the previous image
+    const prevImage = () => {
+        if (product && product.image_urls.length > 0) {
+            setCurrentImageIndex((prevIndex) =>
+                prevIndex > 0 ? prevIndex - 1 : product.image_urls.length - 1
+            );
+        }
+    };
 
-
+    if (loading) {
+        return (
+            <div className="loader-container">
+                <div className="spinner"></div>
+                <p>Loading...</p>
+            </div>
+        );
+    }
 
     return <>
         <main id="main-content" className="u-outline-none">
@@ -42,275 +81,89 @@ const cardDetails = () => {
             >
                 <div className="product-options-module__inner-wrap is-in-view">
                     <div className="wrapper">
-                        <div className="layout u-display-flex u-flexDirection-column u-flexDirection-row@medium">
-                            <div className="layout__item u-5/12@medium u-1/2@large">
-                                <div className="product-options-module__sticky-ui u-clearfix js-product-options-sticky-ui">
-                                    <div className="u-marginBottom-xl u-marginBottom-m@medium u-cancel-wrapper-padding@until-medium">
-                                        <div
-                                            id="js-product-options-product-image-ratio-box"
-                                            className="product-images__ratio-box has-multiple-images"
-                                            data-component-name="product-images"
-                                        >
-                                            <div id="js-product-images" className="u-fill">
-                                                <div
-                                                    id="js-product-options-images-skeleton"
-                                                    className="product-images__skeleton u-fill u-display-none"
-                                                >
-                                                    <div className="u-ratio-1:1 u-backgroundColor-neutralTint" />
-                                                    <div className="product-images__slider -nav product-images__nav-slider-wrap u-display-none@until-medium u-hide-when-js-disabled">
-                                                        <div className="layout layout--tiny slick-list">
-                                                            <div className="layout__item u-1/4 slick-slide">
-                                                                <div className="u-ratio-1:1">
-                                                                    <div className="u-fill u-backgroundColor-neutralTint" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="layout__item u-1/4 slick-slide">
-                                                                <div className="u-ratio-1:1">
-                                                                    <div className="u-fill u-backgroundColor-neutralTint" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="layout__item u-1/4 slick-slide">
-                                                                <div className="u-ratio-1:1">
-                                                                    <div className="u-fill u-backgroundColor-neutralTint" />
-                                                                </div>
-                                                            </div>
-                                                            <div className="layout__item u-1/4 slick-slide">
-                                                                <div className="u-ratio-1:1">
-                                                                    <div className="u-fill u-backgroundColor-neutralTint" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="u-hide-when-js-enabled">
-                                                    <img
-                                                        src=""
-                                                        sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                        alt="Five Original Postcards in various sizes "
-                                                        className="u-fill"
-                                                        fetchPriority="high"
-                                                    />
-                                                </div>
-                                                <div
-                                                    className="slick-slider product-images__slider -main slick-initialized"
-                                                    dir="ltr"
-                                                >
-                                                    <div className="u-center-transform-y u-zIndex-1 slick-arrow slick-prev slick-disabled">
-                                                        <button
-                                                            className="btn -disc -ghost-light is-disabled"
-                                                            disabled=""
-                                                            data-qa-name="arrow-left"
-                                                        >
-                                                            <svg className="svg-icon" viewBox="0 0 48 48">
-                                                                <path d="M28.654 9.57L14.224 24l14.43 14.429 2.121-2.121L18.467 24l12.308-12.309-2.121-2.121z" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <div className="slick-list">
-                                                        <div
-                                                            className="slick-track"
-                                                            style={{ width: 2008, opacity: 1 }}
-                                                        >
-                                                            <div
-                                                                data-index={0}
-                                                                className="slick-slide slick-active slick-current"
-                                                                tabIndex={-1}
-                                                                aria-hidden="false"
-                                                                style={{
-                                                                    outline: "none",
-                                                                    width: 502,
-                                                                    position: "relative",
-                                                                    left: 0,
-                                                                    opacity: 1,
-                                                                    transition: "opacity 500ms, visibility 500ms"
-                                                                }}
-                                                            >
-                                                                <div>
-                                                                    <div
-                                                                        className="product-images__image-wrap u-display-block u-position-relative"
-                                                                        tabIndex={-1}
-                                                                        style={{
-                                                                            width: "100%",
-                                                                            display: "inline-block"
-                                                                        }}
-                                                                    >
-                                                                        <div className="u-backgroundColor-neutralTint">
-                                                                            <div
-                                                                                className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
-                                                                                data-qa-name="product-images-image-wrapper"
-                                                                            >
-                                                                                <img
-                                                                                    data-qa-name="magnolia-generated-static-image"
-                                                                                    srcSet="/.imaging/po-product-320x320/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 320w, /.imaging/po-product-524x524/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 524w, /.imaging/po-product-683x683/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 683w, /.imaging/po-product-817x817/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 817w, /.imaging/po-product-987x987/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 987w, /.imaging/po-product-1152x1152/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 1152w"
-                                                                                    sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                    alt="Five Original Postcards in various sizes "
-                                                                                    className="u-fill"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
+                        {product ? (
+                            <div className="layout u-display-flex u-flexDirection-column u-flexDirection-row@medium">
+                                {/* Product Images */}
+                                <div className="layout__item u-5/12@medium u-1/2@large">
+                                    <div className="product-options-module__sticky-ui u-clearfix js-product-options-sticky-ui">
+                                        <div className="u-marginBottom-xl u-marginBottom-m@medium u-cancel-wrapper-padding@until-medium">
+                                            <div
+                                                id="js-product-options-product-image-ratio-box"
+                                                className="product-images__ratio-box has-multiple-images"
+                                                data-component-name="product-images"
+                                            >
+                                                <div id="js-product-images" className="u-fill">
+                                                    <div
+                                                        id="js-product-options-images-skeleton"
+                                                        className="product-images__skeleton u-fill u-display-none"
+                                                    >
+                                                        <div className="u-ratio-1:1 u-backgroundColor-neutralTint" />
+                                                        <div className="product-images__slider -nav product-images__nav-slider-wrap u-display-none@until-medium u-hide-when-js-disabled">
+                                                            <div className="layout layout--tiny slick-list">
+                                                                <div className="layout__item u-1/4 slick-slide">
+                                                                    <div className="u-ratio-1:1">
+                                                                        <div className="u-fill u-backgroundColor-neutralTint" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div
-                                                                data-index={1}
-                                                                className="slick-slide"
-                                                                tabIndex={-1}
-                                                                aria-hidden="true"
-                                                                style={{
-                                                                    outline: "none",
-                                                                    width: 502,
-                                                                    position: "relative",
-                                                                    left: "-502px",
-                                                                    opacity: 0,
-                                                                    transition: "opacity 500ms, visibility 500ms"
-                                                                }}
-                                                            >
-                                                                <div>
-                                                                    <div
-                                                                        className="product-images__image-wrap u-display-block u-position-relative"
-                                                                        tabIndex={-1}
-                                                                        style={{
-                                                                            width: "100%",
-                                                                            display: "inline-block"
-                                                                        }}
-                                                                    >
-                                                                        <div className="u-backgroundColor-neutralTint">
-                                                                            <div
-                                                                                className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
-                                                                                data-qa-name="product-images-image-wrapper"
-                                                                            >
-                                                                                <img
-                                                                                    data-qa-name="magnolia-generated-static-image"
-                                                                                    srcSet="/.imaging/po-product-320x320/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 320w, /.imaging/po-product-524x524/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 524w, /.imaging/po-product-683x683/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 683w, /.imaging/po-product-817x817/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 817w, /.imaging/po-product-987x987/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 987w, /.imaging/po-product-1152x1152/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 1152w"
-                                                                                    sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                    alt="Original Postcards matte corner close- up"
-                                                                                    className="u-fill"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
+                                                                <div className="layout__item u-1/4 slick-slide">
+                                                                    <div className="u-ratio-1:1">
+                                                                        <div className="u-fill u-backgroundColor-neutralTint" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div
-                                                                data-index={2}
-                                                                className="slick-slide"
-                                                                tabIndex={-1}
-                                                                aria-hidden="true"
-                                                                style={{
-                                                                    outline: "none",
-                                                                    width: 502,
-                                                                    position: "relative",
-                                                                    left: "-1004px",
-                                                                    opacity: 0,
-                                                                    transition: "opacity 500ms, visibility 500ms"
-                                                                }}
-                                                            >
-                                                                <div>
-                                                                    <div
-                                                                        className="product-images__image-wrap u-display-block u-position-relative"
-                                                                        tabIndex={-1}
-                                                                        style={{
-                                                                            width: "100%",
-                                                                            display: "inline-block"
-                                                                        }}
-                                                                    >
-                                                                        <div className="u-backgroundColor-neutralTint">
-                                                                            <div
-                                                                                className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
-                                                                                data-qa-name="product-images-image-wrapper"
-                                                                            >
-                                                                                <img
-                                                                                    data-qa-name="magnolia-generated-static-image"
-                                                                                    srcSet="/.imaging/po-product-320x320/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 320w, /.imaging/po-product-524x524/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 524w, /.imaging/po-product-683x683/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 683w, /.imaging/po-product-817x817/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 817w, /.imaging/po-product-987x987/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 987w, /.imaging/po-product-1152x1152/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 1152w"
-                                                                                    sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                    alt="Original Postcards at another angle"
-                                                                                    className="u-fill"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
+                                                                <div className="layout__item u-1/4 slick-slide">
+                                                                    <div className="u-ratio-1:1">
+                                                                        <div className="u-fill u-backgroundColor-neutralTint" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div
-                                                                data-index={3}
-                                                                className="slick-slide"
-                                                                tabIndex={-1}
-                                                                aria-hidden="true"
-                                                                style={{
-                                                                    outline: "none",
-                                                                    width: 502,
-                                                                    position: "relative",
-                                                                    left: "-1506px",
-                                                                    opacity: 0,
-                                                                    transition: "opacity 500ms, visibility 500ms"
-                                                                }}
-                                                            >
-                                                                <div>
-                                                                    <div
-                                                                        className="product-images__image-wrap u-display-block u-position-relative"
-                                                                        tabIndex={-1}
-                                                                        style={{
-                                                                            width: "100%",
-                                                                            display: "inline-block"
-                                                                        }}
-                                                                    >
-                                                                        <div className="u-backgroundColor-neutralTint">
-                                                                            <div
-                                                                                className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
-                                                                                data-qa-name="product-images-image-wrapper"
-                                                                            >
-                                                                                <img
-                                                                                    data-qa-name="magnolia-generated-static-image"
-                                                                                    srcSet="/.imaging/po-product-320x320/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 320w, /.imaging/po-product-524x524/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 524w, /.imaging/po-product-683x683/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 683w, /.imaging/po-product-817x817/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 817w, /.imaging/po-product-987x987/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 987w, /.imaging/po-product-1152x1152/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 1152w"
-                                                                                    sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                    alt="A pair of hands holding a set of Original Postcards "
-                                                                                    className="u-fill"
-                                                                                />
-                                                                            </div>
-                                                                        </div>
+                                                                <div className="layout__item u-1/4 slick-slide">
+                                                                    <div className="u-ratio-1:1">
+                                                                        <div className="u-fill u-backgroundColor-neutralTint" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="u-center-transform-y u-zIndex-1 slick-arrow slick-next">
-                                                        <button
-                                                            className="btn -disc -ghost-light"
-                                                            data-qa-name="arrow-right"
-                                                        >
-                                                            <svg className="svg-icon" viewBox="0 0 48 48">
-                                                                <path d="M19.346 9.57l-2.121 2.121L29.533 24 17.225 36.308l2.121 2.121L33.775 24 19.346 9.57z" />
-                                                            </svg>
-                                                        </button>
+                                                    <div className="u-hide-when-js-enabled">
+                                                        <img
+                                                            srcSet="/.imaging/po-product-320x320/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 320w, /.imaging/po-product-524x524/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 524w, /.imaging/po-product-683x683/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 683w, /.imaging/po-product-817x817/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 817w, /.imaging/po-product-987x987/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 987w, /.imaging/po-product-1152x1152/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 1152w"
+                                                            sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
+                                                            alt="A selection of Super Postcards in various sizes with different special finishes"
+                                                            className="u-fill"
+                                                            fetchpriority="high"
+                                                        />
                                                     </div>
-                                                </div>
-                                                <div className="product-images__nav-slider-wrap">
-                                                    <div className="slick-slider product-images__slider -nav slick-initialized">
+                                                    <div
+                                                        className="slick-slider product-images__slider -main slick-initialized"
+                                                        dir="ltr"
+                                                    >
+                                                        <div className="u-center-transform-y u-zIndex-1 slick-arrow slick-prev">
+                                                            <button className="btn -disc -ghost-light" data-qa-name="arrow-left">
+                                                                <svg className="svg-icon" viewBox="0 0 48 48">
+                                                                    <path d="M28.654 9.57L14.224 24l14.43 14.429 2.121-2.121L18.467 24l12.308-12.309-2.121-2.121z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
                                                         <div className="slick-list">
-                                                            <div
-                                                                className="slick-track"
-                                                                style={{
-                                                                    width: 512,
-                                                                    opacity: 1,
-                                                                    transform: "translate3d(0px, 0px, 0px)"
-                                                                }}
-                                                            >
+                                                            <div className="slick-track" style={{ width: 2304, opacity: 1 }}>
                                                                 <div
                                                                     data-index={0}
-                                                                    className="slick-slide slick-active slick-current"
+                                                                    className="slick-slide"
                                                                     tabIndex={-1}
-                                                                    aria-hidden="false"
-                                                                    style={{ outline: "none", width: 128 }}
+                                                                    aria-hidden="true"
+                                                                    style={{
+                                                                        outline: "none",
+                                                                        width: 576,
+                                                                        position: "relative",
+                                                                        left: 0,
+                                                                        opacity: 0,
+                                                                        transition: "opacity 500ms, visibility 500ms"
+                                                                    }}
                                                                 >
                                                                     <div>
                                                                         <div
                                                                             className="product-images__image-wrap u-display-block u-position-relative"
-                                                                            data-qa-name="thumbnail"
                                                                             tabIndex={-1}
-                                                                            style={{
-                                                                                width: "100%",
-                                                                                display: "inline-block"
-                                                                            }}
+                                                                            style={{ width: "100%", display: "inline-block" }}
                                                                         >
                                                                             <div className="u-backgroundColor-neutralTint">
                                                                                 <div
@@ -319,9 +172,9 @@ const cardDetails = () => {
                                                                                 >
                                                                                     <img
                                                                                         data-qa-name="magnolia-generated-static-image"
-                                                                                        srcSet="/.imaging/po-product-320x320/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 320w, /.imaging/po-product-524x524/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 524w, /.imaging/po-product-683x683/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 683w, /.imaging/po-product-817x817/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 817w, /.imaging/po-product-987x987/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 987w, /.imaging/po-product-1152x1152/dam/bf731ecc-a206-4773-b20a-3611cd5f9657/0337WF-PO-1920x1920-original-postcards0.jpg 1152w"
+                                                                                        srcSet="/.imaging/po-product-320x320/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 320w, /.imaging/po-product-524x524/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 524w, /.imaging/po-product-683x683/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 683w, /.imaging/po-product-817x817/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 817w, /.imaging/po-product-987x987/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 987w, /.imaging/po-product-1152x1152/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 1152w"
                                                                                         sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                        alt="Five Original Postcards in various sizes "
+                                                                                        alt="A selection of Super Postcards in various sizes with different special finishes"
                                                                                         className="u-fill"
                                                                                     />
                                                                                 </div>
@@ -331,20 +184,23 @@ const cardDetails = () => {
                                                                 </div>
                                                                 <div
                                                                     data-index={1}
-                                                                    className="slick-slide slick-active"
+                                                                    className="slick-slide"
                                                                     tabIndex={-1}
-                                                                    aria-hidden="false"
-                                                                    style={{ outline: "none", width: 128 }}
+                                                                    aria-hidden="true"
+                                                                    style={{
+                                                                        outline: "none",
+                                                                        width: 576,
+                                                                        position: "relative",
+                                                                        left: "-576px",
+                                                                        opacity: 0,
+                                                                        transition: "opacity 500ms, visibility 500ms"
+                                                                    }}
                                                                 >
                                                                     <div>
                                                                         <div
                                                                             className="product-images__image-wrap u-display-block u-position-relative"
-                                                                            data-qa-name="thumbnail"
                                                                             tabIndex={-1}
-                                                                            style={{
-                                                                                width: "100%",
-                                                                                display: "inline-block"
-                                                                            }}
+                                                                            style={{ width: "100%", display: "inline-block" }}
                                                                         >
                                                                             <div className="u-backgroundColor-neutralTint">
                                                                                 <div
@@ -353,9 +209,9 @@ const cardDetails = () => {
                                                                                 >
                                                                                     <img
                                                                                         data-qa-name="magnolia-generated-static-image"
-                                                                                        srcSet="/.imaging/po-product-320x320/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 320w, /.imaging/po-product-524x524/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 524w, /.imaging/po-product-683x683/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 683w, /.imaging/po-product-817x817/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 817w, /.imaging/po-product-987x987/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 987w, /.imaging/po-product-1152x1152/dam/6055574d-628f-4993-b159-c9e5f69fd3ec/0337WF-PO-1920x1920-original-postcards-matte0.jpg 1152w"
+                                                                                        srcSet="/.imaging/po-product-320x320/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 320w, /.imaging/po-product-524x524/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 524w, /.imaging/po-product-683x683/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 683w, /.imaging/po-product-817x817/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 817w, /.imaging/po-product-987x987/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 987w, /.imaging/po-product-1152x1152/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 1152w"
                                                                                         sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                        alt="Original Postcards matte corner close- up"
+                                                                                        alt="Two close up Super Postcards"
                                                                                         className="u-fill"
                                                                                     />
                                                                                 </div>
@@ -365,20 +221,23 @@ const cardDetails = () => {
                                                                 </div>
                                                                 <div
                                                                     data-index={2}
-                                                                    className="slick-slide slick-active"
+                                                                    className="slick-slide"
                                                                     tabIndex={-1}
-                                                                    aria-hidden="false"
-                                                                    style={{ outline: "none", width: 128 }}
+                                                                    aria-hidden="true"
+                                                                    style={{
+                                                                        outline: "none",
+                                                                        width: 576,
+                                                                        position: "relative",
+                                                                        left: "-1152px",
+                                                                        opacity: 0,
+                                                                        transition: "opacity 500ms, visibility 500ms"
+                                                                    }}
                                                                 >
                                                                     <div>
                                                                         <div
                                                                             className="product-images__image-wrap u-display-block u-position-relative"
-                                                                            data-qa-name="thumbnail"
                                                                             tabIndex={-1}
-                                                                            style={{
-                                                                                width: "100%",
-                                                                                display: "inline-block"
-                                                                            }}
+                                                                            style={{ width: "100%", display: "inline-block" }}
                                                                         >
                                                                             <div className="u-backgroundColor-neutralTint">
                                                                                 <div
@@ -387,9 +246,9 @@ const cardDetails = () => {
                                                                                 >
                                                                                     <img
                                                                                         data-qa-name="magnolia-generated-static-image"
-                                                                                        srcSet="/.imaging/po-product-320x320/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 320w, /.imaging/po-product-524x524/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 524w, /.imaging/po-product-683x683/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 683w, /.imaging/po-product-817x817/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 817w, /.imaging/po-product-987x987/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 987w, /.imaging/po-product-1152x1152/dam/f30cc625-7027-4ca8-906d-fb1604fcd06b/0337WF-PO-1920x1920-original-postcards-corners0.jpg 1152w"
+                                                                                        srcSet="/.imaging/po-product-320x320/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 320w, /.imaging/po-product-524x524/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 524w, /.imaging/po-product-683x683/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 683w, /.imaging/po-product-817x817/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 817w, /.imaging/po-product-987x987/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 987w, /.imaging/po-product-1152x1152/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 1152w"
                                                                                         sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                        alt="Original Postcards at another angle"
+                                                                                        alt="Gold foil Postcards corner close-up"
                                                                                         className="u-fill"
                                                                                     />
                                                                                 </div>
@@ -399,20 +258,23 @@ const cardDetails = () => {
                                                                 </div>
                                                                 <div
                                                                     data-index={3}
-                                                                    className="slick-slide slick-active"
+                                                                    className="slick-slide slick-active slick-current"
                                                                     tabIndex={-1}
                                                                     aria-hidden="false"
-                                                                    style={{ outline: "none", width: 128 }}
+                                                                    style={{
+                                                                        outline: "none",
+                                                                        width: 576,
+                                                                        position: "relative",
+                                                                        left: "-1728px",
+                                                                        opacity: 1,
+                                                                        transition: "opacity 500ms, visibility 500ms"
+                                                                    }}
                                                                 >
                                                                     <div>
                                                                         <div
                                                                             className="product-images__image-wrap u-display-block u-position-relative"
-                                                                            data-qa-name="thumbnail"
                                                                             tabIndex={-1}
-                                                                            style={{
-                                                                                width: "100%",
-                                                                                display: "inline-block"
-                                                                            }}
+                                                                            style={{ width: "100%", display: "inline-block" }}
                                                                         >
                                                                             <div className="u-backgroundColor-neutralTint">
                                                                                 <div
@@ -421,11 +283,161 @@ const cardDetails = () => {
                                                                                 >
                                                                                     <img
                                                                                         data-qa-name="magnolia-generated-static-image"
-                                                                                        srcSet="/.imaging/po-product-320x320/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 320w, /.imaging/po-product-524x524/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 524w, /.imaging/po-product-683x683/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 683w, /.imaging/po-product-817x817/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 817w, /.imaging/po-product-987x987/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 987w, /.imaging/po-product-1152x1152/dam/6eaf4b76-7cb7-41fc-8520-b691ff18da60/0337WF-PO-1920x1920-original-postcards-irl0.jpg 1152w"
+                                                                                        srcSet="/.imaging/po-product-320x320/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 320w, /.imaging/po-product-524x524/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 524w, /.imaging/po-product-683x683/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 683w, /.imaging/po-product-817x817/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 817w, /.imaging/po-product-987x987/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 987w, /.imaging/po-product-1152x1152/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 1152w"
                                                                                         sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
-                                                                                        alt="A pair of hands holding a set of Original Postcards "
+                                                                                        alt="A pair of hands holding a set of Silver foil Postcards "
                                                                                         className="u-fill"
                                                                                     />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="u-center-transform-y u-zIndex-1 slick-arrow slick-next slick-disabled">
+                                                            <button
+                                                                className="btn -disc -ghost-light is-disabled"
+                                                                data-qa-name="arrow-right"
+                                                                disabled=""
+                                                            >
+                                                                <svg className="svg-icon" viewBox="0 0 48 48">
+                                                                    <path d="M19.346 9.57l-2.121 2.121L29.533 24 17.225 36.308l2.121 2.121L33.775 24 19.346 9.57z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="product-images__nav-slider-wrap">
+                                                        <div className="slick-slider product-images__slider -nav slick-initialized">
+                                                            <div className="slick-list">
+                                                                <div
+                                                                    className="slick-track"
+                                                                    style={{
+                                                                        width: 584,
+                                                                        opacity: 1,
+                                                                        transform: "translate3d(0px, 0px, 0px)"
+                                                                    }}
+                                                                >
+                                                                    <div
+                                                                        data-index={0}
+                                                                        className="slick-slide slick-active"
+                                                                        tabIndex={-1}
+                                                                        aria-hidden="false"
+                                                                        style={{ outline: "none", width: 146 }}
+                                                                    >
+                                                                        <div>
+                                                                            <div
+                                                                                className="product-images__image-wrap u-display-block u-position-relative"
+                                                                                data-qa-name="thumbnail"
+                                                                                tabIndex={-1}
+                                                                                style={{ width: "100%", display: "inline-block" }}
+                                                                            >
+                                                                                <div className="u-backgroundColor-neutralTint">
+                                                                                    <div
+                                                                                        className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
+                                                                                        data-qa-name="product-images-image-wrapper"
+                                                                                    >
+                                                                                        <img
+                                                                                            data-qa-name="magnolia-generated-static-image"
+                                                                                            srcSet="/.imaging/po-product-320x320/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 320w, /.imaging/po-product-524x524/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 524w, /.imaging/po-product-683x683/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 683w, /.imaging/po-product-817x817/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 817w, /.imaging/po-product-987x987/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 987w, /.imaging/po-product-1152x1152/dam/fd28789d-a4ce-44f0-a0ad-6d25666188c1/0337WF-PO-1920x1920-super-foil-postcards.jpg 1152w"
+                                                                                            sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
+                                                                                            alt="A selection of Super Postcards in various sizes with different special finishes"
+                                                                                            className="u-fill"
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        data-index={1}
+                                                                        className="slick-slide slick-active"
+                                                                        tabIndex={-1}
+                                                                        aria-hidden="false"
+                                                                        style={{ outline: "none", width: 146 }}
+                                                                    >
+                                                                        <div>
+                                                                            <div
+                                                                                className="product-images__image-wrap u-display-block u-position-relative"
+                                                                                data-qa-name="thumbnail"
+                                                                                tabIndex={-1}
+                                                                                style={{ width: "100%", display: "inline-block" }}
+                                                                            >
+                                                                                <div className="u-backgroundColor-neutralTint">
+                                                                                    <div
+                                                                                        className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
+                                                                                        data-qa-name="product-images-image-wrapper"
+                                                                                    >
+                                                                                        <img
+                                                                                            data-qa-name="magnolia-generated-static-image"
+                                                                                            srcSet="/.imaging/po-product-320x320/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 320w, /.imaging/po-product-524x524/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 524w, /.imaging/po-product-683x683/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 683w, /.imaging/po-product-817x817/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 817w, /.imaging/po-product-987x987/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 987w, /.imaging/po-product-1152x1152/dam/8f3d8eab-7016-4da9-a1ef-d06a2d4e6764/0337WF-PO-1920x1920-super-postcards-corners.jpg 1152w"
+                                                                                            sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
+                                                                                            alt="Two close up Super Postcards"
+                                                                                            className="u-fill"
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        data-index={2}
+                                                                        className="slick-slide slick-active"
+                                                                        tabIndex={-1}
+                                                                        aria-hidden="false"
+                                                                        style={{ outline: "none", width: 146 }}
+                                                                    >
+                                                                        <div>
+                                                                            <div
+                                                                                className="product-images__image-wrap u-display-block u-position-relative"
+                                                                                data-qa-name="thumbnail"
+                                                                                tabIndex={-1}
+                                                                                style={{ width: "100%", display: "inline-block" }}
+                                                                            >
+                                                                                <div className="u-backgroundColor-neutralTint">
+                                                                                    <div
+                                                                                        className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
+                                                                                        data-qa-name="product-images-image-wrapper"
+                                                                                    >
+                                                                                        <img
+                                                                                            data-qa-name="magnolia-generated-static-image"
+                                                                                            srcSet="/.imaging/po-product-320x320/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 320w, /.imaging/po-product-524x524/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 524w, /.imaging/po-product-683x683/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 683w, /.imaging/po-product-817x817/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 817w, /.imaging/po-product-987x987/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 987w, /.imaging/po-product-1152x1152/dam/1b2ca534-2798-418f-9b1d-daf774d90724/0337WF-PO-1920x1920-gold-foil-postcards-stack.jpg 1152w"
+                                                                                            sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
+                                                                                            alt="Gold foil Postcards corner close-up"
+                                                                                            className="u-fill"
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        data-index={3}
+                                                                        className="slick-slide slick-active slick-current"
+                                                                        tabIndex={-1}
+                                                                        aria-hidden="false"
+                                                                        style={{ outline: "none", width: 146 }}
+                                                                    >
+                                                                        <div>
+                                                                            <div
+                                                                                className="product-images__image-wrap u-display-block u-position-relative"
+                                                                                data-qa-name="thumbnail"
+                                                                                tabIndex={-1}
+                                                                                style={{ width: "100%", display: "inline-block" }}
+                                                                            >
+                                                                                <div className="u-backgroundColor-neutralTint">
+                                                                                    <div
+                                                                                        className="product-images__image-ratio-box u-ratio-1:1 product-images__fade-enter-done"
+                                                                                        data-qa-name="product-images-image-wrapper"
+                                                                                    >
+                                                                                        <img
+                                                                                            data-qa-name="magnolia-generated-static-image"
+                                                                                            srcSet="/.imaging/po-product-320x320/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 320w, /.imaging/po-product-524x524/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 524w, /.imaging/po-product-683x683/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 683w, /.imaging/po-product-817x817/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 817w, /.imaging/po-product-987x987/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 987w, /.imaging/po-product-1152x1152/dam/e688b19b-8313-4c45-a1e8-d40742f1030a/0337WF-PO-1920x1920-silver-foil-postcards-irl.jpg 1152w"
+                                                                                            sizes="(min-width: 76.5625em) 576px, (min-width: 64.0625em) 46.4vw, (min-width: 40.0625em) 36.9vw, 100vw"
+                                                                                            alt="A pair of hands holding a set of Silver foil Postcards "
+                                                                                            className="u-fill"
+                                                                                        />
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -436,1405 +448,1506 @@ const cardDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div className="layout layout--row-spacing u-display-none@until-medium">
-                                        <div className="layout__item u-1/2@large" data-qa-name="usp">
-                                            <a
-                                                href="/us/about/moo-promise"
-                                                className="js-ga4-click-track"
-                                                data-component-name="filler-block"
-                                            >
-                                                <div className="filler-block">
-                                                    <div className="filler-block__content u-padding-0">
-                                                        <div className="media-flex media-flex--small">
-                                                            <div className="media-flex__img">
-                                                                <img
-                                                                    src="/dam/jcr:06b51357-f16f-410d-9c70-29aaf562f6ad/MOO-Icon-Promise0.svg"
-                                                                    alt="The MOO promise"
-                                                                    title="The MOO promise"
-                                                                    className="filler-block__image"
-                                                                />
-                                                            </div>
-                                                            <div className="media-flex__body u-marginTop-xxxxs">
-                                                                <div className="h__block">The MOO promise</div>
-                                                                <p>
-                                                                    We move heaven and earth so you are happy with
-                                                                    your order!
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>{" "}
-                                        </div>
-                                        <div className="layout__item u-1/2@large" data-qa-name="usp">
-                                            <a
-                                                href="/us/about/printfinity"
-                                                className="js-ga4-click-track"
-                                                data-component-name="filler-block"
-                                            >
-                                                <div className="filler-block">
-                                                    <div className="filler-block__content u-padding-0">
-                                                        <div className="media-flex media-flex--small">
-                                                            <div className="media-flex__img">
-                                                                <img
-                                                                    src="/dam/jcr:d411fa3d-9dfe-4fcf-881f-e76b915e7393/MOO-Icon-Printfinity0.svg"
-                                                                    alt="Variety at no extra cost"
-                                                                    title="Variety at no extra cost"
-                                                                    className="filler-block__image"
-                                                                />
-                                                            </div>
-                                                            <div className="media-flex__body u-marginTop-xxxxs">
-                                                                <div className="h__block">
-                                                                    Variety at no extra cost
-                                                                </div>
-                                                                <p>
-                                                                    Print a different design on every Postcard for
-                                                                    FREE.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>{" "}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="layout__item u-7/12@medium u-1/2@large product-options-module__options-col u-paddingLeft-xl@large u-last-child-margin-bottom-0">
-                                <header
-                                    className="product-options-module__section u-marginTop-s@medium u-marginTop-l@large"
-                                    data-qa-name="product-options-module-header"
-                                    data-component-name="product-options-module-header"
-                                >
-                                    <div className="u-marginBottom-l">
-                                        <div className="u-marginBottom-xs">
-                                            <div className="media-flex media-flex--small media-flex--rev">
-                                                <div className="media-flex__body">
-                                                    <h1 className="h3" data-qa-name="heading">
-                                                        Original Postcards
-                                                    </h1>
-                                                </div>
-                                                <div className="media-flex__img u-lineHeight-0">
-                                                    <div
-                                                        className="pill u-color-white u-marginTop-xxxxs@medium"
-                                                        style={{ backgroundColor: "#FFFFFF" }}
-                                                    ></div>{" "}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="h6 u-marginBottom-xxs">
-                                            16–17 pt paper thickness | Available in matte or gloss
-                                        </div>
-                                        <p className="p__large">
-                                            <span className="u-fontFamily-secondaryMedium">25</span>{" "}
-                                            postcards from{" "}
-                                            <span
-                                                className="u-fontFamily-secondaryMedium"
-                                                data-qa-name="price"
-                                            >
-                                                $21.00
-                                            </span>
-                                        </p>
-                                        <div
-                                            className="trust-pilot"
-                                            data-component-name="trust-pilot--stars--number-of-reviews"
-                                        >
-                                            <div className="u-display-inlineBlock u-verticalAlign-middle u-marginRight-xxs u-margin-vertical-xxxs">
-                                                <ul className="trust-pilot__stars-wrap fnx-list-inline">
-                                                    <li data-qa-name="star">
-                                                        <svg
-                                                            viewBox="0 0 85 80.9"
-                                                            className="svg-icon trust-pilot__star "
-                                                            role="presentation"
-                                                            aria-hidden="true"
-                                                            data-icon-id="logo--trust-pilot-star"
-                                                        >
-                                                            <path
-                                                                fill="#FFF"
-                                                                d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
-                                                            />
-                                                        </svg>{" "}
-                                                    </li>
-                                                    <li data-qa-name="star">
-                                                        <svg
-                                                            viewBox="0 0 85 80.9"
-                                                            className="svg-icon trust-pilot__star "
-                                                            role="presentation"
-                                                            aria-hidden="true"
-                                                            data-icon-id="logo--trust-pilot-star"
-                                                        >
-                                                            <path
-                                                                fill="#FFF"
-                                                                d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
-                                                            />
-                                                        </svg>{" "}
-                                                    </li>
-                                                    <li data-qa-name="star">
-                                                        <svg
-                                                            viewBox="0 0 85 80.9"
-                                                            className="svg-icon trust-pilot__star "
-                                                            role="presentation"
-                                                            aria-hidden="true"
-                                                            data-icon-id="logo--trust-pilot-star"
-                                                        >
-                                                            <path
-                                                                fill="#FFF"
-                                                                d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
-                                                            />
-                                                        </svg>{" "}
-                                                    </li>
-                                                    <li data-qa-name="star">
-                                                        <svg
-                                                            viewBox="0 0 85 80.9"
-                                                            className="svg-icon trust-pilot__star "
-                                                            role="presentation"
-                                                            aria-hidden="true"
-                                                            data-icon-id="logo--trust-pilot-star"
-                                                        >
-                                                            <path
-                                                                fill="#FFF"
-                                                                d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
-                                                            />
-                                                        </svg>{" "}
-                                                    </li>
-                                                    <li data-qa-name="star">
-                                                        <svg
-                                                            viewBox="0 0 85 80.9"
-                                                            className="svg-icon trust-pilot__star "
-                                                            role="presentation"
-                                                            aria-hidden="true"
-                                                            data-icon-id="logo--trust-pilot-star"
-                                                        >
-                                                            <path
-                                                                fill="#FFF"
-                                                                d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
-                                                            />
-                                                        </svg>{" "}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="u-display-inlineBlock u-verticalAlign-middle">
+                                        <div className="layout layout--row-spacing u-display-none@until-medium">
+                                            <div className="layout__item u-1/2@large" data-qa-name="usp">
                                                 <a
-                                                    href="https://www.trustpilot.com/review/www.moo.com"
-                                                    className="cta-link js-ga4-click-track"
+                                                    href="/us/about/moo-promise"
+                                                    className="js-ga4-click-track"
+                                                    data-component-name="filler-block"
                                                 >
-                                                    <span className="cta-link__text">
-                                                        <span>605 reviews</span>
-                                                    </span>
+                                                    <div className="filler-block">
+                                                        <div className="filler-block__content u-padding-0">
+                                                            <div className="media-flex media-flex--small">
+                                                                <div className="media-flex__img">
+                                                                    <img
+                                                                        src="/dam/jcr:06b51357-f16f-410d-9c70-29aaf562f6ad/MOO-Icon-Promise0.svg"
+                                                                        alt="The MOO promise"
+                                                                        title="The MOO promise"
+                                                                        className="filler-block__image"
+                                                                    />
+                                                                </div>
+                                                                <div className="media-flex__body u-marginTop-xxxxs">
+                                                                    <div className="h__block">The MOO promise</div>
+                                                                    <p>
+                                                                        We move heaven and earth so you are happy with
+                                                                        your order!
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>{" "}
+                                            </div>
+                                            <div className="layout__item u-1/2@large" data-qa-name="usp">
+                                                <a
+                                                    href="/us/about/printfinity"
+                                                    className="js-ga4-click-track"
+                                                    data-component-name="filler-block"
+                                                >
+                                                    <div className="filler-block">
+                                                        <div className="filler-block__content u-padding-0">
+                                                            <div className="media-flex media-flex--small">
+                                                                <div className="media-flex__img">
+                                                                    <img
+                                                                        src="/dam/jcr:d411fa3d-9dfe-4fcf-881f-e76b915e7393/MOO-Icon-Printfinity0.svg"
+                                                                        alt="Variety at no extra cost"
+                                                                        title="Variety at no extra cost"
+                                                                        className="filler-block__image"
+                                                                    />
+                                                                </div>
+                                                                <div className="media-flex__body u-marginTop-xxxxs">
+                                                                    <div className="h__block">
+                                                                        Variety at no extra cost
+                                                                    </div>
+                                                                    <p>
+                                                                        Print a different design on every Postcard for
+                                                                        FREE.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </a>{" "}
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <h2 className="h5">Premium as standard</h2>
-                                        <div
-                                            className="p read-more js-read-more rmjs-1"
-                                            data-read-more-config='{
-                              "label": "Show more",
-                              "viewports": [
-                                  {
-                                      "alias": "smallDown",
-                                      "lines": 5
-                                  },
-                                  {
-                                      "alias": "mediumOnly",
-                                      "lines": 5
-                                  },
-                                  {
-                                      "alias": "largeUp",
-                                      "lines": 12
-                                  }
-                              ]
-                          }'
-                                            style={{ height: "auto", maxHeight: "none" }}
-                                        >
-                                            <p>
-                                                Great quality AND great value. Whether in gloss or matte,
-                                                our entry-level Postcard paper packs a punch.
+                                </div>
+                                {/* product Details */}
+                                <div className="layout__item u-7/12@medium u-1/2@large product-options-module__options-col u-paddingLeft-xl@large u-last-child-margin-bottom-0">
+                                    <header
+                                        className="product-options-module__section u-marginTop-s@medium u-marginTop-l@large"
+                                        data-qa-name="product-options-module-header"
+                                        data-component-name="product-options-module-header"
+                                    >
+                                        <div className="u-marginBottom-l">
+                                            <div className="u-marginBottom-xs">
+                                                <div className="media-flex media-flex--small media-flex--rev">
+                                                    <div className="media-flex__body">
+                                                        <h1 className="h3" data-qa-name="heading">
+                                                            {product.product_title}
+                                                        </h1>
+                                                    </div>
+                                                    <div className="media-flex__img u-lineHeight-0">
+                                                        <div
+                                                            className="pill u-color-white u-marginTop-xxxxs@medium"
+                                                            style={{ backgroundColor: "#FFFFFF" }}
+                                                        ></div>{" "}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="h6 u-marginBottom-xxs">
+                                                16–17 pt paper thickness | Available in matte or gloss
+                                            </div>
+                                            <p className="p__large">
+                                                <span className="u-fontFamily-secondaryMedium">25</span>{" "}
+                                                postcards from{" "}
+                                                <span
+                                                    className="u-fontFamily-secondaryMedium"
+                                                    data-qa-name="price"
+                                                >
+                                                    {product.price}
+                                                </span>
                                             </p>
-                                            <ul>
-                                                <li>Our “feel good” premium paper</li>
-                                                <li>In your choice of 2 finishes:</li>
-                                                <li>
-                                                    <strong>Matte:</strong> shine-free, so no glare
-                                                </li>
-                                                <li>
-                                                    <strong>Gloss:</strong> makes Postcard colors really “pop”
-                                                </li>
-                                                <li>Coat both sides for extra protection</li>
-                                                <li>For writing on, leave one side uncoated</li>
-                                                <li>16–17 pt paper thickness</li>
-                                                <li>Available in 7 Postcard sizes</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </header>
-                                <div
-                                    id="js-product-options"
-                                    className="u-last-child-margin-bottom-0"
-                                >
-                                    <fieldset className="product-options-module__section">
-                                        <legend
-                                            className="h5 u-marginBottom-xs u-transitionProperty-color u-transitionDuration-s"
-                                            id="radiogroup-size"
-                                        >
-                                            Choose your size
-                                        </legend>
-                                        <div
-                                            className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
-                                            role="radiogroup"
-                                            aria-labelledby="radiogroup-size"
-                                        >
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_6"
-                                                        name="size"
-                                                        tabIndex={0}
-                                                        aria-describedby="size_6_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={6}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_6"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-a6-526x325.jpg"
-                                                                alt="A6 postcard for a store opening"
-                                                                title="A6 postcard for a store opening"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Small
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                4.13” x 5.83”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_6_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Small</div>
-                                                        <div>4.13” x 5.83”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_14"
-                                                        name="size"
-                                                        tabIndex={-1}
-                                                        aria-describedby="size_14_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={14}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_14"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-standard-526x325.jpg"
-                                                                alt="Standard-size postcard with food photography"
-                                                                title="Standard-size postcard with food photography"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Standard
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                4” x 6”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_14_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Standard</div>
-                                                        <div>4” x 6”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_9"
-                                                        name="size"
-                                                        tabIndex={-1}
-                                                        aria-describedby="size_9_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={9}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_9"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-square-526x325.jpg"
-                                                                alt="Square postcard with food photography"
-                                                                title="Square postcard with food photography"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Square
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                4.72” x 4.72”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_9_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Square</div>
-                                                        <div>4.72” x 4.72”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_11"
-                                                        name="size"
-                                                        tabIndex={-1}
-                                                        aria-describedby="size_11_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={11}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_11"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-rack_cards-526x325.jpg"
-                                                                alt="Rack postcard with food photography"
-                                                                title="Rack postcard with food photography"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Rack Cards
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                3.67” x 8.5”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_11_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Rack Cards</div>
-                                                        <div>3.67” x 8.5”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_8"
-                                                        name="size"
-                                                        tabIndex={-1}
-                                                        aria-describedby="size_8_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={8}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_8"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-medium-526x325.jpg"
-                                                                alt="Medium postcard for store opening"
-                                                                title="Medium postcard for store opening"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Medium
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                5” x 7”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_8_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Medium</div>
-                                                        <div>5” x 7”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_13"
-                                                        name="size"
-                                                        tabIndex={-1}
-                                                        aria-describedby="size_13_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={13}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_13"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-half_page-526x325.jpg"
-                                                                alt="Half-page postcard with food photography"
-                                                                title="Half-page postcard with food photography"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Half Page
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                5.5” x 8.5”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_13_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Half Page</div>
-                                                        <div>5.5” x 8.5”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="size_15"
-                                                        name="size"
-                                                        tabIndex={-1}
-                                                        aria-describedby="size_15_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={15}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="size_15"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-large-526x325.jpg"
-                                                                alt="Large postcard for store opening"
-                                                                title="Large postcard for store opening"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Large
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                6” x 9”
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="size_15_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Large</div>
-                                                        <div>6” x 9”</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="">
                                             <div
-                                                style={{
-                                                    visibility: "hidden",
-                                                    position: "absolute",
-                                                    height: 90,
-                                                    width: 200
-                                                }}
-                                            />
+                                                className="trust-pilot"
+                                                data-component-name="trust-pilot--stars--number-of-reviews"
+                                            >
+                                                <div className="u-display-inlineBlock u-verticalAlign-middle u-marginRight-xxs u-margin-vertical-xxxs">
+                                                    <ul className="trust-pilot__stars-wrap fnx-list-inline">
+                                                        <li data-qa-name="star">
+                                                            <svg
+                                                                viewBox="0 0 85 80.9"
+                                                                className="svg-icon trust-pilot__star "
+                                                                role="presentation"
+                                                                aria-hidden="true"
+                                                                data-icon-id="logo--trust-pilot-star"
+                                                            >
+                                                                <path
+                                                                    fill="#FFF"
+                                                                    d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
+                                                                />
+                                                            </svg>{" "}
+                                                        </li>
+                                                        <li data-qa-name="star">
+                                                            <svg
+                                                                viewBox="0 0 85 80.9"
+                                                                className="svg-icon trust-pilot__star "
+                                                                role="presentation"
+                                                                aria-hidden="true"
+                                                                data-icon-id="logo--trust-pilot-star"
+                                                            >
+                                                                <path
+                                                                    fill="#FFF"
+                                                                    d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
+                                                                />
+                                                            </svg>{" "}
+                                                        </li>
+                                                        <li data-qa-name="star">
+                                                            <svg
+                                                                viewBox="0 0 85 80.9"
+                                                                className="svg-icon trust-pilot__star "
+                                                                role="presentation"
+                                                                aria-hidden="true"
+                                                                data-icon-id="logo--trust-pilot-star"
+                                                            >
+                                                                <path
+                                                                    fill="#FFF"
+                                                                    d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
+                                                                />
+                                                            </svg>{" "}
+                                                        </li>
+                                                        <li data-qa-name="star">
+                                                            <svg
+                                                                viewBox="0 0 85 80.9"
+                                                                className="svg-icon trust-pilot__star "
+                                                                role="presentation"
+                                                                aria-hidden="true"
+                                                                data-icon-id="logo--trust-pilot-star"
+                                                            >
+                                                                <path
+                                                                    fill="#FFF"
+                                                                    d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
+                                                                />
+                                                            </svg>{" "}
+                                                        </li>
+                                                        <li data-qa-name="star">
+                                                            <svg
+                                                                viewBox="0 0 85 80.9"
+                                                                className="svg-icon trust-pilot__star "
+                                                                role="presentation"
+                                                                aria-hidden="true"
+                                                                data-icon-id="logo--trust-pilot-star"
+                                                            >
+                                                                <path
+                                                                    fill="#FFF"
+                                                                    d="M42.5 0l9.4 31.8 33.1-.9-27.3 18.7 11.1 31.3-26.3-20.2-26.3 20.2 11.1-31.3L0 30.9l33.1.9"
+                                                                />
+                                                            </svg>{" "}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div className="u-display-inlineBlock u-verticalAlign-middle">
+                                                    <a
+                                                        href="https://www.trustpilot.com/review/www.moo.com"
+                                                        className="cta-link js-ga4-click-track"
+                                                    >
+                                                        <span className="cta-link__text">
+                                                            <span>605 reviews</span>
+                                                        </span>
+                                                    </a>{" "}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </fieldset>
-                                    <fieldset className="product-options-module__section u-visually-hidden">
                                         <div>
-                                            <input
-                                                type="text"
-                                                name="paper"
-                                                tabIndex={-1}
-                                                aria-hidden="true"
-                                                readOnly=""
-                                                defaultValue={8}
-                                            />
+                                            <h2 className="h5">Premium as standard</h2>
+                                            <div className={`p read-more ${isExpanded ? "expanded" : ""}`}>
+                                                <p>{product.description || "High-quality postcards with premium finishes."}</p>
+
+                                                {/* Dynamically list features */}
+                                                <ul>
+                                                    {product.finishes && product.finishes.length > 0 ? (
+                                                        product.finishes.map((feature, index) => <li key={index}>{feature}</li>)
+                                                    ) : (
+                                                        <li>No additional features listed.</li>
+                                                    )}
+                                                </ul>
+
+                                                {/* Show More / Show Less Button */}
+                                                <button className="read-more-btn" onClick={() => setIsExpanded(!isExpanded)}>
+                                                    {isExpanded ? "Show Less" : "Show More"}
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="">
+                                    </header>
+                                    <div
+                                        id="js-product-options"
+                                        className="u-last-child-margin-bottom-0"
+                                    >
+                                        <fieldset className="product-options-module__section">
+                                            <legend
+                                                className="h5 u-marginBottom-xs u-transitionProperty-color u-transitionDuration-s"
+                                                id="radiogroup-size"
+                                            >
+                                                Choose your size
+                                            </legend>
                                             <div
-                                                style={{
-                                                    visibility: "hidden",
-                                                    position: "absolute",
-                                                    height: 90,
-                                                    width: 200
-                                                }}
-                                            />
-                                        </div>
-                                    </fieldset>
-                                    <fieldset className="product-options-module__section">
-                                        <legend
-                                            className="h5 u-marginBottom-xs u-transitionProperty-color u-transitionDuration-s"
-                                            id="radiogroup-laminatedSides"
-                                        >
-                                            Choose your coating
-                                        </legend>
-                                        <div
-                                            className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
-                                            role="radiogroup"
-                                            aria-labelledby="radiogroup-laminatedSides"
-                                        >
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="laminatedSides_1"
-                                                        name="laminatedSides"
-                                                        tabIndex={0}
-                                                        aria-describedby="laminatedSides_1_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={1}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="laminatedSides_1"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminated-sides/postcards-coated_back-526x251.jpg"
-                                                                alt="Postcard coated on the back only, with a logo and a handwritten note on the front"
-                                                                title="Postcard coated on the back only, with a logo and a handwritten note on the front"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
+                                                className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
+                                                role="radiogroup"
+                                                aria-labelledby="radiogroup-size"
+                                            >
+                                                {product.sizes.map((size) => (
+                                                    <div key={size.id} className="u-position-relative u-display-flex layout__item u-1/2 u-1/3@medium-to-large">
+                                                        <div className={`tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image ${selectedSize === size.id ? "selected" : ""}`} onClick={() => handleSizeChange(size.id)}>
+                                                            <input
+                                                                type="radio"
+                                                                id={`size_${size.id}`}
+                                                                name="size"
+                                                                value={size.id}
+                                                                checked={selectedSize === size.id}
+                                                                onChange={() => handleSizeChange(size.id)}
+                                                                className="tile-radio-button__input"
                                                             />
+                                                            <label className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s" htmlFor={`size_${size.id}`}>
+                                                                <div className="tile-radio-button__image-wrap u-marginBottom-xs">
+                                                                    <img src={size.image} alt={size.name} className="tile-radio-button__image" />
+                                                                </div>
+                                                                <div className="u-last-child-margin-bottom-0">
+                                                                    <div className="h__block tile-radio-button__text">{size.name}</div>
+                                                                    <p className="tile-radio-button__text">{size.dimensions}</p>
+                                                                </div>
+                                                            </label>
                                                         </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Coated on the back only
+                                                    </div>
+
+                                                ))}
+                                            </div>
+                                            <div className="">
+                                                <div
+                                                    style={{
+                                                        visibility: "hidden",
+                                                        position: "absolute",
+                                                        height: 90,
+                                                        width: 200
+                                                    }}
+                                                />
+                                            </div>
+                                        </fieldset>
+                                        <fieldset className="product-options-module__section u-visually-hidden">
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    name="paper"
+                                                    tabIndex={-1}
+                                                    aria-hidden="true"
+                                                    readOnly=""
+                                                    defaultValue={8}
+                                                />
+                                            </div>
+                                            <div className="">
+                                                <div
+                                                    style={{
+                                                        visibility: "hidden",
+                                                        position: "absolute",
+                                                        height: 90,
+                                                        width: 200
+                                                    }}
+                                                />
+                                            </div>
+                                        </fieldset>
+                                        <fieldset className="product-options-module__section">
+                                            <legend
+                                                className="h5 u-marginBottom-xs u-transitionProperty-color u-transitionDuration-s"
+                                                id="radiogroup-laminatedSides"
+                                            >
+                                                Choose your coating
+                                            </legend>
+                                            <div
+                                                className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
+                                                role="radiogroup"
+                                                aria-labelledby="radiogroup-laminatedSides"
+                                            >
+                                                <div className="u-position-relative u-display-flex layout__item u-1/2">
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
+                                                        data-qa-name="radio-container"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            id="laminatedSides_1"
+                                                            name="laminatedSides"
+                                                            tabIndex={0}
+                                                            aria-describedby="laminatedSides_1_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue={1}
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="laminatedSides_1"
+                                                            data-qa-name="radio-label"
+                                                        >
+                                                            <div className="tile-radio-button__image-wrap u-marginBottom-xs">
+                                                                <img
+                                                                    src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminated-sides/postcards-coated_back-526x251.jpg"
+                                                                    alt="Postcard coated on the back only, with a logo and a handwritten note on the front"
+                                                                    title="Postcard coated on the back only, with a logo and a handwritten note on the front"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-image"
+                                                                />
                                                             </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
+                                                            <div className="u-last-child-margin-bottom-0">
+                                                                <div
+                                                                    className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-heading"
+                                                                >
+                                                                    Coated on the back only
+                                                                </div>
+                                                                <p
+                                                                    className="tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="text"
+                                                                >
+                                                                    The front will be uncoated – you’ll be able to write
+                                                                    on it with a pen.
+                                                                </p>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="laminatedSides_1_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div>Coated on the back only</div>
+                                                            <div>
                                                                 The front will be uncoated – you’ll be able to write
                                                                 on it with a pen.
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="laminatedSides_1_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Coated on the back only</div>
-                                                        <div>
-                                                            The front will be uncoated – you’ll be able to write
-                                                            on it with a pen.
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="laminatedSides_2"
-                                                        name="laminatedSides"
-                                                        tabIndex={-1}
-                                                        aria-describedby="laminatedSides_2_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={2}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="laminatedSides_2"
-                                                        data-qa-name="radio-label"
+                                                <div className="u-position-relative u-display-flex layout__item u-1/2">
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
+                                                        data-qa-name="radio-container"
                                                     >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminated-sides/postcards-coated-526x251.jpg"
-                                                                alt="Postcard coated on both sides, with pictures and a logo on the front"
-                                                                title="Postcard coated on both sides, with pictures and a logo on the front"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Coated on both sides
+                                                        <input
+                                                            type="radio"
+                                                            id="laminatedSides_2"
+                                                            name="laminatedSides"
+                                                            tabIndex={-1}
+                                                            aria-describedby="laminatedSides_2_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue={2}
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="laminatedSides_2"
+                                                            data-qa-name="radio-label"
+                                                        >
+                                                            <div className="tile-radio-button__image-wrap u-marginBottom-xs">
+                                                                <img
+                                                                    src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminated-sides/postcards-coated-526x251.jpg"
+                                                                    alt="Postcard coated on both sides, with pictures and a logo on the front"
+                                                                    title="Postcard coated on both sides, with pictures and a logo on the front"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-image"
+                                                                />
                                                             </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
+                                                            <div className="u-last-child-margin-bottom-0">
+                                                                <div
+                                                                    className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-heading"
+                                                                >
+                                                                    Coated on both sides
+                                                                </div>
+                                                                <p
+                                                                    className="tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="text"
+                                                                >
+                                                                    This means you won’t be able to write on your
+                                                                    postcards with a pen.
+                                                                </p>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="laminatedSides_2_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div>Coated on both sides</div>
+                                                            <div>
                                                                 This means you won’t be able to write on your
                                                                 postcards with a pen.
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="laminatedSides_2_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Coated on both sides</div>
-                                                        <div>
-                                                            This means you won’t be able to write on your
-                                                            postcards with a pen.
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="">
-                                            <div
-                                                style={{
-                                                    visibility: "hidden",
-                                                    position: "absolute",
-                                                    height: 90,
-                                                    width: 200
-                                                }}
-                                            />
-                                        </div>
-                                    </fieldset>
-                                    <fieldset className="product-options-module__section">
-                                        <legend
-                                            className="h5 u-marginBottom-xs u-transitionProperty-color u-transitionDuration-s"
-                                            id="radiogroup-laminate"
-                                        >
-                                            Choose your finish
-                                        </legend>
-                                        <div
-                                            className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
-                                            role="radiogroup"
-                                            aria-labelledby="radiogroup-laminate"
-                                        >
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2">
+                                            <div className="">
                                                 <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="laminate_5"
-                                                        name="laminate"
-                                                        tabIndex={0}
-                                                        aria-describedby="laminate_5_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={5}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="laminate_5"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminates/postcards-matte-526x251.jpg"
-                                                                alt="Matte postcard on blue background"
-                                                                title="Matte postcard on blue background"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Matte
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                With a smooth feel. Shine-free so no glare.
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="laminate_5_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Matte</div>
-                                                        <div>With a smooth feel. Shine-free so no glare.</div>
-                                                    </div>
-                                                </div>
+                                                    style={{
+                                                        visibility: "hidden",
+                                                        position: "absolute",
+                                                        height: 90,
+                                                        width: 200
+                                                    }}
+                                                />
                                             </div>
-                                            <div className="u-position-relative u-display-flex layout__item u-1/2">
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="laminate_6"
-                                                        name="laminate"
-                                                        tabIndex={-1}
-                                                        aria-describedby="laminate_6_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue={6}
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="laminate_6"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__image-wrap u-marginBottom-xs">
-                                                            <img
-                                                                src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminates/postcards-gloss-526x251.jpg"
-                                                                alt="Glossy postcard on blue background"
-                                                                title="Glossy postcard on blue background"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-image"
-                                                            />
-                                                        </div>
-                                                        <div className="u-last-child-margin-bottom-0">
-                                                            <div
-                                                                className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="radio-heading"
-                                                            >
-                                                                Gloss
-                                                            </div>
-                                                            <p
-                                                                className="tile-radio-button__text u-wordBreak-breakWord"
-                                                                aria-hidden="true"
-                                                                data-qa-name="text"
-                                                            >
-                                                                Eye-catchingly shiny. Makes color photos pop.
-                                                            </p>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="laminate_6_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div>Gloss</div>
-                                                        <div>Eye-catchingly shiny. Makes color photos pop.</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            <div
-                                                style={{
-                                                    visibility: "hidden",
-                                                    position: "absolute",
-                                                    height: 90,
-                                                    width: 200
-                                                }}
-                                            />
-                                        </div>
-                                    </fieldset>
-                                    <fieldset className="product-options-module__section u-visually-hidden">
-                                        <div>
-                                            <input
-                                                type="text"
-                                                name="corners"
-                                                tabIndex={-1}
-                                                aria-hidden="true"
-                                                readOnly=""
-                                                defaultValue={1}
-                                            />
-                                        </div>
-                                        <div className="">
-                                            <div
-                                                style={{
-                                                    visibility: "hidden",
-                                                    position: "absolute",
-                                                    height: 90,
-                                                    width: 200
-                                                }}
-                                            />
-                                        </div>
-                                    </fieldset>
-                                    <div className="u-marginBottom-l">
-                                        <div className="h5 u-marginBottom-xs">Choose your quantity</div>
-                                        <table
-                                            className="table u-position-relative u-marginBottom-0"
-                                            data-component-name="quantity-pricing-table"
-                                        >
-                                            <thead data-qa-name="quantity-prices-thead">
-                                                <tr>
-                                                    <th style={{ width: "30%" }}>Quantity</th>
-                                                    <th className="u-display-none@until-medium">
-                                                        Price per postcard
-                                                    </th>
-                                                    <th>Pack price</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody data-qa-name="quantity-prices-tbody">
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={-1}
-                                                        />
-                                                        25
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.84
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $21.00
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row is-selected is-focused"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={0}
-                                                        />
-                                                        50
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.74
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $37.00
-                                                            </span>
-                                                            <span>
-                                                                &nbsp;
-                                                                <s
-                                                                    className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                    data-qa-name="strikethrough-price"
-                                                                >
-                                                                    $42.00
-                                                                </s>
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={-1}
-                                                        />
-                                                        100
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.58
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $58.00
-                                                            </span>
-                                                            <span>
-                                                                &nbsp;
-                                                                <s
-                                                                    className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                    data-qa-name="strikethrough-price"
-                                                                >
-                                                                    $84.00
-                                                                </s>
-                                                            </span>
-                                                        </span>
-                                                        <div>
-                                                            <div
-                                                                className="pill -small -denim u-marginTop-xxxxs"
-                                                                data-qa-name="pill"
-                                                            >
-                                                                RECOMMENDED
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={-1}
-                                                        />
-                                                        250
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.38
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $95.00
-                                                            </span>
-                                                            <span>
-                                                                &nbsp;
-                                                                <s
-                                                                    className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                    data-qa-name="strikethrough-price"
-                                                                >
-                                                                    $210.00
-                                                                </s>
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={-1}
-                                                        />
-                                                        500
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.28
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $142.00
-                                                            </span>
-                                                            <span>
-                                                                &nbsp;
-                                                                <s
-                                                                    className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                    data-qa-name="strikethrough-price"
-                                                                >
-                                                                    $420.00
-                                                                </s>
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={-1}
-                                                        />
-                                                        1000
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.18
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $181.00
-                                                            </span>
-                                                            <span>
-                                                                &nbsp;
-                                                                <s
-                                                                    className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                    data-qa-name="strikethrough-price"
-                                                                >
-                                                                    $840.00
-                                                                </s>
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="quantity-price-row"
-                                                >
-                                                    <td data-qa-name="quantity">
-                                                        <input
-                                                            type="radio"
-                                                            className="u-visually-hidden js-quantity-pricing-radio"
-                                                            tabIndex={-1}
-                                                        />
-                                                        2500
-                                                    </td>
-                                                    <td
-                                                        className="u-display-none@until-medium"
-                                                        data-qa-name="unit-price"
-                                                    >
-                                                        $0.15
-                                                    </td>
-                                                    <td>
-                                                        <span>
-                                                            <span
-                                                                className="u-fontFamily-secondaryMedium"
-                                                                data-qa-name="price"
-                                                            >
-                                                                $367.00
-                                                            </span>
-                                                            <span>
-                                                                &nbsp;
-                                                                <s
-                                                                    className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                    data-qa-name="strikethrough-price"
-                                                                >
-                                                                    $2100.00
-                                                                </s>
-                                                            </span>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    className="quantity-pricing-table__row"
-                                                    data-qa-name="show-more-quantities"
-                                                >
-                                                    <td colSpan="100%">
-                                                        <div className="u-display-flex u-justifyContent-spaceBetween u-alignItems-center">
-                                                            <span>Show more quantities</span>
-                                                            <svg className="-small svg-icon" viewBox="0 0 48 48">
-                                                                <path d="M24 29.086l-13-13L9.586 17.5 24 31.914 38.414 17.5 37 16.086l-13 13z" />
-                                                            </svg>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot data-qa-name="quantity-prices-tfoot">
-                                                <tr>
-                                                    <td colSpan="100%">
-                                                        <span>
-                                                            For more pricing info, see our{" "}
-                                                            <a
-                                                                href="/us/help/faq/cost-calculator.html"
-                                                                className="js-ga4-click-track"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                            >
-                                                                Shipping and Cost Calculator
-                                                            </a>
-                                                            .
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                        <div className="u-marginTop-xxs">
-                                            <div
-                                                className="u-paddingBottom-s notification -information -small has-icon is-visible"
-                                                data-qa-name="notification"
-                                                data-testid="notification-information"
-                                                role="status"
+                                        </fieldset>
+                                        <fieldset className="product-options-module__section">
+                                            <legend
+                                                className="h5 u-marginBottom-xs u-transitionProperty-color u-transitionDuration-s"
+                                                id="radiogroup-laminate"
                                             >
-                                                <div className="media-flex media-flex--small">
-                                                    <div className="media-flex__img notification__icon">
-                                                        <svg className="svg-icon" viewBox="0 0 48 48">
-                                                            <path d="M24-.023A24.023 24.023 0 1 0 48.023 24 24.051 24.051 0 0 0 24-.023zm0 46.046A22.023 22.023 0 1 1 46.023 24 22.047 22.047 0 0 1 24 46.023z" />
-                                                            <path d="M23 22h2v12h-2z" />
-                                                            <circle cx={24} cy={16} r={2} />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="media-flex__body notification__text-wrap">
-                                                        <div
-                                                            className="media-flex media-flex--rev media-flex--small u-media-flex-stack@until-xlarge"
-                                                            style={{ paddingTop: 2 }}
+                                                Choose your finish
+                                            </legend>
+                                            <div
+                                                className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
+                                                role="radiogroup"
+                                                aria-labelledby="radiogroup-laminate"
+                                            >
+                                                <div className="u-position-relative u-display-flex layout__item u-1/2">
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
+                                                        data-qa-name="radio-container"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            id="laminate_5"
+                                                            name="laminate"
+                                                            tabIndex={0}
+                                                            aria-describedby="laminate_5_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue={5}
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="laminate_5"
+                                                            data-qa-name="radio-label"
                                                         >
-                                                            <div className="media-flex__body notification__text-wrap">
-                                                                <p className="notification__text u-marginBottom-xxxs">
-                                                                    Bulk shouldn’t cost the earth. Meet Eco
-                                                                </p>
-                                                                <p />
-                                                                <p>
-                                                                    Order in bulk from our new Eco range, and save big
-                                                                    on your next order of postcards. Email&nbsp;
-                                                                    <a href="mailto:inquiries@moo.com">
-                                                                        inquiries@moo.com
-                                                                    </a>
-                                                                    &nbsp; or call{" "}
-                                                                    <a href="tel:+1 401-484-0988">+1 401-484-0988</a>{" "}
-                                                                    to get started.
-                                                                </p>
-                                                                <p />
+                                                            <div className="tile-radio-button__image-wrap u-marginBottom-xs">
+                                                                <img
+                                                                    src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminates/postcards-matte-526x251.jpg"
+                                                                    alt="Matte postcard on blue background"
+                                                                    title="Matte postcard on blue background"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-image"
+                                                                />
                                                             </div>
-                                                            <div className="media-flex__img">
+                                                            <div className="u-last-child-margin-bottom-0">
+                                                                <div
+                                                                    className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-heading"
+                                                                >
+                                                                    Matte
+                                                                </div>
+                                                                <p
+                                                                    className="tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="text"
+                                                                >
+                                                                    With a smooth feel. Shine-free so no glare.
+                                                                </p>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="laminate_5_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div>Matte</div>
+                                                            <div>With a smooth feel. Shine-free so no glare.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="u-position-relative u-display-flex layout__item u-1/2">
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1 has-image"
+                                                        data-qa-name="radio-container"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            id="laminate_6"
+                                                            name="laminate"
+                                                            tabIndex={-1}
+                                                            aria-describedby="laminate_6_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue={6}
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="laminate_6"
+                                                            data-qa-name="radio-label"
+                                                        >
+                                                            <div className="tile-radio-button__image-wrap u-marginBottom-xs">
+                                                                <img
+                                                                    src="https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/laminates/postcards-gloss-526x251.jpg"
+                                                                    alt="Glossy postcard on blue background"
+                                                                    title="Glossy postcard on blue background"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-image"
+                                                                />
+                                                            </div>
+                                                            <div className="u-last-child-margin-bottom-0">
+                                                                <div
+                                                                    className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="radio-heading"
+                                                                >
+                                                                    Gloss
+                                                                </div>
+                                                                <p
+                                                                    className="tile-radio-button__text u-wordBreak-breakWord"
+                                                                    aria-hidden="true"
+                                                                    data-qa-name="text"
+                                                                >
+                                                                    Eye-catchingly shiny. Makes color photos pop.
+                                                                </p>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="laminate_6_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div>Gloss</div>
+                                                            <div>Eye-catchingly shiny. Makes color photos pop.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                <div
+                                                    style={{
+                                                        visibility: "hidden",
+                                                        position: "absolute",
+                                                        height: 90,
+                                                        width: 200
+                                                    }}
+                                                />
+                                            </div>
+                                        </fieldset>
+                                        <fieldset className="product-options-module__section u-visually-hidden">
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    name="corners"
+                                                    tabIndex={-1}
+                                                    aria-hidden="true"
+                                                    readOnly=""
+                                                    defaultValue={1}
+                                                />
+                                            </div>
+                                            <div className="">
+                                                <div
+                                                    style={{
+                                                        visibility: "hidden",
+                                                        position: "absolute",
+                                                        height: 90,
+                                                        width: 200
+                                                    }}
+                                                />
+                                            </div>
+                                        </fieldset>
+                                        <div className="u-marginBottom-l">
+                                            <div className="h5 u-marginBottom-xs">Choose your quantity</div>
+                                            <table
+                                                className="table u-position-relative u-marginBottom-0"
+                                                data-component-name="quantity-pricing-table"
+                                            >
+                                                <thead data-qa-name="quantity-prices-thead">
+                                                    <tr>
+                                                        <th style={{ width: "30%" }}>Quantity</th>
+                                                        <th className="u-display-none@until-medium">
+                                                            Price per postcard
+                                                        </th>
+                                                        <th>Pack price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-qa-name="quantity-prices-tbody">
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={-1}
+                                                            />
+                                                            25
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.84
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $21.00
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row is-selected is-focused"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={0}
+                                                            />
+                                                            50
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.74
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $37.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $42.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={-1}
+                                                            />
+                                                            100
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.58
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $58.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $84.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                            <div>
+                                                                <div
+                                                                    className="pill -small -denim u-marginTop-xxxxs"
+                                                                    data-qa-name="pill"
+                                                                >
+                                                                    RECOMMENDED
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={-1}
+                                                            />
+                                                            250
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.38
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $95.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $210.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={-1}
+                                                            />
+                                                            500
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.28
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $142.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $420.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={-1}
+                                                            />
+                                                            1000
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.18
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $181.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $840.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="quantity-price-row"
+                                                    >
+                                                        <td data-qa-name="quantity">
+                                                            <input
+                                                                type="radio"
+                                                                className="u-visually-hidden js-quantity-pricing-radio"
+                                                                tabIndex={-1}
+                                                            />
+                                                            2500
+                                                        </td>
+                                                        <td
+                                                            className="u-display-none@until-medium"
+                                                            data-qa-name="unit-price"
+                                                        >
+                                                            $0.15
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $367.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $2100.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        className="quantity-pricing-table__row"
+                                                        data-qa-name="show-more-quantities"
+                                                    >
+                                                        <td colSpan="100%">
+                                                            <div className="u-display-flex u-justifyContent-spaceBetween u-alignItems-center">
+                                                                <span>Show more quantities</span>
+                                                                <svg className="-small svg-icon" viewBox="0 0 48 48">
+                                                                    <path d="M24 29.086l-13-13L9.586 17.5 24 31.914 38.414 17.5 37 16.086l-13 13z" />
+                                                                </svg>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot data-qa-name="quantity-prices-tfoot">
+                                                    <tr>
+                                                        <td colSpan="100%">
+                                                            <span>
+                                                                For more pricing info, see our{" "}
                                                                 <a
-                                                                    href="/us/eco"
+                                                                    href="/us/help/faq/cost-calculator.html"
+                                                                    className="js-ga4-click-track"
                                                                     target="_blank"
                                                                     rel="noreferrer"
-                                                                    className="btn -ghost-dark -small"
-                                                                    data-qa-name="mbs-cta"
                                                                 >
-                                                                    Learn more
+                                                                    Shipping and Cost Calculator
                                                                 </a>
+                                                                .
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            <div className="u-marginTop-xxs">
+                                                <div
+                                                    className="u-paddingBottom-s notification -information -small has-icon is-visible"
+                                                    data-qa-name="notification"
+                                                    data-testid="notification-information"
+                                                    role="status"
+                                                >
+                                                    <div className="media-flex media-flex--small">
+                                                        <div className="media-flex__img notification__icon">
+                                                            <svg className="svg-icon" viewBox="0 0 48 48">
+                                                                <path d="M24-.023A24.023 24.023 0 1 0 48.023 24 24.051 24.051 0 0 0 24-.023zm0 46.046A22.023 22.023 0 1 1 46.023 24 22.047 22.047 0 0 1 24 46.023z" />
+                                                                <path d="M23 22h2v12h-2z" />
+                                                                <circle cx={24} cy={16} r={2} />
+                                                            </svg>
+                                                        </div>
+                                                        <div className="media-flex__body notification__text-wrap">
+                                                            <div
+                                                                className="media-flex media-flex--rev media-flex--small u-media-flex-stack@until-xlarge"
+                                                                style={{ paddingTop: 2 }}
+                                                            >
+                                                                <div className="media-flex__body notification__text-wrap">
+                                                                    <p className="notification__text u-marginBottom-xxxs">
+                                                                        Bulk shouldn’t cost the earth. Meet Eco
+                                                                    </p>
+                                                                    <p />
+                                                                    <p>
+                                                                        Order in bulk from our new Eco range, and save big
+                                                                        on your next order of postcards. Email&nbsp;
+                                                                        <a href="mailto:inquiries@moo.com">
+                                                                            inquiries@moo.com
+                                                                        </a>
+                                                                        &nbsp; or call{" "}
+                                                                        <a href="tel:+1 401-484-0988">+1 401-484-0988</a>{" "}
+                                                                        to get started.
+                                                                    </p>
+                                                                    <p />
+                                                                </div>
+                                                                <div className="media-flex__img">
+                                                                    <a
+                                                                        href="/us/eco"
+                                                                        target="_blank"
+                                                                        rel="noreferrer"
+                                                                        className="btn -ghost-dark -small"
+                                                                        data-qa-name="mbs-cta"
+                                                                    >
+                                                                        Learn more
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div
-                                        className="u-marginBottom-l"
-                                        data-component-name="options-summary"
-                                    >
-                                        <div className="u-marginBottom-xs">
-                                            <div className="h5">Summary</div>
-                                        </div>
-                                        <table
-                                            className="table -horizontal-borders -border-top -col-1-heading u-marginBottom-0"
-                                            data-qa-name="options-summary"
+                                        <div
+                                            className="u-marginBottom-l"
+                                            data-component-name="options-summary"
                                         >
-                                            <tbody>
-                                                <tr>
-                                                    <td data-qa-name="size-name">Size</td>
-                                                    <td data-qa-name="size-value">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-qa-name="paper-name">Paper</td>
-                                                    <td data-qa-name="paper-value">Original</td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-qa-name="laminatedSides-name">Coating</td>
-                                                    <td data-qa-name="laminatedSides-value">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-qa-name="laminate-name">Finish</td>
-                                                    <td data-qa-name="laminate-value">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-qa-name="corners-name">Corners</td>
-                                                    <td data-qa-name="corners-value">Square</td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-qa-name="quantity-name">Quantity</td>
-                                                    <td data-qa-name="quantity-value">50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-qa-name="price-name" className="u-fontSize-l">
-                                                        Price
-                                                    </td>
-                                                    <td data-qa-name="price-value" className="u-fontSize-l">
+                                            <div className="u-marginBottom-xs">
+                                                <div className="h5">Summary</div>
+                                            </div>
+                                            <table
+                                                className="table -horizontal-borders -border-top -col-1-heading u-marginBottom-0"
+                                                data-qa-name="options-summary"
+                                            >
+                                                <tbody>
+                                                    <tr>
+                                                        <td data-qa-name="size-name">Size</td>
+                                                        <td data-qa-name="size-value">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-qa-name="paper-name">Paper</td>
+                                                        <td data-qa-name="paper-value">Original</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-qa-name="laminatedSides-name">Coating</td>
+                                                        <td data-qa-name="laminatedSides-value">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-qa-name="laminate-name">Finish</td>
+                                                        <td data-qa-name="laminate-value">-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-qa-name="corners-name">Corners</td>
+                                                        <td data-qa-name="corners-value">Square</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-qa-name="quantity-name">Quantity</td>
+                                                        <td data-qa-name="quantity-value">50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td data-qa-name="price-name" className="u-fontSize-l">
+                                                            Price
+                                                        </td>
+                                                        <td data-qa-name="price-value" className="u-fontSize-l">
+                                                            <span>
+                                                                <span
+                                                                    className="u-fontFamily-secondaryMedium"
+                                                                    data-qa-name="price"
+                                                                >
+                                                                    $37.00
+                                                                </span>
+                                                                <span>
+                                                                    &nbsp;
+                                                                    <s
+                                                                        className="u-fontSize-80 u-color-light u-fontFamily-secondary"
+                                                                        data-qa-name="strikethrough-price"
+                                                                    >
+                                                                        $42.00
+                                                                    </s>
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="product-options-module__section u-marginBottom-xxxxs">
+                                            <div
+                                                className="h5 u-marginBottom-xs"
+                                                id="radiogroup-buildflow"
+                                                data-qa-name="buildflow-options-heading"
+                                            >
+                                                How would you like to design your postcards?
+                                            </div>
+                                            <div
+                                                className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
+                                                role="radiogroup"
+                                                aria-labelledby="radiogroup-buildflow"
+                                            >
+                                                <div
+                                                    className="u-position-relative u-display-flex layout__item
+u-1/3@medium-to-large"
+                                                >
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1"
+                                                        data-qa-name="radio-container"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            id="buildflow_designTemplateHub"
+                                                            name="buildflow"
+                                                            tabIndex={0}
+                                                            aria-describedby="buildflow_designTemplateHub_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue="designTemplateHub"
+                                                            defaultChecked=""
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="buildflow_designTemplateHub"
+                                                            data-qa-name="radio-label"
+                                                        >
+                                                            <div className="tile-radio-button__buildflow-media-flex media-flex">
+                                                                <div className="media-flex__img">
+                                                                    <div
+                                                                        className="u-marginBottom-xs tile-radio-button__svg-image-wrap
+u-flex-center-content -design-templates"
+                                                                    >
+                                                                        <svg
+                                                                            className="tile-radio-button__svg-image svg-icon"
+                                                                            viewBox="0 0 157.3 124.85"
+                                                                        >
+                                                                            <path
+                                                                                d="M13,67.34h0v40.25H73.28V67.3H13Zm58.66,38.05-.54.54H66.36l5.26-5.31Zm0-5.68-6.18,6.22H58.73L71.62,93Zm0-7.63-13.8,13.85H51.19L71.62,85.41Zm0-7.59L50.28,105.93H43.56L71.62,77.83Zm0-7.59-29,29H36L71.62,70.24Zm0-7.92v.33L35.1,105.93H28.39L65.28,69Zm-7.25,0L27.48,105.93H20.8L57.65,69ZM14.63,69h4.23l-4.23,4.19Zm0,5.1L19.77,69h6.67L14.63,80.81Zm0,7.63L27.35,69H34L14.63,88.4Zm0,7.59L34.94,69h6.67l-27,27Zm0,7.59L42.52,69H49.2L14.63,103.61Zm0,7.63L50.11,69h6.63L19.89,105.93H14.63Z"
+                                                                                fill="#384044"
+                                                                            />
+                                                                            <path
+                                                                                d="M84.06,107.59h60.36V67.3H84.06ZM85.72,69h57v37h-57Z"
+                                                                                fill="#384044"
+                                                                            />
+                                                                            <path
+                                                                                d="M73.24,17.26H12.89V57.56H73.24ZM71.58,55.9h-57v-37h57Z"
+                                                                                fill="#384044"
+                                                                            />
+                                                                            <path
+                                                                                d="M84.1,17.3h0V57.56h60.36V17.26H84.1Zm58.66,38.1-.5.5h-4.77l5.26-5.26Zm0-5.68-6.18,6.18h-6.72L142.76,43Zm0-7.67L129,55.9h-6.63l20.44-20.48Zm0-7.54L121.41,55.9h-6.72l28.06-28.11Zm0-7.63-29,29h-6.63l35.61-35.65Zm0-7.92v.37L106.24,55.9H99.52L136.41,19Zm-7.25,0L98.61,55.9H91.94L128.83,19ZM85.76,19H90l-4.23,4.23Zm0,5.14L90.9,19h6.72L85.76,30.82Zm0,7.63L98.53,19h6.63L85.76,38.4Zm0,7.59L106.07,19h6.72l-27,27Zm0,7.59L113.7,19h6.63L85.76,53.62Zm0,7.63L121.24,19h6.67L91,55.9H85.76Z"
+                                                                                fill="#384044"
+                                                                            />
+                                                                            <polygon
+                                                                                points="27.48 105.93 64.37 69 57.65 69 20.8 105.93 27.48 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="14.63 69 14.63 73.18 18.85 69 14.63 69"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="71.08 105.93 71.62 105.39 71.62 100.63 66.36 105.93 71.08 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="35.1 105.93 71.62 69.33 71.62 69 65.28 69 28.39 105.93 35.1 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="27.35 69 14.63 81.72 14.63 88.4 34.03 69 27.35 69"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="42.65 105.93 71.62 76.91 71.62 70.24 36.02 105.93 42.65 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="42.52 69 14.63 96.89 14.63 103.61 49.2 69 42.52 69"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="34.94 69 14.63 89.31 14.63 95.98 41.61 69 34.94 69"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="56.74 69 50.11 69 14.63 104.52 14.63 105.93 19.89 105.93 56.74 69"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="57.82 105.93 71.62 92.08 71.62 85.41 51.19 105.93 57.82 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="19.77 69 14.63 74.09 14.63 80.81 26.44 69 19.77 69"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="65.45 105.93 71.62 99.71 71.62 93 58.73 105.93 65.45 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="106.07 18.96 85.76 39.32 85.76 45.99 112.79 18.96 106.07 18.96"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="136.58 55.9 142.76 49.72 142.76 42.96 129.87 55.9 136.58 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="106.24 55.9 142.76 19.34 142.76 18.96 136.41 18.96 99.52 55.9 106.24 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="85.76 18.96 85.76 23.19 89.99 18.96 85.76 18.96"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="98.61 55.9 135.5 18.96 128.83 18.96 91.94 55.9 98.61 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="128.95 55.9 142.76 42.05 142.76 35.42 122.32 55.9 128.95 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="113.78 55.9 142.76 26.88 142.76 20.25 107.15 55.9 113.78 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="121.41 55.9 142.76 34.51 142.76 27.79 114.69 55.9 121.41 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="142.26 55.9 142.76 55.4 142.76 50.63 137.49 55.9 142.26 55.9"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="127.92 18.96 121.24 18.96 85.76 54.53 85.76 55.9 91.02 55.9 127.92 18.96"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="113.7 18.96 85.76 46.9 85.76 53.62 120.33 18.96 113.7 18.96"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="98.53 18.96 85.76 31.73 85.76 38.4 105.16 18.96 98.53 18.96"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="50.28 105.93 71.62 84.5 71.62 77.83 43.56 105.93 50.28 105.93"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <polygon
+                                                                                points="90.9 18.96 85.76 24.1 85.76 30.82 97.61 18.96 90.9 18.96"
+                                                                                fill="#d3d9dd"
+                                                                            />
+                                                                            <path
+                                                                                d="M142.76,69h-57v37h57Zm-31.55,5.8a4.19,4.19,0,0,1,3-1.2,4.11,4.11,0,0,1,4.19,4.19,4.19,4.19,0,0,1-1.2,3,4.14,4.14,0,0,1-3,1.2A4.11,4.11,0,0,1,110,77.74,4.14,4.14,0,0,1,111.21,74.76ZM128.33,97.1H100.06V95.44h28.27Zm0-4.06H100.06V91.38h28.27Z"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <path
+                                                                                d="M14.54,55.9h57v-37h-57ZM38.17,41.35H66.44V43H38.17Zm0,4.1H66.44v1.66H38.17ZM20.39,24.81a4,4,0,0,1,3-1.29,4.09,4.09,0,0,1,3,1.29,4.05,4.05,0,0,1,1.2,3,4.14,4.14,0,0,1-1.2,3,4.23,4.23,0,0,1-3,1.2,4.18,4.18,0,0,1-4.27-4.19A4,4,0,0,1,20.39,24.81Z"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="100.06"
+                                                                                y="91.38"
+                                                                                width="28.27"
+                                                                                height="1.66"
+                                                                                fill="#b1b9c2"
+                                                                            />
+                                                                            <path
+                                                                                d="M23.41,32a4.23,4.23,0,0,0,3-1.2,4.14,4.14,0,0,0,1.2-3,4.05,4.05,0,0,0-1.2-3,4.09,4.09,0,0,0-3-1.29,4.32,4.32,0,0,0-4.27,4.27A4.18,4.18,0,0,0,23.41,32Z"
+                                                                                fill="#b1b9c2"
+                                                                            />
+                                                                            <rect
+                                                                                x="38.17"
+                                                                                y="41.35"
+                                                                                width="28.27"
+                                                                                height="1.66"
+                                                                                fill="#b1b9c2"
+                                                                            />
+                                                                            <rect
+                                                                                x="100.06"
+                                                                                y="95.44"
+                                                                                width="28.27"
+                                                                                height="1.66"
+                                                                                fill="#b1b9c2"
+                                                                            />
+                                                                            <rect
+                                                                                x="38.17"
+                                                                                y="45.45"
+                                                                                width="28.27"
+                                                                                height="1.66"
+                                                                                fill="#b1b9c2"
+                                                                            />
+                                                                            <path
+                                                                                d="M114.24,82a4.14,4.14,0,0,0,3-1.2,4.19,4.19,0,0,0,1.2-3,4.11,4.11,0,0,0-4.19-4.19,4.19,4.19,0,0,0-3,1.2,4.14,4.14,0,0,0-1.2,3A4.11,4.11,0,0,0,114.24,82Z"
+                                                                                fill="#b1b9c2"
+                                                                            />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="media-flex__body">
+                                                                    <div className="u-last-child-margin-bottom-0">
+                                                                        <div
+                                                                            className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                            data-qa-name="radio-heading"
+                                                                        >
+                                                                            Use our templates
+                                                                        </div>
+                                                                        <div className="list-default__parent tile-radio-button__text u-wordBreak-breakWord u-last-child-margin-bottom-0">
+                                                                            <ul>
+                                                                                <li>Looking for inspiration</li>
+                                                                                <li>Want simple customization</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="buildflow_designTemplateHub_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className="u-position-relative u-display-flex layout__item
+u-1/3@medium-to-large"
+                                                >
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1"
+                                                        data-qa-name="radio-container"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            id="buildflow_designYourOwn"
+                                                            name="buildflow"
+                                                            tabIndex={-1}
+                                                            aria-describedby="buildflow_designYourOwn_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue="designYourOwn"
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="buildflow_designYourOwn"
+                                                            data-qa-name="radio-label"
+                                                        >
+                                                            <div className="tile-radio-button__buildflow-media-flex media-flex">
+                                                                <div className="media-flex__img">
+                                                                    <div
+                                                                        className="u-marginBottom-xs tile-radio-button__svg-image-wrap
+u-flex-center-content -design-your-own"
+                                                                    >
+                                                                        <svg
+                                                                            className="tile-radio-button__svg-image svg-icon"
+                                                                            viewBox="0 0 157.3 124.84"
+                                                                        >
+                                                                            <polygon
+                                                                                points="23.91 101.28 23.91 23.3 133.88 23.3 133.88 96.14 141.55 99.08 141.55 67.33 137.32 67.33 137.32 57.21 141.55 57.21 141.55 19.66 137.32 19.66 137.32 15.34 83.85 15.34 83.85 19.66 73.78 19.66 73.78 15.34 20.26 15.34 20.26 19.66 16.03 19.66 16.03 57.21 20.26 57.21 20.26 67.33 16.03 67.33 16.03 104.88 20.26 104.88 20.26 109.03 73.78 109.03 73.78 104.88 83.85 104.88 83.85 109.03 131.44 109.03 128.49 101.28 23.91 101.28"
+                                                                                fill="none"
+                                                                            />
+                                                                            <path
+                                                                                d="M154.2,103.89l-11-4.19V67.33h4.27V57.21h-4.27V19.65h4.27V9.54H137.32v4.15H83.85V9.54H73.78v4.15H20.26V9.54H10.15V19.65h4.23V57.21H10.15V67.33h4.23v37.56H10.15V115H20.26v-4.31H73.78V115H83.85v-4.31H132.1l4.23,11.15,5.93-5.93,7.46,7.5,6.22-6.09-7.63-7.54Zm-8.37-45v6.8H139v-6.8ZM139,11.2h6.84V18H139Zm-63.55,0h6.76V18H75.43ZM11.8,18V11.2h6.8V18Zm0,47.67v-6.8h6.8v6.8Zm6.8,47.67H11.8v-6.8h6.8Zm63.59,0H75.43v-6.8h6.76ZM83.85,109v-4.15H73.78V109H20.26v-4.15H16V67.33h4.23V57.21H16V19.65h4.23V15.34H73.78v4.31H83.85V15.34h53.47v4.31h4.23V57.21h-4.23V67.33h4.23V99.08l-7.67-2.94V23.3h-110v78H128.49l2.94,7.75Zm44-9.41H25.57V25H132.23V95.51l-7-2.69Zm25.7,17.66-3.86,3.81-7.46-7.54L137,118.85l-3.44-9.08a.87.87,0,0,0-.17-.41l-3.48-9.08a.47.47,0,0,0-.08-.25l-1.66-4.35,4.6,1.78a.22.22,0,0,0,.12,0L142,101a.39.39,0,0,0,.21.08l9,3.44-5.26,5.26Z"
+                                                                                fill="#394145"
+                                                                            />
+                                                                            <rect
+                                                                                x="11.8"
+                                                                                y="11.2"
+                                                                                width="6.8"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="75.43"
+                                                                                y="11.2"
+                                                                                width="6.76"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="11.8"
+                                                                                y="58.87"
+                                                                                width="6.8"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="138.98"
+                                                                                y="11.2"
+                                                                                width="6.84"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="11.8"
+                                                                                y="106.54"
+                                                                                width="6.8"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <path
+                                                                                d="M132.23,25H25.57V99.62H127.87l-2.61-6.8,7,2.69ZM104,67.33H53.59V65.67H104Zm0-8.46H53.59V57.21H104Z"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <path
+                                                                                d="M151.21,104.51l-9-3.44A.39.39,0,0,1,142,101l-9.12-3.48a.22.22,0,0,1-.12,0l-4.6-1.78,1.66,4.35a.47.47,0,0,1,.08.25l3.48,9.08a.87.87,0,0,1,.17.41l3.44,9.08,5.31-5.31,7.46,7.54,3.86-3.81-7.63-7.5Z"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="138.98"
+                                                                                y="58.87"
+                                                                                width="6.84"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="75.43"
+                                                                                y="106.54"
+                                                                                width="6.76"
+                                                                                height="6.8"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <rect
+                                                                                x="53.59"
+                                                                                y="57.21"
+                                                                                width="50.45"
+                                                                                height="1.66"
+                                                                                fill="#a2b4b9"
+                                                                            />
+                                                                            <rect
+                                                                                x="53.59"
+                                                                                y="65.67"
+                                                                                width="50.45"
+                                                                                height="1.66"
+                                                                                fill="#a2b4b9"
+                                                                            />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="media-flex__body">
+                                                                    <div className="u-last-child-margin-bottom-0">
+                                                                        <div
+                                                                            className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                            data-qa-name="radio-heading"
+                                                                        >
+                                                                            Design here online
+                                                                        </div>
+                                                                        <div className="list-default__parent tile-radio-button__text u-wordBreak-breakWord u-last-child-margin-bottom-0">
+                                                                            <ul>
+                                                                                <li>Already have your logo</li>
+                                                                                <li>Customize every detail</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="buildflow_designYourOwn_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className="u-position-relative u-display-flex layout__item
+u-1/3@medium-to-large"
+                                                >
+                                                    <div
+                                                        className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1"
+                                                        data-qa-name="radio-container"
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            id="buildflow_fullUpload"
+                                                            name="buildflow"
+                                                            tabIndex={-1}
+                                                            aria-describedby="buildflow_fullUpload_description"
+                                                            className="tile-radio-button__input"
+                                                            data-qa-name="radio-input"
+                                                            defaultValue="fullUpload"
+                                                        />
+                                                        <label
+                                                            className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
+                                                            htmlFor="buildflow_fullUpload"
+                                                            data-qa-name="radio-label"
+                                                        >
+                                                            <div className="tile-radio-button__buildflow-media-flex media-flex">
+                                                                <div className="media-flex__img">
+                                                                    <div
+                                                                        className="u-marginBottom-xs tile-radio-button__svg-image-wrap
+u-flex-center-content -full-upload"
+                                                                    >
+                                                                        <svg
+                                                                            className="tile-radio-button__svg-image svg-icon"
+                                                                            viewBox="0 0 157.3 124.85"
+                                                                        >
+                                                                            <path
+                                                                                d="M141.16,47.46a36,36,0,0,0-11.32-7.83A12.93,12.93,0,0,0,130,37.8a17.14,17.14,0,0,0-5.06-12.44v0a17.09,17.09,0,0,0-12.27-5A16.92,16.92,0,0,0,101.9,24a41.12,41.12,0,0,0-26.7-9.24A41.72,41.72,0,0,0,44.82,27.19a36.81,36.81,0,0,0-6,7.71l0,0a38.53,38.53,0,0,0-6.14,17.91,27.77,27.77,0,0,0-19,8.41h0a38.09,38.09,0,0,0-3.9,5.06,27.75,27.75,0,0,0-4.35,15.3,28.41,28.41,0,0,0,8.25,20.27h0a28.53,28.53,0,0,0,20.48,8.33h81.87a35.41,35.41,0,0,0,25.08-10.69,35.66,35.66,0,0,0,10.69-26A35.66,35.66,0,0,0,141.16,47.46ZM140,98.28a33.82,33.82,0,0,1-24,10.2H34.21a27,27,0,0,1-19.32-7.83v0A26.28,26.28,0,0,1,7.1,81.54a26,26,0,0,1,4.1-14.38,36.71,36.71,0,0,1,3.72-4.84l0,0,0,0h0a26.16,26.16,0,0,1,18.58-7.89l.75,0,.08-.75a36.81,36.81,0,0,1,5.89-17.87l0,0A35.16,35.16,0,0,1,46,28.35a40.11,40.11,0,0,1,29.22-12,39.56,39.56,0,0,1,26.16,9.29l.54.41.54-.41A15.17,15.17,0,0,1,112.64,22a15.38,15.38,0,0,1,11.07,4.52h0a15.65,15.65,0,0,1,4.56,11.28,10.59,10.59,0,0,1-.21,2.2l-.12.66.62.25a35.29,35.29,0,0,1,21.6,32.54A34.05,34.05,0,0,1,140,98.28Z"
+                                                                                fill="#394145"
+                                                                            />
+                                                                            <polygon
+                                                                                points="63.12 59.15 65.49 61.47 77.01 49.99 77.01 85.35 80.33 85.35 80.33 49.99 91.85 61.43 94.17 59.11 78.67 43.65 63.12 59.15"
+                                                                                fill="#394145"
+                                                                            />
+                                                                            <path
+                                                                                d="M140,48.62a34.22,34.22,0,0,0-11.4-7.71l-.62-.25.12-.66a10.59,10.59,0,0,0,.21-2.2,15.65,15.65,0,0,0-4.56-11.28h0A15.38,15.38,0,0,0,112.64,22a15.17,15.17,0,0,0-10.2,3.65l-.54.41-.54-.41a39.56,39.56,0,0,0-26.16-9.29A40.11,40.11,0,0,0,46,28.35a35.16,35.16,0,0,0-5.72,7.38l0,0a36.81,36.81,0,0,0-5.89,17.87l-.08.75-.75,0a26.16,26.16,0,0,0-18.58,7.89,36.71,36.71,0,0,0-3.72,4.84A26,26,0,0,0,7.1,81.54a26.28,26.28,0,0,0,7.79,19.07v0a27,27,0,0,0,19.32,7.83H116a34.83,34.83,0,0,0,34.16-35A34.05,34.05,0,0,0,140,48.62ZM91.83,61.43,80.31,50V85.35H77V50L65.47,61.47,63.1,59.15l15.54-15.5,15.5,15.46Z"
+                                                                                fill="#fff"
+                                                                            />
+                                                                            <path d="M78.63,62.34l0,0h0Z" fill="#fff" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="media-flex__body">
+                                                                    <div className="u-last-child-margin-bottom-0">
+                                                                        <div
+                                                                            className="h__block tile-radio-button__text u-wordBreak-breakWord"
+                                                                            data-qa-name="radio-heading"
+                                                                        >
+                                                                            Upload a full design
+                                                                        </div>
+                                                                        <div className="list-default__parent tile-radio-button__text u-wordBreak-breakWord u-last-child-margin-bottom-0">
+                                                                            <ul>
+                                                                                <li>Have a complete design</li>
+                                                                                <li>Have your own designer</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                        <div
+                                                            id="buildflow_fullUpload_description"
+                                                            className="u-visually-hidden"
+                                                            data-qa-name="aria-description"
+                                                            aria-hidden="true"
+                                                        >
+                                                            <div />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="product-options-cta__sticky u-padding-vertical-s u-paddingBottom-0@medium is-disabled">
+                                            <div className="product-options-cta__price-wrap">
+                                                <div className="product-options-cta__price-container u-display-flex u-justifyContent-spaceBetween">
+                                                    <span
+                                                        className="u-fontSize-m"
+                                                        data-qa-name="quantity-of-item"
+                                                    >
+                                                        <span className="u-fontFamily-secondaryMedium">50</span>{" "}
+                                                        postcards
+                                                    </span>
+                                                    <span>
                                                         <span>
                                                             <span
                                                                 className="u-fontFamily-secondaryMedium"
@@ -1852,549 +1965,56 @@ const cardDetails = () => {
                                                                 </s>
                                                             </span>
                                                         </span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div className="product-options-module__section u-marginBottom-xxxxs">
-                                        <div
-                                            className="h5 u-marginBottom-xs"
-                                            id="radiogroup-buildflow"
-                                            data-qa-name="buildflow-options-heading"
-                                        >
-                                            How would you like to design your postcards?
-                                        </div>
-                                        <div
-                                            className="layout layout--tiny layout--row-spacing-tiny u-display-flex u-flexWrap-wrap"
-                                            role="radiogroup"
-                                            aria-labelledby="radiogroup-buildflow"
-                                        >
-                                            <div
-                                                className="u-position-relative u-display-flex layout__item
-  u-1/3@medium-to-large"
-                                            >
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="buildflow_designTemplateHub"
-                                                        name="buildflow"
-                                                        tabIndex={0}
-                                                        aria-describedby="buildflow_designTemplateHub_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue="designTemplateHub"
-                                                        defaultChecked=""
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="buildflow_designTemplateHub"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__buildflow-media-flex media-flex">
-                                                            <div className="media-flex__img">
-                                                                <div
-                                                                    className="u-marginBottom-xs tile-radio-button__svg-image-wrap
-  u-flex-center-content -design-templates"
-                                                                >
-                                                                    <svg
-                                                                        className="tile-radio-button__svg-image svg-icon"
-                                                                        viewBox="0 0 157.3 124.85"
-                                                                    >
-                                                                        <path
-                                                                            d="M13,67.34h0v40.25H73.28V67.3H13Zm58.66,38.05-.54.54H66.36l5.26-5.31Zm0-5.68-6.18,6.22H58.73L71.62,93Zm0-7.63-13.8,13.85H51.19L71.62,85.41Zm0-7.59L50.28,105.93H43.56L71.62,77.83Zm0-7.59-29,29H36L71.62,70.24Zm0-7.92v.33L35.1,105.93H28.39L65.28,69Zm-7.25,0L27.48,105.93H20.8L57.65,69ZM14.63,69h4.23l-4.23,4.19Zm0,5.1L19.77,69h6.67L14.63,80.81Zm0,7.63L27.35,69H34L14.63,88.4Zm0,7.59L34.94,69h6.67l-27,27Zm0,7.59L42.52,69H49.2L14.63,103.61Zm0,7.63L50.11,69h6.63L19.89,105.93H14.63Z"
-                                                                            fill="#384044"
-                                                                        />
-                                                                        <path
-                                                                            d="M84.06,107.59h60.36V67.3H84.06ZM85.72,69h57v37h-57Z"
-                                                                            fill="#384044"
-                                                                        />
-                                                                        <path
-                                                                            d="M73.24,17.26H12.89V57.56H73.24ZM71.58,55.9h-57v-37h57Z"
-                                                                            fill="#384044"
-                                                                        />
-                                                                        <path
-                                                                            d="M84.1,17.3h0V57.56h60.36V17.26H84.1Zm58.66,38.1-.5.5h-4.77l5.26-5.26Zm0-5.68-6.18,6.18h-6.72L142.76,43Zm0-7.67L129,55.9h-6.63l20.44-20.48Zm0-7.54L121.41,55.9h-6.72l28.06-28.11Zm0-7.63-29,29h-6.63l35.61-35.65Zm0-7.92v.37L106.24,55.9H99.52L136.41,19Zm-7.25,0L98.61,55.9H91.94L128.83,19ZM85.76,19H90l-4.23,4.23Zm0,5.14L90.9,19h6.72L85.76,30.82Zm0,7.63L98.53,19h6.63L85.76,38.4Zm0,7.59L106.07,19h6.72l-27,27Zm0,7.59L113.7,19h6.63L85.76,53.62Zm0,7.63L121.24,19h6.67L91,55.9H85.76Z"
-                                                                            fill="#384044"
-                                                                        />
-                                                                        <polygon
-                                                                            points="27.48 105.93 64.37 69 57.65 69 20.8 105.93 27.48 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="14.63 69 14.63 73.18 18.85 69 14.63 69"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="71.08 105.93 71.62 105.39 71.62 100.63 66.36 105.93 71.08 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="35.1 105.93 71.62 69.33 71.62 69 65.28 69 28.39 105.93 35.1 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="27.35 69 14.63 81.72 14.63 88.4 34.03 69 27.35 69"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="42.65 105.93 71.62 76.91 71.62 70.24 36.02 105.93 42.65 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="42.52 69 14.63 96.89 14.63 103.61 49.2 69 42.52 69"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="34.94 69 14.63 89.31 14.63 95.98 41.61 69 34.94 69"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="56.74 69 50.11 69 14.63 104.52 14.63 105.93 19.89 105.93 56.74 69"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="57.82 105.93 71.62 92.08 71.62 85.41 51.19 105.93 57.82 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="19.77 69 14.63 74.09 14.63 80.81 26.44 69 19.77 69"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="65.45 105.93 71.62 99.71 71.62 93 58.73 105.93 65.45 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="106.07 18.96 85.76 39.32 85.76 45.99 112.79 18.96 106.07 18.96"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="136.58 55.9 142.76 49.72 142.76 42.96 129.87 55.9 136.58 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="106.24 55.9 142.76 19.34 142.76 18.96 136.41 18.96 99.52 55.9 106.24 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="85.76 18.96 85.76 23.19 89.99 18.96 85.76 18.96"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="98.61 55.9 135.5 18.96 128.83 18.96 91.94 55.9 98.61 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="128.95 55.9 142.76 42.05 142.76 35.42 122.32 55.9 128.95 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="113.78 55.9 142.76 26.88 142.76 20.25 107.15 55.9 113.78 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="121.41 55.9 142.76 34.51 142.76 27.79 114.69 55.9 121.41 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="142.26 55.9 142.76 55.4 142.76 50.63 137.49 55.9 142.26 55.9"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="127.92 18.96 121.24 18.96 85.76 54.53 85.76 55.9 91.02 55.9 127.92 18.96"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="113.7 18.96 85.76 46.9 85.76 53.62 120.33 18.96 113.7 18.96"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="98.53 18.96 85.76 31.73 85.76 38.4 105.16 18.96 98.53 18.96"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="50.28 105.93 71.62 84.5 71.62 77.83 43.56 105.93 50.28 105.93"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <polygon
-                                                                            points="90.9 18.96 85.76 24.1 85.76 30.82 97.61 18.96 90.9 18.96"
-                                                                            fill="#d3d9dd"
-                                                                        />
-                                                                        <path
-                                                                            d="M142.76,69h-57v37h57Zm-31.55,5.8a4.19,4.19,0,0,1,3-1.2,4.11,4.11,0,0,1,4.19,4.19,4.19,4.19,0,0,1-1.2,3,4.14,4.14,0,0,1-3,1.2A4.11,4.11,0,0,1,110,77.74,4.14,4.14,0,0,1,111.21,74.76ZM128.33,97.1H100.06V95.44h28.27Zm0-4.06H100.06V91.38h28.27Z"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <path
-                                                                            d="M14.54,55.9h57v-37h-57ZM38.17,41.35H66.44V43H38.17Zm0,4.1H66.44v1.66H38.17ZM20.39,24.81a4,4,0,0,1,3-1.29,4.09,4.09,0,0,1,3,1.29,4.05,4.05,0,0,1,1.2,3,4.14,4.14,0,0,1-1.2,3,4.23,4.23,0,0,1-3,1.2,4.18,4.18,0,0,1-4.27-4.19A4,4,0,0,1,20.39,24.81Z"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="100.06"
-                                                                            y="91.38"
-                                                                            width="28.27"
-                                                                            height="1.66"
-                                                                            fill="#b1b9c2"
-                                                                        />
-                                                                        <path
-                                                                            d="M23.41,32a4.23,4.23,0,0,0,3-1.2,4.14,4.14,0,0,0,1.2-3,4.05,4.05,0,0,0-1.2-3,4.09,4.09,0,0,0-3-1.29,4.32,4.32,0,0,0-4.27,4.27A4.18,4.18,0,0,0,23.41,32Z"
-                                                                            fill="#b1b9c2"
-                                                                        />
-                                                                        <rect
-                                                                            x="38.17"
-                                                                            y="41.35"
-                                                                            width="28.27"
-                                                                            height="1.66"
-                                                                            fill="#b1b9c2"
-                                                                        />
-                                                                        <rect
-                                                                            x="100.06"
-                                                                            y="95.44"
-                                                                            width="28.27"
-                                                                            height="1.66"
-                                                                            fill="#b1b9c2"
-                                                                        />
-                                                                        <rect
-                                                                            x="38.17"
-                                                                            y="45.45"
-                                                                            width="28.27"
-                                                                            height="1.66"
-                                                                            fill="#b1b9c2"
-                                                                        />
-                                                                        <path
-                                                                            d="M114.24,82a4.14,4.14,0,0,0,3-1.2,4.19,4.19,0,0,0,1.2-3,4.11,4.11,0,0,0-4.19-4.19,4.19,4.19,0,0,0-3,1.2,4.14,4.14,0,0,0-1.2,3A4.11,4.11,0,0,0,114.24,82Z"
-                                                                            fill="#b1b9c2"
-                                                                        />
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                            <div className="media-flex__body">
-                                                                <div className="u-last-child-margin-bottom-0">
-                                                                    <div
-                                                                        className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                        data-qa-name="radio-heading"
-                                                                    >
-                                                                        Use our templates
-                                                                    </div>
-                                                                    <div className="list-default__parent tile-radio-button__text u-wordBreak-breakWord u-last-child-margin-bottom-0">
-                                                                        <ul>
-                                                                            <li>Looking for inspiration</li>
-                                                                            <li>Want simple customization</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="buildflow_designTemplateHub_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                className="u-position-relative u-display-flex layout__item
-  u-1/3@medium-to-large"
-                                            >
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="buildflow_designYourOwn"
-                                                        name="buildflow"
-                                                        tabIndex={-1}
-                                                        aria-describedby="buildflow_designYourOwn_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue="designYourOwn"
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="buildflow_designYourOwn"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__buildflow-media-flex media-flex">
-                                                            <div className="media-flex__img">
-                                                                <div
-                                                                    className="u-marginBottom-xs tile-radio-button__svg-image-wrap
-  u-flex-center-content -design-your-own"
-                                                                >
-                                                                    <svg
-                                                                        className="tile-radio-button__svg-image svg-icon"
-                                                                        viewBox="0 0 157.3 124.84"
-                                                                    >
-                                                                        <polygon
-                                                                            points="23.91 101.28 23.91 23.3 133.88 23.3 133.88 96.14 141.55 99.08 141.55 67.33 137.32 67.33 137.32 57.21 141.55 57.21 141.55 19.66 137.32 19.66 137.32 15.34 83.85 15.34 83.85 19.66 73.78 19.66 73.78 15.34 20.26 15.34 20.26 19.66 16.03 19.66 16.03 57.21 20.26 57.21 20.26 67.33 16.03 67.33 16.03 104.88 20.26 104.88 20.26 109.03 73.78 109.03 73.78 104.88 83.85 104.88 83.85 109.03 131.44 109.03 128.49 101.28 23.91 101.28"
-                                                                            fill="none"
-                                                                        />
-                                                                        <path
-                                                                            d="M154.2,103.89l-11-4.19V67.33h4.27V57.21h-4.27V19.65h4.27V9.54H137.32v4.15H83.85V9.54H73.78v4.15H20.26V9.54H10.15V19.65h4.23V57.21H10.15V67.33h4.23v37.56H10.15V115H20.26v-4.31H73.78V115H83.85v-4.31H132.1l4.23,11.15,5.93-5.93,7.46,7.5,6.22-6.09-7.63-7.54Zm-8.37-45v6.8H139v-6.8ZM139,11.2h6.84V18H139Zm-63.55,0h6.76V18H75.43ZM11.8,18V11.2h6.8V18Zm0,47.67v-6.8h6.8v6.8Zm6.8,47.67H11.8v-6.8h6.8Zm63.59,0H75.43v-6.8h6.76ZM83.85,109v-4.15H73.78V109H20.26v-4.15H16V67.33h4.23V57.21H16V19.65h4.23V15.34H73.78v4.31H83.85V15.34h53.47v4.31h4.23V57.21h-4.23V67.33h4.23V99.08l-7.67-2.94V23.3h-110v78H128.49l2.94,7.75Zm44-9.41H25.57V25H132.23V95.51l-7-2.69Zm25.7,17.66-3.86,3.81-7.46-7.54L137,118.85l-3.44-9.08a.87.87,0,0,0-.17-.41l-3.48-9.08a.47.47,0,0,0-.08-.25l-1.66-4.35,4.6,1.78a.22.22,0,0,0,.12,0L142,101a.39.39,0,0,0,.21.08l9,3.44-5.26,5.26Z"
-                                                                            fill="#394145"
-                                                                        />
-                                                                        <rect
-                                                                            x="11.8"
-                                                                            y="11.2"
-                                                                            width="6.8"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="75.43"
-                                                                            y="11.2"
-                                                                            width="6.76"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="11.8"
-                                                                            y="58.87"
-                                                                            width="6.8"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="138.98"
-                                                                            y="11.2"
-                                                                            width="6.84"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="11.8"
-                                                                            y="106.54"
-                                                                            width="6.8"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <path
-                                                                            d="M132.23,25H25.57V99.62H127.87l-2.61-6.8,7,2.69ZM104,67.33H53.59V65.67H104Zm0-8.46H53.59V57.21H104Z"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <path
-                                                                            d="M151.21,104.51l-9-3.44A.39.39,0,0,1,142,101l-9.12-3.48a.22.22,0,0,1-.12,0l-4.6-1.78,1.66,4.35a.47.47,0,0,1,.08.25l3.48,9.08a.87.87,0,0,1,.17.41l3.44,9.08,5.31-5.31,7.46,7.54,3.86-3.81-7.63-7.5Z"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="138.98"
-                                                                            y="58.87"
-                                                                            width="6.84"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="75.43"
-                                                                            y="106.54"
-                                                                            width="6.76"
-                                                                            height="6.8"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <rect
-                                                                            x="53.59"
-                                                                            y="57.21"
-                                                                            width="50.45"
-                                                                            height="1.66"
-                                                                            fill="#a2b4b9"
-                                                                        />
-                                                                        <rect
-                                                                            x="53.59"
-                                                                            y="65.67"
-                                                                            width="50.45"
-                                                                            height="1.66"
-                                                                            fill="#a2b4b9"
-                                                                        />
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                            <div className="media-flex__body">
-                                                                <div className="u-last-child-margin-bottom-0">
-                                                                    <div
-                                                                        className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                        data-qa-name="radio-heading"
-                                                                    >
-                                                                        Design here online
-                                                                    </div>
-                                                                    <div className="list-default__parent tile-radio-button__text u-wordBreak-breakWord u-last-child-margin-bottom-0">
-                                                                        <ul>
-                                                                            <li>Already have your logo</li>
-                                                                            <li>Customize every detail</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="buildflow_designYourOwn_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                className="u-position-relative u-display-flex layout__item
-  u-1/3@medium-to-large"
-                                            >
-                                                <div
-                                                    className="tile-radio-button__wrap u-position-relative u-display-flex u-flex-grow-1"
-                                                    data-qa-name="radio-container"
-                                                >
-                                                    <input
-                                                        type="radio"
-                                                        id="buildflow_fullUpload"
-                                                        name="buildflow"
-                                                        tabIndex={-1}
-                                                        aria-describedby="buildflow_fullUpload_description"
-                                                        className="tile-radio-button__input"
-                                                        data-qa-name="radio-input"
-                                                        defaultValue="fullUpload"
-                                                    />
-                                                    <label
-                                                        className="tile-radio-button__label u-flex-grow-1 u-height-100 u-borderRadius-s u-padding-s"
-                                                        htmlFor="buildflow_fullUpload"
-                                                        data-qa-name="radio-label"
-                                                    >
-                                                        <div className="tile-radio-button__buildflow-media-flex media-flex">
-                                                            <div className="media-flex__img">
-                                                                <div
-                                                                    className="u-marginBottom-xs tile-radio-button__svg-image-wrap
-  u-flex-center-content -full-upload"
-                                                                >
-                                                                    <svg
-                                                                        className="tile-radio-button__svg-image svg-icon"
-                                                                        viewBox="0 0 157.3 124.85"
-                                                                    >
-                                                                        <path
-                                                                            d="M141.16,47.46a36,36,0,0,0-11.32-7.83A12.93,12.93,0,0,0,130,37.8a17.14,17.14,0,0,0-5.06-12.44v0a17.09,17.09,0,0,0-12.27-5A16.92,16.92,0,0,0,101.9,24a41.12,41.12,0,0,0-26.7-9.24A41.72,41.72,0,0,0,44.82,27.19a36.81,36.81,0,0,0-6,7.71l0,0a38.53,38.53,0,0,0-6.14,17.91,27.77,27.77,0,0,0-19,8.41h0a38.09,38.09,0,0,0-3.9,5.06,27.75,27.75,0,0,0-4.35,15.3,28.41,28.41,0,0,0,8.25,20.27h0a28.53,28.53,0,0,0,20.48,8.33h81.87a35.41,35.41,0,0,0,25.08-10.69,35.66,35.66,0,0,0,10.69-26A35.66,35.66,0,0,0,141.16,47.46ZM140,98.28a33.82,33.82,0,0,1-24,10.2H34.21a27,27,0,0,1-19.32-7.83v0A26.28,26.28,0,0,1,7.1,81.54a26,26,0,0,1,4.1-14.38,36.71,36.71,0,0,1,3.72-4.84l0,0,0,0h0a26.16,26.16,0,0,1,18.58-7.89l.75,0,.08-.75a36.81,36.81,0,0,1,5.89-17.87l0,0A35.16,35.16,0,0,1,46,28.35a40.11,40.11,0,0,1,29.22-12,39.56,39.56,0,0,1,26.16,9.29l.54.41.54-.41A15.17,15.17,0,0,1,112.64,22a15.38,15.38,0,0,1,11.07,4.52h0a15.65,15.65,0,0,1,4.56,11.28,10.59,10.59,0,0,1-.21,2.2l-.12.66.62.25a35.29,35.29,0,0,1,21.6,32.54A34.05,34.05,0,0,1,140,98.28Z"
-                                                                            fill="#394145"
-                                                                        />
-                                                                        <polygon
-                                                                            points="63.12 59.15 65.49 61.47 77.01 49.99 77.01 85.35 80.33 85.35 80.33 49.99 91.85 61.43 94.17 59.11 78.67 43.65 63.12 59.15"
-                                                                            fill="#394145"
-                                                                        />
-                                                                        <path
-                                                                            d="M140,48.62a34.22,34.22,0,0,0-11.4-7.71l-.62-.25.12-.66a10.59,10.59,0,0,0,.21-2.2,15.65,15.65,0,0,0-4.56-11.28h0A15.38,15.38,0,0,0,112.64,22a15.17,15.17,0,0,0-10.2,3.65l-.54.41-.54-.41a39.56,39.56,0,0,0-26.16-9.29A40.11,40.11,0,0,0,46,28.35a35.16,35.16,0,0,0-5.72,7.38l0,0a36.81,36.81,0,0,0-5.89,17.87l-.08.75-.75,0a26.16,26.16,0,0,0-18.58,7.89,36.71,36.71,0,0,0-3.72,4.84A26,26,0,0,0,7.1,81.54a26.28,26.28,0,0,0,7.79,19.07v0a27,27,0,0,0,19.32,7.83H116a34.83,34.83,0,0,0,34.16-35A34.05,34.05,0,0,0,140,48.62ZM91.83,61.43,80.31,50V85.35H77V50L65.47,61.47,63.1,59.15l15.54-15.5,15.5,15.46Z"
-                                                                            fill="#fff"
-                                                                        />
-                                                                        <path d="M78.63,62.34l0,0h0Z" fill="#fff" />
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                            <div className="media-flex__body">
-                                                                <div className="u-last-child-margin-bottom-0">
-                                                                    <div
-                                                                        className="h__block tile-radio-button__text u-wordBreak-breakWord"
-                                                                        data-qa-name="radio-heading"
-                                                                    >
-                                                                        Upload a full design
-                                                                    </div>
-                                                                    <div className="list-default__parent tile-radio-button__text u-wordBreak-breakWord u-last-child-margin-bottom-0">
-                                                                        <ul>
-                                                                            <li>Have a complete design</li>
-                                                                            <li>Have your own designer</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </label>
-                                                    <div
-                                                        id="buildflow_fullUpload_description"
-                                                        className="u-visually-hidden"
-                                                        data-qa-name="aria-description"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <div />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="product-options-cta__sticky u-padding-vertical-s u-paddingBottom-0@medium is-disabled">
-                                        <div className="product-options-cta__price-wrap">
-                                            <div className="product-options-cta__price-container u-display-flex u-justifyContent-spaceBetween">
-                                                <span
-                                                    className="u-fontSize-m"
-                                                    data-qa-name="quantity-of-item"
-                                                >
-                                                    <span className="u-fontFamily-secondaryMedium">50</span>{" "}
-                                                    postcards
-                                                </span>
-                                                <span>
-                                                    <span>
-                                                        <span
-                                                            className="u-fontFamily-secondaryMedium"
-                                                            data-qa-name="price"
-                                                        >
-                                                            $37.00
-                                                        </span>
-                                                        <span>
-                                                            &nbsp;
-                                                            <s
-                                                                className="u-fontSize-80 u-color-light u-fontFamily-secondary"
-                                                                data-qa-name="strikethrough-price"
-                                                            >
-                                                                $42.00
-                                                            </s>
-                                                        </span>
                                                     </span>
-                                                </span>
+                                                </div>
                                             </div>
+                                            <span data-qa-name="product-options-cta-link-wrapper">
+                                                <a
+                                                    href="#"
+                                                    className="btn -width-100 is-disabled u-pointerEvents-none"
+                                                    data-qa-name="product-options-cta"
+                                                >
+                                                    Start making
+                                                </a>
+                                            </span>
                                         </div>
-                                        <span data-qa-name="product-options-cta-link-wrapper">
-                                            <a
-                                                href="#"
-                                                className="btn -width-100 is-disabled u-pointerEvents-none"
-                                                data-qa-name="product-options-cta"
-                                            >
-                                                Start making
-                                            </a>
-                                        </span>
-                                    </div>
-                                    <div className="u-display-none@medium u-padding-vertical-s u-paddingBottom-0@medium">
-                                        <div className="btn fade-then-hide" />
-                                    </div>
-                                    <div
-                                        data-qa-name="po-cta-notification"
-                                        className="cta-notification-wrapper"
-                                    >
+                                        <div className="u-display-none@medium u-padding-vertical-s u-paddingBottom-0@medium">
+                                            <div className="btn fade-then-hide" />
+                                        </div>
                                         <div
-                                            style={{
-                                                visibility: "hidden",
-                                                position: "absolute",
-                                                height: 90,
-                                                width: 200
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="cta-notification-wrapper">
-                                        <div
-                                            style={{
-                                                visibility: "hidden",
-                                                position: "absolute",
-                                                height: 100,
-                                                width: 200
-                                            }}
-                                        />
+                                            data-qa-name="po-cta-notification"
+                                            className="cta-notification-wrapper"
+                                        >
+                                            <div
+                                                style={{
+                                                    visibility: "hidden",
+                                                    position: "absolute",
+                                                    height: 90,
+                                                    width: 200
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="cta-notification-wrapper">
+                                            <div
+                                                style={{
+                                                    visibility: "hidden",
+                                                    position: "absolute",
+                                                    height: 100,
+                                                    width: 200
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        ) : (
+                            <p>No product found.</p>
+                        )}
+
                     </div>
                 </div>
 
-                
+
                 <div className="wrapper u-display-none@medium u-marginTop-s">
                     <div className="layout layout--row-spacing">
                         <div className="layout__item u-1/2@large" data-qa-name="usp">

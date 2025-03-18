@@ -4,49 +4,59 @@
         "product_title": "Original Postcards",
         "price": "$23.00",
         "description": "Looking for inspiration\nWant simple customization",
-        "sizes": [],
+        "sizes": [
+            {
+                "id": 6,
+                "name": "Small",
+                "dimensions": "4.13” x 5.83”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-a6-526x325.jpg"
+            },
+            {
+                "id": 14,
+                "name": "Standard",
+                "dimensions": "4” x 6”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-standard-526x325.jpg"
+            },
+            {
+                "id": 9,
+                "name": "Square",
+                "dimensions": "4.72” x 4.72”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-square-526x325.jpg"
+            },
+            {
+                "id": 11,
+                "name": "Rack Cards",
+                "dimensions": "3.67” x 8.5”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-rack_cards-526x325.jpg"
+            },
+            {
+                "id": 8,
+                "name": "Medium",
+                "dimensions": "5” x 7”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-medium-526x325.jpg"
+            },
+            {
+                "id": 13,
+                "name": "Half Page",
+                "dimensions": "5.5” x 8.5”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-half_page-526x325.jpg"
+            },
+            {
+                "id": 15,
+                "name": "Large",
+                "dimensions": "6” x 9”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-large-526x325.jpg"
+            }
+        ],
         "finishes": [
-            "Looking for inspiration",
-            "Want simple customization",
-            "Already have your logo",
-            "Customize every detail",
-            "Have a complete design",
-            "Have your own designer",
-            "16\u201317 pt paper thickness",
-            "A premium paper for less",
-            "Also in Business Cards and Letterhead",
-            "Matte Postcards are shine free, so no glare",
-            "Gloss Postcards make colors really \u201cpop\u201d",
-            "Both come at no extra cost",
+            "Our “feel good” premium paper",
+            "In your choice of 2 finishes:",
+            "Matte: shine-free, so no glare",
+            "Gloss: makes Postcard colors really “pop”",
             "Coat both sides for extra protection",
-            "Leave one side uncoated to write on",
-            "Or get that \"traditional\" Postcard feel",
-            "Strong, non-bendy and durable paper",
-            "18pt paper thickness",
-            "Velvety-feel, Soft Touch finish",
-            "Add extra shine with Gold or Silver Foil",
-            "Mohawk Superfine paper with a pop of color in the middle",
-            "Extra-impactful 32pt paper that\u2019s four layers thick",
-            "Natural, tactile texture, feels great to hold and write on",
-            "Your choice of eight different seam colors",
-            "Our feel-good premium paper",
-            "16pt thick \u2013 thicker than your average business card",
-            "Available in two free finishes: matte or gloss",
-            "In MOO, Standard, Square and MiniCard sizes",
-            "Small (4.13\"x 5.83\")",
-            "Square (4.72\"x 4.72\")",
-            "Rack Cards (3.67\"x 8.5\")",
-            "Medium (5\"x 7\")",
-            "Half Page (5.5\"x 8.5\")\"",
-            "Large (6\u201d x 9\u201d)",
-            "Standard size (4\u201d x 6\u201d)",
-            "Matte Postcards (16pt): shine free, so no glare. And you can write on it, too.",
-            "Gloss Postcards (17pt): eye-catchingly shiny to make colors more vibrant.",
-            "Super (18pt): impressively strong and silky to touch, available with silver or gold foil special finishes",
-            "Luxe (32pt): beautifully textured and impressively thick, with a colored edge",
-            "Customize a blank design",
-            "Upload a complete design",
-            "Use our templates if you're creating Small or Medium Postcards"
+            "For writing on, leave one side uncoated",
+            "16–17 pt paper thickness",
+            "Available in 7 Postcard sizes"
         ],
         "quantities": [
             "25 - $21.00",
@@ -84,39 +94,61 @@
         "id": 2,
         "product_title": "Super Postcards",
         "price": "$23.00",
-        "description": "Looking for inspiration\nWant simple customization",
-        "sizes": [],
+        "description": "An “un-bendy” paper with a velvety Soft Touch coating. For the kind of Postcards you just want to hold on to. And if you really want to turn heads? You can even add shiny, tactile Gold or Silver Foil.",
+        "sizes": [
+            {
+                "id": 6,
+                "name": "Small",
+                "dimensions": "4.13” x 5.83”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-a6-526x325.jpg"
+            },
+            {
+                "id": 14,
+                "name": "Standard",
+                "dimensions": "4” x 6”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-standard-526x325.jpg"
+            },
+            {
+                "id": 9,
+                "name": "Square",
+                "dimensions": "4.72” x 4.72”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-square-526x325.jpg"
+            },
+            {
+                "id": 11,
+                "name": "Rack Cards",
+                "dimensions": "3.67” x 8.5”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-rack_cards-526x325.jpg"
+            },
+            {
+                "id": 8,
+                "name": "Medium",
+                "dimensions": "5” x 7”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-medium-526x325.jpg"
+            },
+            {
+                "id": 13,
+                "name": "Half Page",
+                "dimensions": "5.5” x 8.5”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-half_page-526x325.jpg"
+            },
+            {
+                "id": 15,
+                "name": "Large",
+                "dimensions": "6” x 9”",
+                "image": "https://www.moo.com/static-assets/product-images/470a0393153fba295db8ff4c1bd514591a9ec246/sizes/postcards-large-526x325.jpg"
+            }
+        ],
         "finishes": [
-            "Looking for inspiration",
-            "Want simple customization",
-            "Already have your logo",
-            "Customize every detail",
-            "Have a complete design",
-            "Have your own designer",
-            "Matches your Original Business Cards",
-            "16\u201317pt thickness",
-            "Available in matte and gloss finishes",
-            "Coated on one side (write on the other) or both",
-            "Mohawk Superfine paper with a pop of color in the middle",
-            "Extra-impactful 32pt paper that\u2019s four layers thick",
-            "Natural, tactile texture, feels great to hold and write on",
-            "Your choice of eight different seam colors",
-            "Impressively strong and non-bendy 18pt paper",
-            "Slim enough that it won\u2019t bulk up your wallet",
-            "Available in velvety Soft Touch and dramatic High Gloss",
-            "Add shiny special finishes like Gold Foil and Spot Gloss",
-            "Small (4.13\"x 5.83\")",
-            "Square (4.72\"x 4.72\")",
-            "Rack Cards (3.67\"x 8.5\")",
-            "Medium (5\"x 7\")",
-            "Half Page (5.5\"x 8.5\")\"",
-            "Large (6\u201d x 9\u201d)",
-            "Standard size (4\u201d x 6\u201d)",
-            "Original (16-17pt): great quality and great value, available in matte or gloss",
-            "Luxe (32pt): beautifully textured and impressively thick, with a colored edge",
-            "Customize a blank design",
-            "Upload a complete design",
-            "Use our templates if you're creating Small or Medium Postcards"
+            "Silky smooth, solid Postcards",
+            "Soft Touch coating for a velvety look and feel",
+            "Shine-free, so there’s no glare",
+            "Keepworthy quality",
+            "Coat both sides for extra protection",
+            "For writing on, leave one side uncoated",
+            "Optional Gold or Silver Foil for extra “Ooh!”",
+            "18pt paper thickness",
+            "Available in 7 Postcard sizes"
         ],
         "quantities": [
             "25 - $31.00",
@@ -159,39 +191,12 @@
         "id": 3,
         "product_title": "Luxe Postcards",
         "price": "$31.00",
-        "description": "Looking for inspiration\nWant simple customization",
+        "description": "Noticeably thick, Luxe Postcards are made with archival-quality Mohawk Superfine paper. With its beautiful formation and uniformity, nothing prints better. It also gives them that 'Ooh, that feels good' texture. Add a pop of color in the middle and they make your promotions unmissable.",
         "sizes": [],
         "finishes": [
-            "Looking for inspiration",
-            "Want simple customization",
-            "Already have your logo",
-            "Customize every detail",
-            "Have a complete design",
-            "Have your own designer",
-            "Strong, non-bendy and durable paper",
-            "18pt paper thickness",
-            "Velvety-feel, Soft Touch finish",
-            "Add extra shine with Gold or Silver Foil",
-            "Mohawk Superfine paper with a pop of color in the middle",
-            "Extra-impactful 32pt paper that\u2019s four layers thick",
-            "Natural, tactile texture, feels great to hold and write on",
-            "Your choice of eight different seam colors",
-            "Our feel-good premium paper",
-            "16pt thick \u2013 thicker than your average business card",
-            "Available in two free finishes: matte or gloss",
-            "In MOO, Standard, Square and MiniCard sizes",
-            "Small (4.13\"x 5.83\")",
-            "Square (4.72\"x 4.72\")",
-            "Rack Cards (3.67\"x 8.5\")",
-            "Medium (5\"x 7\")",
-            "Half Page (5.5\"x 8.5\")\"",
-            "Large (6\u201d x 9\u201d)",
-            "Standard size (4\u201d x 6\u201d)",
-            "Original (16-17pt): great quality and great value, available in matte or gloss",
-            "Super (18 pt): impressively strong and silky to touch, available with silver or gold foil special finishes",
-            "Customize a blank design",
-            "Upload a complete design",
-            "Use our templates if you're creating Small or Medium Postcards"
+            "Uncoated, naturally textured Mohawk Superfine paper.",
+            "Your choice of 8 seam colors.",
+            "32pt paper, double thickness for extra impact."
         ],
         "quantities": [
             "25 - $56.00",
@@ -239,34 +244,15 @@
         "id": 4,
         "product_title": "Gold and Silver Foil Postcards",
         "price": "$62.00",
-        "description": "Looking for inspiration\nWant simple customization",
+        "description": "Looking for inspiration Want simple customization",
         "sizes": [],
         "finishes": [
-            "Looking for inspiration",
-            "Want simple customization",
-            "Already have your logo",
-            "Customize every detail",
-            "Have a complete design",
-            "Have your own designer",
-            "Matches your Original Business Cards",
-            "16\u201317pt thickness",
-            "Available in matte and gloss finishes",
-            "Coated on one side (write on the other) or both",
-            "Mohawk Superfine paper with a pop of color in the middle",
-            "Extra-impactful 32pt paper that\u2019s four layers thick",
-            "Natural, tactile texture, feels great to hold and write on",
-            "Your choice of eight different seam colors",
-            "Impressively strong and non-bendy 18pt paper",
-            "Slim enough that it won\u2019t bulk up your wallet",
-            "Available in velvety Soft Touch and dramatic High Gloss",
-            "Add shiny special finishes like Gold Foil and Spot Gloss",
-            "Small (4.13\"x 5.83\")",
-            "Square (4.72\"x 4.72\")",
-            "Rack Cards (3.67\"x 8.5\")",
-            "Medium (5\"x 7\")",
-            "Half Page (5.5\"x 8.5\")\"",
-            "Large (6\u201d x 9\u201d)",
-            "Standard size (4\u201d x 6\u201d)"
+            "18 pt Super paper",
+            "Soft Touch coating",
+            "Add shiny gold or silver to match your brand",
+            "For writing on, leave one side uncoated",
+            "Foil both sides at no extra cost",
+            "Available in all Postcard sizes"
         ],
         "quantities": [
             "25 - $62.00",
@@ -303,16 +289,5 @@
             "Design here online",
             "Upload a full design"
         ]
-    },
-    {
-        "id": 5,
-        "product_title": "Postcard Design Guidelines",
-        "price": "$23.00",
-        "description": "No description available",
-        "sizes": [],
-        "finishes": [],
-        "quantities": [],
-        "image_urls": [],
-        "paper_types": []
     }
 ]

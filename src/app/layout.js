@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./_component/header/page";
 import Footer from "./_component/footer/page";
+import { Suspense } from "react";
 
 
 export const metadata = {
@@ -32,9 +33,12 @@ export default function RootLayout({ children }) {
       <body
         id="htmlBody" data-ga-page-subtype=""
       >
-        <Header />
-        {children}
-        <Footer />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Header />
+          {children}
+          <Footer />
+        </Suspense>
+
       </body>
     </html>
   );
