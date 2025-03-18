@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const header = () => {
 
@@ -7,25 +7,41 @@ const header = () => {
     const [isOpenMenu, setIsOpenMenu] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
     const [isClickedMenu, setIsClickedMenu] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    let timeoutId = null;
 
+    let timeoutId = null;
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(null);
+                setIsClicked(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    // Handle mouse enter
     const handleMouseEnter = (menu) => {
         if (!isClicked) {
-            clearTimeout(timeoutId); // Clear any existing timeout
+            clearTimeout(timeoutId); // Clear previous timeout
             setIsOpen(menu);
         }
     };
 
+    // Handle mouse leave (with delay)
     const handleMouseLeave = () => {
-        if (!isClicked) {
-            timeoutId = setTimeout(() => {
+        timeoutId = setTimeout(() => {
+            if (!isClicked) {
                 setIsOpen(null);
-            }, 4000); // Change to 5000 for 5 sec delay
-        }
-        setIsOpen(null);
+            }
+        }, 300); // Small delay for smooth transition
     };
 
+    // Handle click to toggle the dropdown
     const handleClick = (menu) => {
         clearTimeout(timeoutId);
         setIsOpen(isOpen === menu ? null : menu);
@@ -155,6 +171,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === 'Business-Cards' ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)} // Prevent immediate closing
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -633,6 +650,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === 'Postcards' ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -1072,6 +1090,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === "Flyers" ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -1432,6 +1451,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === "Marketing-Materials" ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -2262,6 +2282,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === "Stationery" ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -3092,6 +3113,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === "BrandedMerchandise" ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -3592,6 +3614,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === 'Business-Services' ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -3941,6 +3964,7 @@ const header = () => {
                                                 <ul
                                                     className={`nav-main__list -l2 js-nav__list--l2 ${isOpen === "Help-FAQs" ? "is-visible" : ""}`}
                                                     data-component-name="header-navigation-level-2"
+                                                    onMouseEnter={() => clearTimeout(timeoutId)}
                                                 >
                                                     <div className="u-float-right u-1/2 u-display-none@until-large u-padding-horizontal-m u-paddingTop-xs">
                                                         <div className="layout layout--row-spacing u-display-flex">
@@ -4265,6 +4289,7 @@ const header = () => {
                                                 id="country-selector__list-l1"
                                                 className={`nav-main__list -l2 -tools js-nav__list--l2 js-nav__list--country ${isOpenMenu === "languages" ? "is-visible" : ""}`}
                                                 data-component-name="supernav-level-2-country-selector"
+                                                onMouseEnter={() => clearTimeout(timeoutId)}
                                             >
                                                 <div className="tooltip__caret-wrap">
                                                     <div className="tooltip__caret" />
@@ -4813,6 +4838,7 @@ const header = () => {
                                             <ul
                                                 className={`nav-main__list -l2 -tools js-nav__list--l2 js-nav__list--account ${isOpenMenu === "Account" ? "is-visible" : ""}`}
                                                 data-component-name="supernav-level-2-account"
+                                                onMouseEnter={() => clearTimeout(timeoutId)}
                                             >
                                                 <div className="tooltip__caret-wrap">
                                                     <div className="tooltip__caret" />
